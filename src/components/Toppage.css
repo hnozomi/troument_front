@@ -1,0 +1,182 @@
+html {
+    width: 100%;
+    font-family: a-otf-midashi-go-mb31-pr6n, sans-serif;
+    font-weight: 600;
+    font-style: normal;
+    background-color: #f1f1f1;
+}
+
+.wrappers {
+    width: 84%;
+    margin: 3.2em auto 0 auto;
+    padding: 1em;
+}
+
+.create-account,
+.login {
+    margin-top: 1.5em;
+    margin-bottom: 1em;
+}
+
+.form-span {
+    color: red;
+    font-size: 12px;
+    /* padding-left: 5px; */
+    padding-left: 1em;
+}
+
+
+/* .account-form-label {
+    font-size: 16px;
+} */
+
+.wrapper-margin {
+    margin-bottom: 2.3em;
+}
+
+.maintitle-wrapper {
+    position: relative;
+}
+
+.maintitle {
+    line-height: 1.2;
+    font-weight: 600;
+}
+
+.maintitle-text {
+    font-size: 24px;
+    margin: 0;
+    line-height: 1.6;
+}
+
+.maintitle-image {
+    /* width: 270.612px; */
+    width: 15em;
+    /* height: 180.611px; */
+    height: 11em;
+    display: flex;
+}
+
+.form-label-wrap {
+    position: relative;
+    width: 100%;
+}
+
+.form-label-wrap input[type="text"] {
+    font: 15px/24px sans-serif;
+    box-sizing: border-box;
+    width: 100%;
+    letter-spacing: 1px;
+    padding-left: 1em;
+}
+
+.form-label-wrap input[type="text"]:focus {
+    outline: none;
+}
+
+.form-input {
+    position: relative;
+    padding: 7px 15px;
+    border: 0;
+    border: 1px solid #1b2538;
+    background: transparent;
+    border-radius: 7px;
+    margin-bottom: 2em;
+}
+
+.form-input:focus~.account-form-bg,
+.form-label-wrap.form-input~.account-form-bg {
+    width: 100%;
+    transition: 0.4s;
+    background-color: rgba(218, 60, 65, 0.3);
+}
+
+.button {
+    width: 100%;
+    display: inline-block;
+    padding: 0.3em 0.6em;
+    text-decoration: none;
+    background: #3b55e6;
+    /*ボタン色*/
+    color: #fff;
+    border-bottom: solid 4px #5d5675;
+    border-radius: 3px;
+    margin: 1em auto 0 auto;
+    font-size: 24px;
+    font-family: sans-serif;
+}
+
+.button:active {
+    /*ボタンを押したとき*/
+    -webkit-transform: translateY(4px);
+    transform: translateY(4px);
+    /*下に動く*/
+    border-bottom: none;
+    /*線を消す*/
+}
+
+.about-troument {
+    text-align: center;
+}
+
+.wrapper-title {
+    font-size: 28px;
+    margin: 0 0 1em 0;
+    text-align: left;
+}
+
+.about-troument-text,
+.todo-troument-text {
+    font-size: 14px;
+    margin: 0;
+    text-align: left;
+}
+
+.down-arrow-icon {
+    width: 40px;
+    height: 40px;
+    margin-top: 2.3em;
+}
+
+.todo-troument-content {
+    position: relative;
+    padding-left: 60px;
+    padding-top: 5px;
+    text-align: justify;
+    /* margin-bottom: 3em; */
+}
+
+.todo-troument-content::before {
+    content: "";
+    position: absolute;
+    border-left: 4px solid #000;
+    /* top: 4px; */
+    top: 0.5em;
+    /* left: 35px; */
+    left: 2em;
+    height: 7em;
+}
+
+.todo-troument-number {
+    position: absolute;
+    top: 0;
+    left: 0;
+    font-size: 37px;
+    font-weight: 200;
+    margin: 0;
+}
+
+.todo-troument-head {
+    font-size: 14px;
+    display: inline-block;
+    margin: 0 0 1em 0;
+}
+
+.todo-troument-image {
+    /* width: 200px; */
+    width: 10em;
+    height: 10em;
+    /* height: 200px; */
+    display: flex;
+    margin: 2.5em 0 2.5em auto;
+}

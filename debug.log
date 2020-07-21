@@ -1,0 +1,2 @@
+[0202/195931.965:ERROR:process_info.cc(375)] NtQuerySystemInformation SystemExtendedHandleInformation: 指定した情報レコードの長さは、指定した情報クラスに対して必要な長さと一致しません。 (0xc0000004)
+[0202/200402.810:ERROR:process_info.cc(375)] NtQuerySystemInformation SystemExtendedHandleInformation: 指定した情報レコードの長さは、指定した情報クラスに対して必要な長さと一致しません。 (0xc0000004)
