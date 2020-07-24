@@ -6,7 +6,6 @@ const titleValidation = (title) => {
 };
 
 const tagValidation = (tag) => {
-  console.log(tag.length)
   if (!tag) return 'タグを入力してください';
   if (tag.length > 3) return 'タグが5つまでしか登録できません';
   return '';

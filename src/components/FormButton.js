@@ -1,5 +1,6 @@
 import React from 'react';
 import Popover from "react-popover";
+import './App.css'
 
 class FormButton extends React.Component {
   constructor(props) {
@@ -25,12 +26,12 @@ class FormButton extends React.Component {
     );
     this.props.displayForm
       ? (this.props.resolveUpdate
-        ? setTimeout(this.props.resolveUpdate, 1500, savedData)
-        : setTimeout(this.props.resolveAdd, 1500, savedData)
+        ? setTimeout(this.props.actionMethod.resolveUpdate, 1500, savedData)
+        : setTimeout(this.props.actionMethod.resolveAdd, 1500, savedData)
       )
       : (this.props.worryUpdate)
-        ? (setTimeout(this.props.worryUpdate, 1500, title, tags, savedData))
-        : (setTimeout(this.props.addLists, 1500, title, tags, savedData))
+        ? (setTimeout(this.props.actionMethod.worryUpdate, 1500, title, tags, savedData))
+        : (setTimeout(this.props.actionMethod.addLists, 1500, title, tags, savedData))
   };
 
   // ****************************************************************///
@@ -63,7 +64,7 @@ class FormButton extends React.Component {
       } else {
         createButton = (
           <div className="button-wrapper">
-            <button onClick={this.props.ClickCloseForm} className="first-button button">キャンセル</button>
+            <button onClick={this.props.actionMethod.ClickCloseForm} className="first-button button">キャンセル</button>
             <Popover
               isOpen={this.state.isOpen}
               body={
@@ -92,9 +93,9 @@ class FormButton extends React.Component {
     // }
 
     return (
-      <div>
+      <React.Fragment>
         {createButton}
-      </div>
+        </React.Fragment>
     );
   }
 }

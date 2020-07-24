@@ -129,7 +129,6 @@ class App extends PureComponent {
             onChange={this.onCropChange}
           />
         )}
-        {console.log(croppedImageUrl, '投稿後')}
         {croppedImageUrl && (
           <img alt="Crop" style={{ maxWidth: '100%' }} src={croppedImageUrl} />
         )}

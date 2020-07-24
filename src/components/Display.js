@@ -35,7 +35,7 @@ class Display extends React.Component {
     this.props.history.push({
       pathname: '/'
     })
-    this.props.handleDetail(worry_id)
+    this.props.actionMethod.handleDetail(worry_id)
   }
 
 
@@ -47,7 +47,7 @@ class Display extends React.Component {
       return {
         isGood: !this.state.isGood
       }
-    }), () => this.props.handleGoodCount(this.props._id, !this.state.isGood)
+    }), () => this.props.actionMethod.handleGoodCount(this.props._id, !this.state.isGood)
     )
 
   }
@@ -63,24 +63,24 @@ class Display extends React.Component {
         <div className={"contents-wrappers " + (this.state.isMypage ? "mypage-diplay-wrapper" : '')}>
           <div className="contents-wrapper">
             <div className="content-icon-wrap">
-              <Avatar size={"50px"} round={"10px"} className="content-icon" src={"https://troument.s3-ap-northeast-1.amazonaws.com/" + this.props.thumbnail } alt="" />
+              <Avatar size={"50px"} round={"10px"} className="content-icon" src={"https://troument.s3-ap-northeast-1.amazonaws.com/" + this.props.thumbnail} alt="" />
             </div>
             <div className="content-wrapper">
               <div className="content-image-time">
-                {this.props.status
+                {this.props.detail_todolist.status
                   ? <img className="content-image display-title-hukidasi" src="/image/resolve.svg" alt="" />
                   : <img className="content-image display-title-hukidasi" src="/image/worry.svg" alt="" />}
-                <span className="content-time">{this.props.createTime(this.props.time)}</span>
+                <span className="content-time">{this.props.actionMethod.createTime(this.props.detail_todolist.time)}</span>
               </div>
 
               <div className="content-text-tag">
-                <p className="content-text">{this.props.title}</p>
-                {this.props.tag && this.props.tag.map((ta, tag_key) => {
+                <p className="content-text">{this.props.detail_todolist.title}</p>
+                {this.props.detail_todolist.tag && this.props.detail_todolist.tag.map((ta, tag_key) => {
                   return <p key={tag_key} className="react-tags__display-tag">{ta.name}</p>
                 })}
               </div>
-              {this.props.status &&
-                <p className="content-count">{this.props.count}人が感謝しています</p>
+              {this.props.detail_todolist.status &&
+                <p className="content-count">{this.props.detail_todolist.count}人が感謝しています</p>
               }
             </div>
           </div>
@@ -92,19 +92,17 @@ class Display extends React.Component {
                 <div className="content-button-wrapper">
 
 
-                  {/* {this.props.status && */}
-                    <div className="content-button-wrapper">
-                      {this.state.isGood
-                        ? <button className="content-button" onClick={this.handleGoodChange}>参考になった
+                  <div className="content-button-wrapper">
+                    {this.state.isGood
+                      ? <button className="content-button" onClick={this.handleGoodChange}>参考になった
                         <ThumbUpIcon className="content-button-icon" style={{ fontSize: 18 }} />
-                        </button>
-                        : <button className="content-button" onClick={this.handleGoodChange}>参考になった
+                      </button>
+                      : <button className="content-button" onClick={this.handleGoodChange}>参考になった
                         <ThumbUpAltOutlinedIcon className="content-button-icon" style={{ fontSize: 18 }} />
-                        </button>
-                      }
-                    </div>
-                  {/* } */}
-                  {this.props.login_user === this.props.username &&
+                      </button>
+                    }
+                  </div>
+                  {this.props.login_user === this.props.detail_todolist.username &&
                     <div className="content-edit-button">
                       <button className="content-button" onClick={this.props.ClickDetailUpdate}>編集
                         <EditIcon className="content-button-icon" style={{ fontSize: 18 }} />
@@ -124,7 +122,7 @@ class Display extends React.Component {
     } else {
 
       createDetail = (
-        <div>
+        <React.Fragment>
           {
             this.props.todolists.map((todolist, i) => {
               return <div key={i} className={"contents-wrappers " + (this.state.isSearch ? 'search-contents-wrappers' : this.state.isMypage ? 'mypage-contents-wrappers' : '')}>
@@ -132,13 +130,12 @@ class Display extends React.Component {
 
                   <div className="content-icon-wrap">
                     <Avatar size={"50px"} round={"10px"} src={"https://troument.s3-ap-northeast-1.amazonaws.com/" + todolist.user.thumbnail} alt="" />
-                    {/* <Avatar size={"50px"} round={"10px"} src={"/image/" + todolist.user.thumbnail} alt="" /> */}
                   </div>
 
                   <div className="content-wrapper">
                     <div className="content-image-time">
                       {todolist.status ? <img className="content-image display-title-hukidasi" src="/image/resolve.svg" alt="" /> : <img className="dcontent-image display-title-hukidasi" src="/image/worry.svg" alt="" />}
-                      <span className="content-time">{this.props.createTime(todolist.time)}</span>
+                      <span className="content-time">{this.props.actionMethod.createTime(todolist.time)}</span>
                     </div>
 
 
@@ -161,7 +158,7 @@ class Display extends React.Component {
               </div>
             })
           }
-        </div>
+        </React.Fragment>
       )
 
     }
@@ -169,9 +166,10 @@ class Display extends React.Component {
 
 
     return (
-      <div>
+      <React.Fragment>
         {createDetail}
-      </div>
+
+      </React.Fragment>
     );
 
 

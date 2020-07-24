@@ -2,8 +2,8 @@ import React from 'react';
 import FormButton from './FormButton';
 import Display from './Display';
 import Form from './Form';
-// import Axios from 'axios';
-import AxiosBase from 'axios';
+import Axios from 'axios';
+// import AxiosBase from 'axios';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -24,9 +24,9 @@ import { EDITOR_JS_TOOLS } from "./editor-tool";
 // ****************************************************************///
 
 
-const Axios = AxiosBase.create({
-    baseURL: "https://troument-api.net"
-});
+// const Axios = AxiosBase.create({
+//     baseURL: "https://troument-api.net"
+// });
 
 
 class Detail extends React.Component {
@@ -68,7 +68,6 @@ class Detail extends React.Component {
         }
         this.goodCheck(param)
 
-        // const url = constUrl + '/api/detail_display'
         Axios.get('/api/detail_display', { params: param })
             .then(response => {
                 this.setState((state) => {
@@ -91,7 +90,6 @@ class Detail extends React.Component {
     // ****************************************************************///
 
     goodCheck(param) {
-        // const url = constUrl + '/api/goodcheck'
         Axios.get('/api/goodcheck', { params: param })
             .then(response => {
                 if (response.data.length === 0) {
@@ -113,13 +111,12 @@ class Detail extends React.Component {
 
 
     // ****************************************************************///
-    // リストから消去  
+    // リストから消去  (state)
     // ****************************************************************///
 
     listDelete() {
-        this.props.TodolistsDelete(this.state.worry_id)
+        this.props.actionMethod.TodolistsDelete(this.state.worry_id)
 
-        // const url = constUrl + '/api/delete'
         Axios.delete('/api/delete', {
             data: { worry_id: this.state.worry_id }
         })
@@ -129,7 +126,7 @@ class Detail extends React.Component {
                 console.error(new Error(err))
             })
 
-        this.props.ClickCloseForm()
+        this.props.actionMethod.ClickCloseForm()
     }
 
 
@@ -224,28 +221,19 @@ class Detail extends React.Component {
                 ? detailDisplay = (
                     <Form
                         displayForm={status}
-                        title={title}
-                        tags={tag}
-                        worry={worry}
-                        worryUpdate={this.props.worryUpdate}
-                        resolveUpdate={this.props.resolveUpdate}
-                        resolveAdd={this.props.resolveAdd}
-                        ClickCloseForm={this.props.ClickCloseForm}
+                        {...this.props}
+
                         data_worry={this.state.data_worry}
                         data_resolve={this.state.data_resolve}
                         detail_todolist={this.props.detail_todolist}
-                        login_user={login_user}
+                        // login_user={login_user}
                     />
                 )
                 : detailDisplay = (
                     <Form
                         displayForm={true}
-                        ClickCloseForm={this.props.ClickCloseForm}
-                        title={title}
-                        tag={tag}
-                        resolveAdd={this.props.resolveAdd}
-                        detail_todolist={this.props.detail_todolist}
-                        login_user={login_user}
+                        // login_user={login_user}
+                        {...this.props}
                     />
                 )
         } else {
@@ -253,7 +241,7 @@ class Detail extends React.Component {
 
                 if (status) {
                     createDetail = (
-                        <div>
+                        <React.Fragment>
 
                             <div className="detail-wrapper">
                                 <section className="detail-section">
@@ -275,12 +263,12 @@ class Detail extends React.Component {
                                     </div>
                                 </section>
                             </div>
-                        </div>
+                            </React.Fragment>
                     )
                 } else {
 
                     createDetail = (
-                        <div>
+                        <React.Fragment>
                             <div className="detail-wrapper">
                                 <section className="detail-section">
                                     <h1 className="detail-section">
@@ -299,7 +287,7 @@ class Detail extends React.Component {
                                     login_user={login_user}
                                 />
                             </div>
-                        </div>
+                            </React.Fragment>
                     )
                 }
             } else {
@@ -311,29 +299,29 @@ class Detail extends React.Component {
 
 
         return (
-            <div>
+            <React.Fragment>
                 {this.state.spnner
                     ? <Display
-                        title={title}
-                        tag={tag}
-                        count={count}
-                        worry_id={worry_id}
-                        worry={worry}
-                        time={time}
-                        status={status}
-                        username={username}
+
+                        // detail_todolist={this.props.detail_todolist}
+                        // login_user={login_user}
+                        // thumbnail={thumbnail}
+                        // handleGoodCount={this.props.actionMethod.handleGoodCount}
+                        // createTime={this.props.actionMethod.createTime}
+
+                        {...this.props}
+
+
                         detail={true}
-                        login_user={login_user}
-                        thumbnail={thumbnail}
                         isGood={this.state.isGood}
-                        ClickDetailUpdate={this.ClickDetailUpdate}
-                        listDelete={this.listDelete}
-                        handleClickOpen={this.handleClickOpen}
-                        ClickDetailOpen={this.ClickDetailOpen}
                         updateform={this.state.updateform}
-                        handleGoodCount={this.props.handleGoodCount}
-                        goodCheck={this.goodCheck}
-                        createTime={this.props.createTime}
+
+                        ClickDetailUpdate={this.ClickDetailUpdate}
+                        // listDelete={this.listDelete}
+                        handleClickOpen={this.handleClickOpen}
+                        // ClickDetailOpen={this.ClickDetailOpen}
+                        // goodCheck={this.goodCheck}
+
                         _id={this.state._id}
                     />
                     : <CircularProgress />
@@ -382,7 +370,7 @@ class Detail extends React.Component {
                         </div>
                     </Fade>
                 </Modal>
-            </div>
+                </React.Fragment>
         );
     }
 }

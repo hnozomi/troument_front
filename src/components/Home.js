@@ -11,16 +11,16 @@ import User from './User';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import './App.css'
-import AxiosBase from 'axios';
-// import Axios from 'axios';
+// import AxiosBase from 'axios';
+import Axios from 'axios';
 
 // ****************************************************************///
 //  初期画面
 // ****************************************************************///
 
-const Axios = AxiosBase.create({
-    baseURL: "https://troument-api.net"
-  });
+// const Axios = AxiosBase.create({
+//     baseURL: "https://troument-api.net"
+//   });
 
 
 class Home extends React.Component {
@@ -128,7 +128,6 @@ class Home extends React.Component {
             worry_id: worry_id
         }
 
-        // const url = constUrl + '/api/worryadd'
         Axios.post('/api/worryadd', {
             list: list,
         })
@@ -257,7 +256,7 @@ class Home extends React.Component {
         );
 
         // const url = constUrl + '/api/listdelete'
-        Axios.post('/api/listdelete', {
+        Axios.post('/api/listupdate', {
             detail_todolist: this.state.detail_todolist,
         })
             .then(response => {
@@ -422,6 +421,19 @@ class Home extends React.Component {
 
     render() {
         let homeDisplay
+        const actionMethod = {
+            resolveAdd: this.resolveAdd,
+            worryUpdate: this.worryUpdate,
+            resolveUpdate: this.resolveUpdate,
+            TodolistsDelete: this.TodolistsDelete,
+            ClickCloseForm: this.ClickCloseForm,
+            createTime: this.createTime,
+            handleGoodCount: this.handleGoodCount,
+            goodaddCheck: this.goodaddCheck,
+            gooddeleteCheck: this.gooddeleteCheck,
+            handleDetail:this.handleDetail
+        }
+
         if (this.state.form) {
             homeDisplay = (
                 <Form
@@ -434,39 +446,36 @@ class Home extends React.Component {
         } else {
             if (this.state.detail) {
                 homeDisplay = (
-                    <div>
                         <Detail
                             todolists={this.state.todolists}
-                            resolveAdd={this.resolveAdd}
-                            worryUpdate={this.worryUpdate}
-                            resolveUpdate={this.resolveUpdate}
-                            TodolistsDelete={this.TodolistsDelete}
-                            ClickCloseForm={this.ClickCloseForm}
-                            // number={this.state.number}
-                            createTime={this.createTime}
                             detail_todolist={this.state.detail_todolist}
-                            handleGoodCount={this.handleGoodCount}
-                            goodaddCheck={this.goodaddCheck}
-                            gooddeleteCheck={this.gooddeleteCheck}
                             count={this.state.count}
                             login_user={this.state.login_user}
+                            // resolveAdd={this.resolveAdd}
+                            // worryUpdate={this.worryUpdate}
+                            // resolveUpdate={this.resolveUpdate}
+                            // TodolistsDelete={this.TodolistsDelete}
+                            // ClickCloseForm={this.ClickCloseForm}
+                            // createTime={this.createTime}
+                            // handleGoodCount={this.handleGoodCount}
+                            // goodaddCheck={this.goodaddCheck}
+                            // gooddeleteCheck={this.gooddeleteCheck}
+                            actionMethod={actionMethod}
                         />
-                    </div>
                 )
 
             } else {
                 this.state.loading
                     ? homeDisplay = (
                         <div className="display-title-wrapper">
-                            <div>
                                 <Display
                                     todolists={this.state.todolists}
                                     userinfo={this.state.userinfo}
-                                    handleDetail={this.handleDetail}
-                                    createTime={this.createTime}
+                                    // handleDetail={this.handleDetail}
+                                    // createTime={this.createTime}
+                                    actionMethod={actionMethod}
                                 />
 
-                            </div>
 
                             <div onClick={this.ClickDisplayForm} className="create-form">
                                 <img alt="CreateForm" src="/icon/create-form.svg" className="create-form-icon" />

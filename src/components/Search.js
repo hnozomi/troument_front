@@ -59,7 +59,7 @@ class Search extends React.Component {
       search_diaplay = (
         <div className="search-wrapper">
           <img className="search-image" src="/icon/Search_unDraw.svg" alt="Search" />
-          <div className="serach-text-wrapper">
+          <div className="search-text-wrapper">
             <p className="search-text">同じ悩みを抱えている人がいるかもしれません</p>
             <p className="search-text">検索してみましょう！</p>
           </div>
@@ -80,14 +80,14 @@ class Search extends React.Component {
     }
 
     return (
-      <div>
+      <React.Fragment>
         <div className="search-form-wrapper">
           <form className="search-form">
             <input value={this.state.search} className="search-input input-area" onChange={e => this.searchResult(e)} placeholder="検索"></input>
           </form>
         </div>
         {search_diaplay}
-      </div>
+        </React.Fragment>
     );
   }
 }

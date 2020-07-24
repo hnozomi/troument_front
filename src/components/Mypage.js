@@ -1,8 +1,8 @@
 import React from 'react';
 import Display from './Display';
 import User from './User';
-import AxiosBase from 'axios';
-// import Axios from 'axios';
+// import AxiosBase from 'axios';
+import Axios from 'axios';
 import { CircularProgress } from '@material-ui/core';
 
 import ReactCrop from 'react-image-crop';
@@ -13,9 +13,9 @@ import Fade from '@material-ui/core/Fade';
 
 import Avatar from 'react-avatar';
 
-const Axios = AxiosBase.create({
-  baseURL: "https://troument-api.net"
-});
+// const Axios = AxiosBase.create({
+//   baseURL: "https://troument-api.net"
+// });
 
 
 // const constUrl = "https://troument-api.net"
@@ -116,7 +116,6 @@ class Mypage extends React.Component {
     // goodlist get test start
     // ****************************************************************///
 
-    // const url = constUrl + '/api/mygoodinfo'
     await Axios.get('/api/mygoodinfo', { params: param })
       .then(response => {
         this.setState((state => {
@@ -132,8 +131,6 @@ class Mypage extends React.Component {
     // goodlist get test end
     // ****************************************************************///
 
-    // const url = constUrl + '/api/myinfo'
-    // await Axios.get('/api/myinfo', { params: param })
     await Axios.get('/api/userinfo', { params: param })
       .then(response => {
         this.setState((state => {
@@ -145,7 +142,6 @@ class Mypage extends React.Component {
         console.error(new Error(err))
       })
 
-    // const url = constUrl + '/api/mypage'
     await Axios.get('/api/mypage', { params: param })
       .then(response => {
         this.setState((state => {
@@ -254,7 +250,6 @@ class Mypage extends React.Component {
       formData.append('username', this.state.username)
     })
 
-    // const url = constUrl + '/api/files'
     Axios.post('/api/files',
       formData,
     ).then(response => {
@@ -284,7 +279,6 @@ class Mypage extends React.Component {
     const formData = new FormData();
     formData.append('Files', this.state.croppedImageUrl)
     formData.append('username', this.state.username)
-    console.log(formData, 'formData')
 
     Axios.post('/api/files',
       formData,
@@ -412,13 +406,12 @@ class Mypage extends React.Component {
   render() {
     const { crop, croppedImageUrl, src } = this.state;
     return (
-      <div className="profile-wrappers">
+      <React.Fragment>
         <div className="profile-wrapper">
           <div className="profile-header">
             <div className="profile">
               <label className="sample">
                 <Avatar size={"50px"} round={"10px"} alt="PROFILE" src={"https://troument.s3-ap-northeast-1.amazonaws.com/" + this.state.thumbnail } />
-                {/* <Avatar size={"50px"} round={"10px"} alt="PROFILE" src={"/image/" + this.state.thumbnail} /> */}
                 <input type="file" accept="image/*" onChange={this.onSelectFile} />
               </label>
               <p className="profile_name">{this.state.username}</p>
@@ -456,9 +449,6 @@ class Mypage extends React.Component {
                     onChange={this.onCropChange}
                   />
                 )}
-                {/* {croppedImageUrl && (
-                  <img alt="Crop" style={{ maxWidth: '100%' }} src={croppedImageUrl} />
-                )} */}
                 <button onClick={this.ClickPicClose}>キャンセル</button>
                 <button onClick={this.onSendPic}>決定</button>
               </div>
@@ -485,7 +475,7 @@ class Mypage extends React.Component {
             : <CircularProgress />
           }
         </div>
-      </div>
+        </React.Fragment>
     );
   }
 }

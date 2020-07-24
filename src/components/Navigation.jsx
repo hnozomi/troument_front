@@ -13,7 +13,7 @@ class Navigation extends React.Component {
 
   render() {
     return (
-      <div className="navigation-wrapper">
+        <React.Fragment>
         <nav className="navigation">
           <ul className="nav-items">
             <li className="nav-item" onClick={() => { this.props.ClickCloseForm() }}><Link to="/"><img src="/icon/home.svg" className="nav-item-icon nav-item-home" alt="" /><span className="nav-item-text">ホーム</span></Link></li>
@@ -22,8 +22,7 @@ class Navigation extends React.Component {
             <li className="nav-item"><Link to="/Mypage"><img className="nav-item-icon nav-item-person" alt="" src="/icon/person.svg" /><span className="nav-item-text">マイページ</span></Link></li>
           </ul>
         </nav>
-
-      </div>
+        </React.Fragment>
 
     );
   }

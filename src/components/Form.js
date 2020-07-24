@@ -15,9 +15,9 @@ class Form extends React.Component {
       clickbutton: false,
       form: true,
       input: {
-        title: this.props.title,
-        tag: this.props.tag,
-        worry: this.props.worry,
+        title: this.props.detail_todolist.title,
+        tag: this.props.detail_todolist.tag,
+        worry: this.props.detail_todolist.worry,
         resolve: this.props.resolve,
 
       },
@@ -28,8 +28,8 @@ class Form extends React.Component {
         resolve: '',
       },
       sending: false,
-      tags: this.props.tags || [],
-      savedData: this.props.worry || '',
+      tags: this.props.detail_todolist.tags || [],
+      savedData: this.props.detail_todolist.worry || '',
       suggestions,
     }
     this.handleChange = this.handleChange.bind(this)
@@ -143,11 +143,11 @@ class Form extends React.Component {
   // ****************************************************************///
 
 
-  saveEditor = async() => {
+  saveEditor = async () => {
     let savedData = await this.editorInstance.save()
-      this.setState({
-        savedData: savedData
-      })
+    this.setState({
+      savedData: savedData
+    })
   }
 
 
@@ -157,8 +157,6 @@ class Form extends React.Component {
 
 
   render() {
-    console.log(this.state, 'this.state')
-    console.log(this.props, 'this.props')
     let displayForm
     const { input, message } = this.state;
     let title = this.state.input.title
@@ -178,18 +176,21 @@ class Form extends React.Component {
             }
 
             <FormButton
-              ClickCloseForm={this.props.ClickCloseForm}
-              resolveAdd={this.props.resolveAdd}
-              displayForm={this.props.displayForm}
+              // ClickCloseForm={this.props.ClickCloseForm}
+              // resolveAdd={this.props.resolveAdd}
+              // displayForm={this.props.displayForm}
+              // sending={this.props.sending}
+              // resolveUpdate={this.props.resolveUpdate}
+              // login_user={this.props.login_user}
+              // detail_todolist={this.props.detail_todolist}
+              {...this.props}
+
               savedData={this.state.savedData}
+
               canSubmit={this.canSubmit}
-              sending={this.props.sending}
               ChangeTrueLoading={this.ChangeTrueLoading}
               ChangeFalseLoading={this.ChangeFalseLoading}
-              resolveUpdate={this.props.resolveUpdate}
-              detail_todolist={this.props.detail_todolist}
-              login_user={this.props.login_user}
-              />
+            />
           </div>
         </form>
       )
@@ -199,88 +200,94 @@ class Form extends React.Component {
           <section className="form-wrapper-sec" style={{ position: 'relative' }}>
             <label>タイトル</label>
             {message.title && (
-              <span style={{ color: 'red', fontSize: 8, position: 'absolute', right: 0, bottom: 0 }}>{message.title}</span>
-              )}
+              <span style={{ color: 'red', fontSize: 8, position: 'absolute', right: 0, top: 3}}>{message.title}</span>
+            )}
+            {this.props.detail_todolist.title
+              ? <input value={this.state.input.title}
+                name="title"
+                onChange={event => this.handleChange(event)}
+                className="input-area" placeholder="悩みのタイトルを入力してください ※50文字以内"></input>
+              : <input
+                name="title"
+                onChange={event => this.handleChange(event)}
+                className="input-area" placeholder="悩みのタイトルを入力してください ※50文字以内"></input>
+            }
           </section>
-          {this.props.title
-            ? <input value={this.state.input.title}
-            name="title"
-            onChange={event => this.handleChange(event)}
-            className="input-area" placeholder="悩みのタイトルを入力してください ※50文字以内"></input>
-            : <input
-            name="title"
-            onChange={event => this.handleChange(event)}
-            className="input-area" placeholder="悩みのタイトルを入力してください ※50文字以内"></input>
-          }
 
           <section className="form-wrapper-sec" style={{ position: 'relative' }}>
             <label>タグ</label>
             {message.tag && (
               <span style={{ color: 'red', fontSize: 8, position: 'absolute', right: 0, bottom: 0 }}>{message.tag}</span>
-              )}
-          </section>
+            )}
 
-          <ReactTags
+            <ReactTags
               tags={this.state.tags}
               suggestions={this.state.suggestions}
               handleDelete={this.handleDelete.bind(this)}
               handleAddition={this.handleAddition.bind(this)}
               handleBlur={this.handleBlur}
               placeholder={"タグを追加してください"}
-              />
+            />
+          </section>
 
           <section className="form-wrapper-sec" style={{ position: 'relative' }}>
             <label>悩み</label>
             {message.worry && (
               <span style={{ color: 'red', fontSize: 8, position: 'absolute', right: 0, bottom: 0 }}>{message.worry}</span>
-              )}
-          </section>
-          {this.props.title
+            )}
+          {this.props.detail_todolist.title
             ? <EditorJs onChange={this.saveEditor} instanceRef={instance => this.editorInstance = instance} data={this.props.data_worry} tools={EDITOR_JS_TOOLS} enableReInitialize={false} />
             
             : <EditorJs onChange={this.saveEditor} instanceRef={instance => this.editorInstance = instance} data={this.props.data_resolve} tools={EDITOR_JS_TOOLS} enableReInitialize={false} />
           }
+          </section>
 
-          {this.props.worryUpdate
+          {this.props.actionMethod.worryUpdate
             ? <FormButton
-            ClickCloseForm={this.props.ClickCloseForm}
-            addLists={this.props.addLists}
-            displayForm={this.props.displayForm}
-            title={title}
-            tags={this.state.tags}
-            savedData={this.state.savedData}
-            canSubmit={this.canSubmit}
-            sending={this.props.sending}
-            ChangeTrueLoading={this.ChangeTrueLoading}
-            ChangeFalseLoading={this.ChangeFalseLoading}
-            worryUpdate={this.props.worryUpdate}
-            detail_todolist={this.props.detail_todolist}
-            login_user={this.props.login_user}
+              // ClickCloseForm={this.props.ClickCloseForm}
+              // addLists={this.props.addLists}
+              // displayForm={this.props.displayForm}
+              // sending={this.props.sending}
+              // worryUpdate={this.props.worryUpdate}
+              // detail_todolist={this.props.detail_todolist}
+              // login_user={this.props.login_user}
+              {...this.props}
+
+
+              title={title}
+              tags={this.state.tags}
+              savedData={this.state.savedData}
+
+              canSubmit={this.canSubmit}
+              ChangeTrueLoading={this.ChangeTrueLoading}
+              ChangeFalseLoading={this.ChangeFalseLoading}
             />
             : <FormButton
-            ClickCloseForm={this.props.ClickCloseForm}
-            addLists={this.props.addLists}
-            displayForm={this.props.displayForm}
-            title={title}
-            tags={this.state.tags}
-            savedData={this.state.savedData}
-            canSubmit={this.canSubmit}
-            sending={this.props.sending}
-            ChangeTrueLoading={this.ChangeTrueLoading}
-            ChangeFalseLoading={this.ChangeFalseLoading}
-            detail_todolist={this.props.detail_todolist}
-            login_user={this.props.login_user}
+              // ClickCloseForm={this.props.ClickCloseForm}
+              // addLists={this.props.addLists}
+              // displayForm={this.props.displayForm}
+              // sending={this.props.sending}
+              // detail_todolist={this.props.detail_todolist}
+              // login_user={this.props.login_user}
+              {...this.props}
+              title={title}
+              tags={this.state.tags}
+              savedData={this.state.savedData}
+
+              canSubmit={this.canSubmit}
+              ChangeTrueLoading={this.ChangeTrueLoading}
+              ChangeFalseLoading={this.ChangeFalseLoading}
             />
-            
+
           }
         </form>
       )
     }
 
     return (
-      <div>
+      <React.Fragment>
         {displayForm}
-      </div>
+      </React.Fragment>
     );
   }
 }
