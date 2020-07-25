@@ -113,6 +113,7 @@ class Home extends React.Component {
         var time = this.createTime()
 
         this.ClickCloseForm()
+        console.log('AAA')
         const shortid = require('shortid');
         let worry_id = shortid.generate()
 
@@ -304,6 +305,7 @@ class Home extends React.Component {
     // ****************************************************************///
 
     ClickCloseForm() {
+        console.log('到着')
 
         this.setState(
             {
@@ -431,16 +433,18 @@ class Home extends React.Component {
             handleGoodCount: this.handleGoodCount,
             goodaddCheck: this.goodaddCheck,
             gooddeleteCheck: this.gooddeleteCheck,
-            handleDetail:this.handleDetail
+            handleDetail:this.handleDetail,
+            addLists: this.addLists
         }
 
         if (this.state.form) {
             homeDisplay = (
                 <Form
-                    ClickCloseForm={this.ClickCloseForm}
-                    addLists={this.addLists}
+                    // ClickCloseForm={this.ClickCloseForm}
+                    // addLists={this.addLists}
                     login_user={this.state.login_user}
-                    detail_todolist={this.state.detail_todolist}
+                    detail_todolist={''}
+                    actionMethod={actionMethod}
                 />
             )
         } else {
@@ -451,15 +455,6 @@ class Home extends React.Component {
                             detail_todolist={this.state.detail_todolist}
                             count={this.state.count}
                             login_user={this.state.login_user}
-                            // resolveAdd={this.resolveAdd}
-                            // worryUpdate={this.worryUpdate}
-                            // resolveUpdate={this.resolveUpdate}
-                            // TodolistsDelete={this.TodolistsDelete}
-                            // ClickCloseForm={this.ClickCloseForm}
-                            // createTime={this.createTime}
-                            // handleGoodCount={this.handleGoodCount}
-                            // goodaddCheck={this.goodaddCheck}
-                            // gooddeleteCheck={this.gooddeleteCheck}
                             actionMethod={actionMethod}
                         />
                 )
@@ -471,8 +466,6 @@ class Home extends React.Component {
                                 <Display
                                     todolists={this.state.todolists}
                                     userinfo={this.state.userinfo}
-                                    // handleDetail={this.handleDetail}
-                                    // createTime={this.createTime}
                                     actionMethod={actionMethod}
                                 />
 

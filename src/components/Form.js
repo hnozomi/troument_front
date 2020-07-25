@@ -11,14 +11,20 @@ import FormButton from './FormButton';
 class Form extends React.Component {
   constructor(props) {
     super(props);
+    const { title, tag, worry } = this.props.detail_todolist
+
     this.state = {
       clickbutton: false,
       form: true,
       input: {
-        title: this.props.detail_todolist.title,
-        tag: this.props.detail_todolist.tag,
-        worry: this.props.detail_todolist.worry,
+        title: title || '',
+        tag: tag || '',
+        worry: worry || '',
         resolve: this.props.resolve,
+        // title: this.props.detail_todolist.title || '',
+        // tag: this.props.detail_todolist.tag || '',
+        // worry: this.props.detail_todolist.worry || '',
+        // resolve: this.props.resolve,
 
       },
       message: {
@@ -28,7 +34,7 @@ class Form extends React.Component {
         resolve: '',
       },
       sending: false,
-      tags: this.props.detail_todolist.tags || [],
+      tags: this.props.detail_todolist.tag || [],
       savedData: this.props.detail_todolist.worry || '',
       suggestions,
     }
@@ -36,6 +42,7 @@ class Form extends React.Component {
     this.canSubmit = this.canSubmit.bind(this)
     this.ChangeFalseLoading = this.ChangeFalseLoading.bind(this)
     this.ChangeTrueLoading = this.ChangeTrueLoading.bind(this)
+    
   }
 
   // ****************************************************************///
@@ -159,8 +166,17 @@ class Form extends React.Component {
   render() {
     let displayForm
     const { input, message } = this.state;
+    const { worryUpdate } = this.props.actionMethod || '';
+
+    // const sendMethod = {
+    //   canSubmit: this.canSubmit,
+    //   ChangeTrueLoading: this.ChangeTrueLoading,
+    //   ChangeFalseLoading: this.ChangeFalseLoading,
+    // }
+
     let title = this.state.input.title
-    if (this.props.displayForm) {
+    // if (this.props.displayForm) {
+    if (this.props.detail_todolist.status) {
       displayForm = (
         <form className="form-wrapper">
           <section className="form-wrapper-sec" style={{ position: 'relative' }}>
@@ -176,16 +192,10 @@ class Form extends React.Component {
             }
 
             <FormButton
-              // ClickCloseForm={this.props.ClickCloseForm}
-              // resolveAdd={this.props.resolveAdd}
-              // displayForm={this.props.displayForm}
-              // sending={this.props.sending}
-              // resolveUpdate={this.props.resolveUpdate}
-              // login_user={this.props.login_user}
-              // detail_todolist={this.props.detail_todolist}
               {...this.props}
 
               savedData={this.state.savedData}
+              sendMethod={this.sendMethod}
 
               canSubmit={this.canSubmit}
               ChangeTrueLoading={this.ChangeTrueLoading}
@@ -242,37 +252,27 @@ class Form extends React.Component {
           }
           </section>
 
-          {this.props.actionMethod.worryUpdate
+          {worryUpdate
             ? <FormButton
-              // ClickCloseForm={this.props.ClickCloseForm}
-              // addLists={this.props.addLists}
-              // displayForm={this.props.displayForm}
-              // sending={this.props.sending}
-              // worryUpdate={this.props.worryUpdate}
-              // detail_todolist={this.props.detail_todolist}
-              // login_user={this.props.login_user}
               {...this.props}
 
 
               title={title}
               tags={this.state.tags}
               savedData={this.state.savedData}
+              sendMethod={this.sendMethod}
 
               canSubmit={this.canSubmit}
               ChangeTrueLoading={this.ChangeTrueLoading}
               ChangeFalseLoading={this.ChangeFalseLoading}
             />
             : <FormButton
-              // ClickCloseForm={this.props.ClickCloseForm}
-              // addLists={this.props.addLists}
-              // displayForm={this.props.displayForm}
-              // sending={this.props.sending}
-              // detail_todolist={this.props.detail_todolist}
-              // login_user={this.props.login_user}
               {...this.props}
+
               title={title}
               tags={this.state.tags}
               savedData={this.state.savedData}
+              sendMethod={this.sendMethod}
 
               canSubmit={this.canSubmit}
               ChangeTrueLoading={this.ChangeTrueLoading}

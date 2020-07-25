@@ -9,6 +9,7 @@ class FormButton extends React.Component {
       isOpen: false,
     }
     this.togglePopover = this.togglePopover.bind(this)
+
   }
 
   // ****************************************************************///
@@ -19,6 +20,8 @@ class FormButton extends React.Component {
     let title = this.props.title
     let tags = this.props.tags
     let savedData = this.props.savedData
+    const { addLists } = this.props.actionMethod || ''
+    console.log(addLists, 'BBBB')
     this.setState(
       {
         isOpen: !this.state.isOpen,
@@ -31,7 +34,7 @@ class FormButton extends React.Component {
       )
       : (this.props.worryUpdate)
         ? (setTimeout(this.props.actionMethod.worryUpdate, 1500, title, tags, savedData))
-        : (setTimeout(this.props.actionMethod.addLists, 1500, title, tags, savedData))
+        : (setTimeout(addLists, 1500, title, tags, savedData))
   };
 
   // ****************************************************************///
@@ -52,6 +55,8 @@ class FormButton extends React.Component {
 
   render() {
     let createButton;
+    const { ClickCloseForm, addLists } = this.props.actionMethod || ''
+    // const { ClickCloseForm } = this.props.sendMethod || ''
 
     
     if (this.props.state === false) {
@@ -64,7 +69,7 @@ class FormButton extends React.Component {
       } else {
         createButton = (
           <div className="button-wrapper">
-            <button onClick={this.props.actionMethod.ClickCloseForm} className="first-button button">キャンセル</button>
+            <button onClick={ClickCloseForm} className="first-button button">キャンセル</button>
             <Popover
               isOpen={this.state.isOpen}
               body={

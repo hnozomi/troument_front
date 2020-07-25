@@ -202,9 +202,7 @@
   line-height: 1.2;
 }
 
-.input-area::placeholder,
-.codex-editor__redactor::placeholder,
-.react-tags::placeholder {
+.input-area::placeholder{
   color: black;
   position: relative;
   left: 0.4em;
@@ -738,7 +736,7 @@
 .react-tags__display-tag {
   display: inline-block;
   box-sizing: border-box;
-  margin: 0 6px 6px 0;
+  /* margin: 0 6px 6px 0; */
   padding: 0 5px;
   border: 1px solid #93c9ff;
   border-radius: 2px;

@@ -212,27 +212,20 @@ class Detail extends React.Component {
     render() {
         let createDetail;
         let detailDisplay
-        const { title, tag, count, worry_id, worry, time, status, username } = this.props.detail_todolist
-        const { thumbnail } = this.props.detail_todolist.user
+        const {status} = this.props.detail_todolist
         let login_user = this.props.login_user
 
         if (this.state.form) {
             this.state.updateform
                 ? detailDisplay = (
                     <Form
-                        displayForm={status}
                         {...this.props}
-
                         data_worry={this.state.data_worry}
                         data_resolve={this.state.data_resolve}
-                        detail_todolist={this.props.detail_todolist}
-                        // login_user={login_user}
                     />
                 )
                 : detailDisplay = (
                     <Form
-                        displayForm={true}
-                        // login_user={login_user}
                         {...this.props}
                     />
                 )
@@ -302,25 +295,13 @@ class Detail extends React.Component {
             <React.Fragment>
                 {this.state.spnner
                     ? <Display
-
-                        // detail_todolist={this.props.detail_todolist}
-                        // login_user={login_user}
-                        // thumbnail={thumbnail}
-                        // handleGoodCount={this.props.actionMethod.handleGoodCount}
-                        // createTime={this.props.actionMethod.createTime}
-
                         {...this.props}
-
-
                         detail={true}
                         isGood={this.state.isGood}
                         updateform={this.state.updateform}
 
                         ClickDetailUpdate={this.ClickDetailUpdate}
-                        // listDelete={this.listDelete}
                         handleClickOpen={this.handleClickOpen}
-                        // ClickDetailOpen={this.ClickDetailOpen}
-                        // goodCheck={this.goodCheck}
 
                         _id={this.state._id}
                     />
