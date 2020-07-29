@@ -11,16 +11,18 @@ import FormButton from './FormButton';
 class Form extends React.Component {
   constructor(props) {
     super(props);
-    const { title, tag, worry } = this.props.detail_todolist
+    const { detail_todolist = ''} = this.props
+    console.log(detail_todolist, 'Form1')
+    const { title = '', tag = '', worry = '', status = ''  } = detail_todolist
 
     this.state = {
       clickbutton: false,
       form: true,
       input: {
-        title: title || '',
-        tag: tag || '',
-        worry: worry || '',
-        resolve: this.props.resolve,
+        title: title,
+        // tag: tag,
+        // worry: worry,
+        // resolve: this.props.resolve,
         // title: this.props.detail_todolist.title || '',
         // tag: this.props.detail_todolist.tag || '',
         // worry: this.props.detail_todolist.worry || '',
@@ -34,15 +36,17 @@ class Form extends React.Component {
         resolve: '',
       },
       sending: false,
-      tags: this.props.detail_todolist.tag || [],
-      savedData: this.props.detail_todolist.worry || '',
+      tags: tag || [],
+      // tags: this.props.detail_todolist.tag || [],
+      savedData: worry,
+      // savedData: this.props.detail_todolist.worry || '',
+      status: status,
       suggestions,
     }
     this.handleChange = this.handleChange.bind(this)
     this.canSubmit = this.canSubmit.bind(this)
     this.ChangeFalseLoading = this.ChangeFalseLoading.bind(this)
     this.ChangeTrueLoading = this.ChangeTrueLoading.bind(this)
-    
   }
 
   // ****************************************************************///
@@ -165,7 +169,8 @@ class Form extends React.Component {
 
   render() {
     let displayForm
-    const { input, message } = this.state;
+    console.log(this.state, 'this.state')
+    const { input, message, status} = this.state;
     const { worryUpdate } = this.props.actionMethod || '';
 
     // const sendMethod = {
@@ -174,9 +179,10 @@ class Form extends React.Component {
     //   ChangeFalseLoading: this.ChangeFalseLoading,
     // }
 
-    let title = this.state.input.title
+    // let title = this.state.input.title
     // if (this.props.displayForm) {
-    if (this.props.detail_todolist.status) {
+    // if (this.props.detail_todolist.status) {
+    if (status) {
       displayForm = (
         <form className="form-wrapper">
           <section className="form-wrapper-sec" style={{ position: 'relative' }}>
@@ -212,7 +218,8 @@ class Form extends React.Component {
             {message.title && (
               <span style={{ color: 'red', fontSize: 8, position: 'absolute', right: 0, top: 3}}>{message.title}</span>
             )}
-            {this.props.detail_todolist.title
+            {/* {this.props.detail_todolist.title */}
+            {input.title
               ? <input value={this.state.input.title}
                 name="title"
                 onChange={event => this.handleChange(event)}
@@ -245,7 +252,8 @@ class Form extends React.Component {
             {message.worry && (
               <span style={{ color: 'red', fontSize: 8, position: 'absolute', right: 0, bottom: 0 }}>{message.worry}</span>
             )}
-          {this.props.detail_todolist.title
+          {/* {this.props.detail_todolist.title */}
+          {input.title
             ? <EditorJs onChange={this.saveEditor} instanceRef={instance => this.editorInstance = instance} data={this.props.data_worry} tools={EDITOR_JS_TOOLS} enableReInitialize={false} />
             
             : <EditorJs onChange={this.saveEditor} instanceRef={instance => this.editorInstance = instance} data={this.props.data_resolve} tools={EDITOR_JS_TOOLS} enableReInitialize={false} />
@@ -257,7 +265,7 @@ class Form extends React.Component {
               {...this.props}
 
 
-              title={title}
+              title={input.title}
               tags={this.state.tags}
               savedData={this.state.savedData}
               sendMethod={this.sendMethod}
@@ -269,7 +277,7 @@ class Form extends React.Component {
             : <FormButton
               {...this.props}
 
-              title={title}
+              title={input.title}
               tags={this.state.tags}
               savedData={this.state.savedData}
               sendMethod={this.sendMethod}

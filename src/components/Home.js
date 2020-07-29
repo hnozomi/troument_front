@@ -305,7 +305,6 @@ class Home extends React.Component {
     // ****************************************************************///
 
     ClickCloseForm() {
-        console.log('到着')
 
         this.setState(
             {
@@ -438,12 +437,14 @@ class Home extends React.Component {
         }
 
         if (this.state.form) {
+            console.log(this.state, 'state')
             homeDisplay = (
                 <Form
                     // ClickCloseForm={this.ClickCloseForm}
                     // addLists={this.addLists}
                     login_user={this.state.login_user}
-                    detail_todolist={''}
+                    // detail_todolist={''}
+                    // detail_todolist={this.state.detail_todolist}
                     actionMethod={actionMethod}
                 />
             )
@@ -494,7 +495,8 @@ class Home extends React.Component {
                         </Route>
 
                         <Route exact path='/Search'
-                            render={props => <Search todolists={this.state.todolists} loginuser={this.state.username} createTime={this.createTime} handleDetail={this.handleDetail} />} />
+                            render={props => <Search todolists={this.state.todolists} loginuser={this.state.username} actionMethod={actionMethod}/>} />
+                            {/* render={props => <Search todolists={this.state.todolists} loginuser={this.state.username} createTime={this.createTime} handleDetail={this.handleDetail} />} /> */}
 
                         <Route exact path='/Notify'>
                             <Notify />
@@ -502,7 +504,8 @@ class Home extends React.Component {
 
 
                         <Route exact path='/Mypage'
-                            render={props => <Mypage getTodolists={this.getTodolists} getUserinfo={this.getUserinfo} userinfo={this.state.userinfo} todolists={this.state.todolists} loginuser={this.state.login_user} createTime={this.createTime} handleDetail={this.handleDetail} />} />
+                            render={props => <Mypage getTodolists={this.getTodolists} getUserinfo={this.getUserinfo} userinfo={this.state.userinfo} todolists={this.state.todolists} loginuser={this.state.login_user} actionMethod={actionMethod} />} />
+                            {/* render={props => <Mypage getTodolists={this.getTodolists} getUserinfo={this.getUserinfo} userinfo={this.state.userinfo} todolists={this.state.todolists} loginuser={this.state.login_user} createTime={this.createTime} handleDetail={this.handleDetail} />} /> */}
 
 
                     </Switch>

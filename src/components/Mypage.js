@@ -468,8 +468,9 @@ class Mypage extends React.Component {
           {this.state.resultlists
             ? <Display
               todolists={this.state.resultlists}
-              handleDetail={this.props.handleDetail}
-              createTime={this.props.createTime}
+              // handleDetail={this.props.handleDetail}
+              // createTime={this.props.createTime}
+              actionMethod={this.props.actionMethod}
               isMypage={this.state.isMypage}
             />
             : <CircularProgress />

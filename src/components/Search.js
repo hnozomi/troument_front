@@ -70,9 +70,10 @@ class Search extends React.Component {
       search_diaplay = (
         <div className="display-title-wrapper">
           <Display
+            // handleDetail={this.props.handleDetail}
+            // createTime={this.props.createTime}
+            actionMethod={this.props.actionMethod}
             todolists={this.state.search_lists}
-            handleDetail={this.props.handleDetail}
-            createTime={this.props.createTime}
             isSearch={this.state.isSearch}
           />
         </div>
