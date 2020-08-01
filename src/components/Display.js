@@ -85,7 +85,7 @@ class Display extends React.Component {
             </div>
           </div>
           {
-            this.props.updateform
+            this.props.isUpdateFormOpen
               ? (<div className="content-button-wrapper">
               </div>)
               : (
@@ -104,10 +104,10 @@ class Display extends React.Component {
                   </div>
                   {this.props.login_user === this.props.detail_todolist.username &&
                     <div className="content-edit-button">
-                      <button className="content-button" onClick={this.props.ClickDetailUpdate}>編集
+                      <button className="content-button" onClick={this.props.updateFormOpen}>編集
                         <EditIcon className="content-button-icon" style={{ fontSize: 18 }} />
                       </button>
-                      <button className="content-button" onClick={this.props.handleClickOpen}>
+                      <button className="content-button" onClick={this.props.deleteDialogOpen}>
                         <span className="content-button-text">削除</span>
                         <DeleteIcon className="content-button-icon" style={{ fontSize: 18 }} />
                       </button>

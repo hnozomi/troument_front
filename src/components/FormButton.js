@@ -16,37 +16,45 @@ class FormButton extends React.Component {
   // 詳細を取得
   // ****************************************************************///
 
-  togglePopover() {
+  async togglePopover() {
     let title = this.props.title
     let tags = this.props.tags
     let savedData = this.props.savedData
     const { addLists } = this.props.actionMethod || ''
-    console.log(addLists, 'BBBB')
     this.setState(
       {
         isOpen: !this.state.isOpen,
       }
-    );
-    this.props.displayForm
+      );
+      this.props.displayForm
       ? (this.props.resolveUpdate
-        ? setTimeout(this.props.actionMethod.resolveUpdate, 1500, savedData)
-        : setTimeout(this.props.actionMethod.resolveAdd, 1500, savedData)
-      )
-      : (this.props.worryUpdate)
-        ? (setTimeout(this.props.actionMethod.worryUpdate, 1500, title, tags, savedData))
-        : (setTimeout(addLists, 1500, title, tags, savedData))
+        ? this.props.actionMethod.resolveUpdate(savedData)
+        : this.props.actionMethod.resolveAdd(savedData)
+        )
+        : (this.props.worryUpdate)
+        ? this.props.actionMethod.worryUpdate(title, tags, savedData)
+        : await addLists(title, tags, savedData)
+        // : (setTimeout(addLists, 3500, title, tags, savedData))
+        // this.props.displayForm
+        //   ? (this.props.resolveUpdate
+        //     ? setTimeout(this.props.actionMethod.resolveUpdate, 1500, savedData)
+        //     : setTimeout(this.props.actionMethod.resolveAdd, 1500, savedData)
+        //   )
+        //   : (this.props.worryUpdate)
+        //     ? (setTimeout(this.props.actionMethod.worryUpdate, 1500, title, tags, savedData))
+        //     : (setTimeout(addLists, 1500, title, tags, savedData))
   };
 
   // ****************************************************************///
   // 投稿ボタンが押されたとき
   // ****************************************************************///
 
-  submit = (event) => {
+  submit = async (event) => {
     event.preventDefault();
 
-    this.props.ChangeTrueLoading()
+    this.props.startSending()
     this.togglePopover()
-    setTimeout(this.props.ChangeFalseLoading, 1800)
+    setTimeout(this.props.endSending, 1000)
   }
 
   // ****************************************************************///
@@ -59,7 +67,7 @@ class FormButton extends React.Component {
     // const { ClickCloseForm } = this.props.sendMethod || ''
 
     
-    if (this.props.state === false) {
+    if (this.props.isStatus === false) {
       if (this.props.login_user === this.props.detail_todolist.username) {
         createButton = (
           <div className="button-wrapper">

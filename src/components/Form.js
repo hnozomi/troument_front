@@ -12,7 +12,6 @@ class Form extends React.Component {
   constructor(props) {
     super(props);
     const { detail_todolist = ''} = this.props
-    console.log(detail_todolist, 'Form1')
     const { title = '', tag = '', worry = '', status = ''  } = detail_todolist
 
     this.state = {
@@ -35,7 +34,7 @@ class Form extends React.Component {
         worry: '',
         resolve: '',
       },
-      sending: false,
+      isSending: false,
       tags: tag || [],
       // tags: this.props.detail_todolist.tag || [],
       savedData: worry,
@@ -43,17 +42,18 @@ class Form extends React.Component {
       status: status,
       suggestions,
     }
-    this.handleChange = this.handleChange.bind(this)
+    this.changeInputText = this.changeInputText.bind(this)
     this.canSubmit = this.canSubmit.bind(this)
-    this.ChangeFalseLoading = this.ChangeFalseLoading.bind(this)
-    this.ChangeTrueLoading = this.ChangeTrueLoading.bind(this)
+    this.startSending = this.startSending.bind(this)
+    this.endSending = this.endSending.bind(this)
+    console.log(this.props)
   }
 
   // ****************************************************************///
   // Formに入力されてる文字を反映
   // ****************************************************************///
 
-  handleChange(event) {
+  changeInputText(event) {
     event.preventDefault();
     const key = event.target.name;
     const value = event.target.value;
@@ -77,9 +77,9 @@ class Form extends React.Component {
   canSubmit = () => {
     let validInput;
     let validMessage;
-    const { sending } = this.state;
+    const { input, isSending } = this.state;
 
-    if (this.state.input.title === undefined) {
+    if (this.state.input.title === '') {
       validInput = false
     } else {
       validInput = true
@@ -91,7 +91,7 @@ class Form extends React.Component {
       validMessage = true
     }
 
-    return validInput && validMessage && !sending
+    return validInput && validMessage && !isSending
   };
 
 
@@ -99,15 +99,15 @@ class Form extends React.Component {
   // 送信が完了するのを待つ
   // ****************************************************************///
 
-  ChangeTrueLoading = () => {
+  startSending = () => {
     this.setState({
-      sending: true
+      isSending: true
     })
   }
 
-  ChangeFalseLoading() {
+  endSending() {
     this.setState({
-      sending: false
+      isSending: false
     })
   }
 
@@ -169,14 +169,14 @@ class Form extends React.Component {
 
   render() {
     let displayForm
-    console.log(this.state, 'this.state')
-    const { input, message, status} = this.state;
+    const { input , message, status} = this.state;
     const { worryUpdate } = this.props.actionMethod || '';
+    console.log(this.state, 'FORM')
 
     // const sendMethod = {
     //   canSubmit: this.canSubmit,
-    //   ChangeTrueLoading: this.ChangeTrueLoading,
-    //   ChangeFalseLoading: this.ChangeFalseLoading,
+    //   startSending: this.startSending,
+    //   endSending: this.endSending,
     // }
 
     // let title = this.state.input.title
@@ -204,8 +204,8 @@ class Form extends React.Component {
               sendMethod={this.sendMethod}
 
               canSubmit={this.canSubmit}
-              ChangeTrueLoading={this.ChangeTrueLoading}
-              ChangeFalseLoading={this.ChangeFalseLoading}
+              startSending={this.startSending}
+              endSending={this.endSending}
             />
           </div>
         </form>
@@ -219,14 +219,17 @@ class Form extends React.Component {
               <span style={{ color: 'red', fontSize: 8, position: 'absolute', right: 0, top: 3}}>{message.title}</span>
             )}
             {/* {this.props.detail_todolist.title */}
-            {input.title
-              ? <input value={this.state.input.title}
+            {this.state.input.title
+              ? <input 
+                value={input.title}
+                type="text"
                 name="title"
-                onChange={event => this.handleChange(event)}
+                onChange={event => this.changeInputText(event)}
                 className="input-area" placeholder="悩みのタイトルを入力してください ※50文字以内"></input>
               : <input
                 name="title"
-                onChange={event => this.handleChange(event)}
+                value={input.title}
+                onChange={event => this.changeInputText(event)}
                 className="input-area" placeholder="悩みのタイトルを入力してください ※50文字以内"></input>
             }
           </section>
@@ -271,8 +274,8 @@ class Form extends React.Component {
               sendMethod={this.sendMethod}
 
               canSubmit={this.canSubmit}
-              ChangeTrueLoading={this.ChangeTrueLoading}
-              ChangeFalseLoading={this.ChangeFalseLoading}
+              startSending={this.startSending}
+              endSending={this.endSending}
             />
             : <FormButton
               {...this.props}
@@ -283,14 +286,15 @@ class Form extends React.Component {
               sendMethod={this.sendMethod}
 
               canSubmit={this.canSubmit}
-              ChangeTrueLoading={this.ChangeTrueLoading}
-              ChangeFalseLoading={this.ChangeFalseLoading}
+              startSending={this.startSending}
+              endSending={this.endSending}
             />
 
           }
         </form>
       )
     }
+    
 
     return (
       <React.Fragment>

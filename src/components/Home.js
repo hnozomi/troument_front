@@ -106,14 +106,13 @@ class Home extends React.Component {
     //  悩みを投稿  ホーム画面のボタンから投稿
     // ****************************************************************///
 
-    addLists(title, tags, savedData) {
+    async addLists(title, tags, savedData) {
         this.setState((state => {
             return { loading: false }
         }))
         var time = this.createTime()
 
         this.ClickCloseForm()
-        console.log('AAA')
         const shortid = require('shortid');
         let worry_id = shortid.generate()
 
@@ -129,6 +128,7 @@ class Home extends React.Component {
             worry_id: worry_id
         }
 
+    
         Axios.post('/api/worryadd', {
             list: list,
         })
@@ -428,6 +428,7 @@ class Home extends React.Component {
             resolveUpdate: this.resolveUpdate,
             TodolistsDelete: this.TodolistsDelete,
             ClickCloseForm: this.ClickCloseForm,
+            ClickDisplayForm: this.ClickDisplayForm,
             createTime: this.createTime,
             handleGoodCount: this.handleGoodCount,
             goodaddCheck: this.goodaddCheck,
@@ -437,7 +438,6 @@ class Home extends React.Component {
         }
 
         if (this.state.form) {
-            console.log(this.state, 'state')
             homeDisplay = (
                 <Form
                     // ClickCloseForm={this.ClickCloseForm}

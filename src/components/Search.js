@@ -5,47 +5,52 @@ class Search extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      search_lists: [],
+      searchLists: [],
       todolists: this.props.todolists,
-      search: '',
+      searchWord: '',
       isSearch: true
     }
-    this.searchResult = this.searchResult.bind(this)
+    this.filterSearchWord = this.filterSearchWord.bind(this)
   }
 
   // ****************************************************************///
   // 文字が入力されるたびにsearchDisplayを実行する 
   // ****************************************************************///
 
-  searchResult(e) {
+  filterSearchWord(e) {
     const value = e.target.value;
     this.setState({
-      search: value
+      searchWord: value
     }, () => {
-      this.searchDisplay(this.state.search)
+      this.searchDisplay(this.state.searchWord)
     })
   }
 
   // ****************************************************************///
-  // 入力された文字でフィルターをかける
+  // 検索結果を表示する
   // ****************************************************************///
 
 
-  searchDisplay(search) {
-    if (search !== '') {
+  searchDisplay(searchWord) {
+
+    if (searchWord !== '') {
       const filterList =
         this.props.todolists &&
-        this.props.todolists.filter((item) => {
+        this.props.todolists.filter((todolist) => {
+          console.log(todolist.tag)
           return (
-            (item.title && item.title.toString().indexOf(search) !== -1) ||
-            (item.worry && item.worry.toString().indexOf(search) !== -1)
+            (todolist.title && todolist.title.toString().toLowerCase().indexOf(searchWord.toLowerCase()) !== -1) ||
+            (todolist.tag[0].name && todolist.tag[0].name.toString().toLowerCase().indexOf(searchWord.toLowerCase()) !== -1) ||
+            (todolist.worry.blocks[0].data.text && todolist.worry.blocks[0].data.text.toString().toLowerCase().indexOf(searchWord.toLowerCase()) !== -1)
           )
         }
         )
+
       this.setState({
-        search_lists: filterList,
+        searchLists: filterList,
       }
       )
+
     }
   }
 
@@ -54,9 +59,10 @@ class Search extends React.Component {
   // ****************************************************************///
 
   render() {
-    let search_diaplay
-    if (this.state.search === '') {
-      search_diaplay = (
+    let searchResult;
+
+    if (this.state.searchWord === '') {
+      searchResult = (
         <div className="search-wrapper">
           <img className="search-image" src="/icon/Search_unDraw.svg" alt="Search" />
           <div className="search-text-wrapper">
@@ -67,13 +73,11 @@ class Search extends React.Component {
         </div>
       )
     } else {
-      search_diaplay = (
+      searchResult = (
         <div className="display-title-wrapper">
           <Display
-            // handleDetail={this.props.handleDetail}
-            // createTime={this.props.createTime}
             actionMethod={this.props.actionMethod}
-            todolists={this.state.search_lists}
+            todolists={this.state.searchLists}
             isSearch={this.state.isSearch}
           />
         </div>
@@ -84,12 +88,13 @@ class Search extends React.Component {
       <React.Fragment>
         <div className="search-form-wrapper">
           <form className="search-form">
-            <input value={this.state.search} className="search-input input-area" onChange={e => this.searchResult(e)} placeholder="検索"></input>
+            <input value={this.state.searchWord} className="search-input input-area" onChange={e => this.filterSearchWord(e)} placeholder="検索"></input>
           </form>
         </div>
-        {search_diaplay}
-        </React.Fragment>
+        {searchResult}
+      </React.Fragment>
     );
+
   }
 }
 

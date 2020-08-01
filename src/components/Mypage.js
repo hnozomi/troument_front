@@ -18,24 +18,22 @@ import Avatar from 'react-avatar';
 // });
 
 
-// const constUrl = "https://troument-api.net"
-
 class Mypage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      worrylists: [],
-      resolvelists: [],
-      usefullists: [],
-      resultlists: [],
+      // worrylists: [],
+      // resolvelists: [],
+      // usefullists: [],
+      resultLists: [],
       todolists: [],
-      worrycount: [],
-      resolvecount: [],
+      worryCount: [],
+      resolveCount: [],
       isActive: 0,
       open: false,
       files: [],
-      userinfo: this.props.userinfo,
-      loading: false,
+      userInfo: this.props.userinfo,
+      // loading: false,
       thumbnail: this.props.userinfo.thumbnail,
       isMypage: true,
       alltodolists: this.props.todolists,
@@ -66,33 +64,33 @@ class Mypage extends React.Component {
 
     await this.getMypageTodolists()
 
-    let worryCount =
+    const worryCount =
       this.state.todolists &&
-      this.state.todolists.filter((item) => {
-        return item.status === false
+      this.state.todolists.filter((todolist) => {
+        return todolist.status === false
       }
       )
 
-    let resolveCount =
+    const resolveCount =
       this.state.todolists &&
-      this.state.todolists.filter((item) => {
-        return item.status === true
+      this.state.todolists.filter((todolist) => {
+        return todolist.status === true
       }
       )
 
 
-    let filterList =
+    const filterList =
       this.state.todolists &&
-      this.state.todolists.filter((item) => {
-        return item.status === false
+      this.state.todolists.filter((todolist) => {
+        return todolist.status === false
       }
       )
 
     this.setState({
-      worrycount: worryCount,
-      resolvecount: resolveCount,
-      goodcount: this.state.goodlist.length || 0,
-      resultlists: filterList,
+      worryCount: worryCount,
+      resolveCount: resolveCount,
+      goodCount: this.state.goodlist.length || 0,
+      resultLists: filterList,
     })
 
   }
@@ -113,7 +111,7 @@ class Mypage extends React.Component {
 
 
     // ****************************************************************///
-    // goodlist get test start
+    // いいねしているデータを取得
     // ****************************************************************///
 
     await Axios.get('/api/mygoodinfo', { params: param })
@@ -128,7 +126,7 @@ class Mypage extends React.Component {
       })
 
     // ****************************************************************///
-    // goodlist get test end
+    // ログインユーザー情報からサムネイル取得
     // ****************************************************************///
 
     await Axios.get('/api/userinfo', { params: param })
@@ -142,10 +140,15 @@ class Mypage extends React.Component {
         console.error(new Error(err))
       })
 
+    // ****************************************************************///
+    // ユーザー情報を関連つけたデータを取得
+    // ****************************************************************///
+
     await Axios.get('/api/mypage', { params: param })
       .then(response => {
         this.setState((state => {
-          return { todolists: response.data.reverse(), loading: true }
+          return { todolists: response.data.reverse() }
+          // return { todolists: response.data.reverse(), loading: true }
         })
         )
       })
@@ -154,14 +157,7 @@ class Mypage extends React.Component {
       })
   }
 
-  // ****************************************************************///
-  // サムネイル更新後、情報再取得
-  // ****************************************************************///
 
-  handleReload() {
-    this.props.getTodolists()
-    this.getTodoListCount()
-  }
 
   // ****************************************************************///
   // 悩み中のリストを取得
@@ -171,12 +167,12 @@ class Mypage extends React.Component {
 
     const filterList =
       this.state.todolists &&
-      this.state.todolists.filter((item) => {
-        return item.status === false
+      this.state.todolists.filter((todolist) => {
+        return todolist.status === false
       }
       )
     this.setState({
-      resultlists: filterList,
+      resultLists: filterList,
       isActive: 0
     })
   }
@@ -188,12 +184,12 @@ class Mypage extends React.Component {
   resolveListDisplay() {
     const filterList =
       this.state.todolists &&
-      this.state.todolists.filter((item) => {
-        return item.status === true
+      this.state.todolists.filter((todolist) => {
+        return todolist.status === true
       }
       )
     this.setState({
-      resultlists: filterList,
+      resultLists: filterList,
       isActive: 1
     }
     )
@@ -206,13 +202,13 @@ class Mypage extends React.Component {
   usefulListDisplay() {
     if (this.state.goodlist) {
       this.setState({
-        resultlists: this.state.goodlist,
+        resultLists: this.state.goodlist,
         isActive: 2
       }
       )
     } else {
       this.setState({
-        resultlists: [],
+        resultLists: [],
         isActive: 2
       }
       )
@@ -223,53 +219,53 @@ class Mypage extends React.Component {
   // ドラッグ＆ドロップの表示
   // ****************************************************************///
 
-  handleOpen() {
-    this.setState({
-      open: true,
-    });
-  }
+  // handleOpen() {
+  //   this.setState({
+  //     open: true,
+  //   });
+  // }
 
   // ****************************************************************///
   // ドラッグ＆ドロップのキャンセル
   // ****************************************************************///
 
-  handleClose() {
-    this.setState({
-      open: false
-    });
-  }
+  // handleClose() {
+  //   this.setState({
+  //     open: false
+  //   });
+  // }
 
   // ****************************************************************///
   // ドロップされたファイルを取得  
   // ****************************************************************///
 
-  onDrop = (files) => {
-    const formData = new FormData();
-    files.forEach(file => {
-      formData.append('Files', file)
-      formData.append('username', this.state.username)
-    })
+  // onDrop = (files) => {
+  //   const formData = new FormData();
+  //   files.forEach(file => {
+  //     formData.append('Files', file)
+  //     formData.append('username', this.state.username)
+  //   })
 
-    Axios.post('/api/files',
-      formData,
-    ).then(response => {
-      this.setState((state => {
-        return { thumbnail: response.data.Files[0].filename }
-      }), () => this.handleReload()
-      )
-    }
-    )
-    this.setState({
-      open: false
-    })
+  //   Axios.post('/api/files',
+  //     formData,
+  //   ).then(response => {
+  //     this.setState((state => {
+  //       return { thumbnail: response.data.Files[0].filename }
+  //     }), () => this.handleReload()
+  //     )
+  //   }
+  //   )
+  //   this.setState({
+  //     open: false
+  //   })
 
-  }
+  // }
 
   // ****************************************************************///
   // トリミングされた画像を保存
   // ****************************************************************///
 
-  onSendPic = () => {
+  sendPicToS3 = () => {
     const login_user = User.LoggedUser()
     this.setState({
       username: login_user
@@ -291,7 +287,7 @@ class Mypage extends React.Component {
     )
 
     this.setState({
-      picOpen: false
+      isPicOpen: false
     })
   }
 
@@ -306,7 +302,7 @@ class Mypage extends React.Component {
         this.setState((state => {
           return {
             src: reader.result,
-            picOpen: true,
+            isPicOpen: true,
           }
         })
         )
@@ -375,26 +371,37 @@ class Mypage extends React.Component {
     });
   }
 
+
+  // ****************************************************************///
+  // サムネイル更新後、情報再取得
+  // ****************************************************************///
+
+  handleReload() {
+    this.props.getTodolists()
+    this.getTodoListCount()
+  }
+
+
   // ****************************************************************///
   // 悩みの詳細を表示
   // ****************************************************************///
 
-  ClickPicOpen = () => {
-    this.setState(
-      {
-        picOpen: true
-      }
-    )
-  };
+  // ClickPicOpen = () => {
+  //   this.setState(
+  //     {
+  //       isPicOpen: true
+  //     }
+  //   )
+  // };
 
   // ****************************************************************///
-  // 悩みの詳細を閉じる
+  // 画像のトリミングをキャンセル
   // ****************************************************************///
 
-  ClickPicClose = () => {
+  canSendPic = () => {
     this.setState(
       {
-        picOpen: false
+        isPicOpen: false
       }
     )
   };
@@ -404,23 +411,23 @@ class Mypage extends React.Component {
   // ****************************************************************///
 
   render() {
-    const { crop, croppedImageUrl, src } = this.state;
+    const { crop, src } = this.state;
     return (
       <React.Fragment>
         <div className="profile-wrapper">
           <div className="profile-header">
             <div className="profile">
               <label className="sample">
-                <Avatar size={"50px"} round={"10px"} alt="PROFILE" src={"https://troument.s3-ap-northeast-1.amazonaws.com/" + this.state.thumbnail } />
+                <Avatar size={"50px"} round={"10px"} alt="PROFILE" src={"https://troument.s3-ap-northeast-1.amazonaws.com/" + this.state.thumbnail} />
                 <input type="file" accept="image/*" onChange={this.onSelectFile} />
               </label>
               <p className="profile_name">{this.state.username}</p>
             </div>
             <div className="profile-count">
               <ul className="count-lists">
-                <li className="count-list"><p className="count-list-number">{this.state.worrycount.length}</p><p className="count-list-text">悩み中</p></li>
-                <li className="count-list"><p className="count-list-number">{this.state.resolvecount.length}</p><p className="count-list-text">解決済</p></li>
-                <li className="count-list"><p className="count-list-number">{this.state.goodcount}</p><p className="count-list-text">スコア</p></li>
+                <li className="count-list"><p className="count-list-number">{this.state.worryCount.length}</p><p className="count-list-text">悩み中</p></li>
+                <li className="count-list"><p className="count-list-number">{this.state.resolveCount.length}</p><p className="count-list-text">解決済</p></li>
+                <li className="count-list"><p className="count-list-number">{this.state.goodCount}</p><p className="count-list-text">スコア</p></li>
               </ul>
             </div>
           </div>
@@ -428,7 +435,7 @@ class Mypage extends React.Component {
           <Modal
             aria-labelledby="transition-modal-title"
             aria-describedby="transition-modal-description"
-            open={this.state.picOpen}
+            open={this.state.isPicOpen}
             onClose={this.CliskcPicClose}
             closeAfterTransition
             BackdropComponent={Backdrop}
@@ -436,7 +443,7 @@ class Mypage extends React.Component {
               timeout: 500,
             }}
           >
-            <Fade in={this.state.picOpen}>
+            <Fade in={this.state.isPicOpen}>
               <div className="modal">
                 <p>画像トリミング</p>
                 {src && (
@@ -449,8 +456,8 @@ class Mypage extends React.Component {
                     onChange={this.onCropChange}
                   />
                 )}
-                <button onClick={this.ClickPicClose}>キャンセル</button>
-                <button onClick={this.onSendPic}>決定</button>
+                <button onClick={this.canSendPic}>キャンセル</button>
+                <button onClick={this.sendPicToS3}>決定</button>
               </div>
             </Fade>
           </Modal>
@@ -465,9 +472,9 @@ class Mypage extends React.Component {
         </div>
         <div className="display-title-wrapper">
 
-          {this.state.resultlists
+          {this.state.resultLists
             ? <Display
-              todolists={this.state.resultlists}
+              todolists={this.state.resultLists}
               // handleDetail={this.props.handleDetail}
               // createTime={this.props.createTime}
               actionMethod={this.props.actionMethod}
@@ -476,7 +483,7 @@ class Mypage extends React.Component {
             : <CircularProgress />
           }
         </div>
-        </React.Fragment>
+      </React.Fragment>
     );
   }
 }

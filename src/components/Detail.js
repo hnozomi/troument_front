@@ -10,9 +10,9 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import Modal from '@material-ui/core/Modal';
-import Backdrop from '@material-ui/core/Backdrop';
-import Fade from '@material-ui/core/Fade';
+// import Modal from '@material-ui/core/Modal';
+// import Backdrop from '@material-ui/core/Backdrop';
+// import Fade from '@material-ui/core/Fade';
 import EditorJs from 'react-editor-js';
 import { CircularProgress } from '@material-ui/core';
 
@@ -33,18 +33,19 @@ class Detail extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            updateform: false,
+            isUpdateFormOpen: false,
             worry_id: this.props.detail_todolist.worry_id,
             _id: this.props.detail_todolist._id,
-            setOpen: false,
-            detailOpen: false,
-            spnner: false
+            isDeleteDialogOpen: false,
+            isDetailOpen: false,
+            isGoodCheck: false
         }
-        this.ClickDisplayForm = this.ClickDisplayForm.bind(this)
+        // this.ClickDisplayForm = this.ClickDisplayForm.bind(this)
         this.listDelete = this.listDelete.bind(this)
-        this.ClickDetailUpdate = this.ClickDetailUpdate.bind(this)
-        this.handleClickOpen = this.handleClickOpen.bind(this)
+        this.updateFormOpen = this.updateFormOpen.bind(this)
+        this.deleteDialogOpen = this.deleteDialogOpen.bind(this)
         this.goodCheck = this.goodCheck.bind(this)
+        console.log(this.props)
     }
 
     // ****************************************************************///
@@ -95,12 +96,12 @@ class Detail extends React.Component {
                 if (response.data.length === 0) {
                     this.setState({
                         isGood: false,
-                        spnner: true
+                        isGoodCheck: true
                     })
                 } else {
                     this.setState({
                         isGood: true,
-                        spnner: true
+                        isGoodCheck: true
                     })
                 }
             })
@@ -135,47 +136,47 @@ class Detail extends React.Component {
     // 詳細ページを閉じる
     // ****************************************************************///
 
-    ClickDisplayForm() {
-        this.setState(
-            {
-                form: true
-            }
-        )
-    }
+    // ClickDisplayForm() {
+    //     this.setState(
+    //         {
+    //             form: true
+    //         }
+    //     )
+    // }
 
     // ****************************************************************///
-    // 編集フォームを開く
+    // 投稿したものを編集するフォームを表示
     // ****************************************************************///
 
-    ClickDetailUpdate() {
+    updateFormOpen() {
         this.setState(
             {
                 form: true,
-                updateform: true
+                isUpdateFormOpen: true
             }
         )
     }
 
     // ****************************************************************///
-    // 削除時、ポップアップを表示する
+    // 投稿したものを削除するとき、モーダルを表示する
     // ****************************************************************///
 
-    handleClickOpen = () => {
+    deleteDialogOpen = () => {
         this.setState(
             {
-                setOpen: true
+                isDeleteDialogOpen: true
             }
         )
     };
 
     // ****************************************************************///
-    // 削除時、ポップアップを閉じる
+    // 削除時のモーダルを閉じる 
     // ****************************************************************///
 
-    handleClose = () => {
+    deleteDialogClose = () => {
         this.setState(
             {
-                setOpen: false
+                isDeleteDialogOpen: false
             }
         )
     };
@@ -184,25 +185,25 @@ class Detail extends React.Component {
     // 悩みの詳細を表示
     // ****************************************************************///
 
-    ClickDetailOpen = () => {
-        this.setState(
-            {
-                detailOpen: true
-            }
-        )
-    };
+    // ClickDetailOpen = () => {
+    //     this.setState(
+    //         {
+    //             isDetailOpen: true
+    //         }
+    //     )
+    // };
 
     // ****************************************************************///
     // 悩みの詳細を閉じる
     // ****************************************************************///
 
-    CliskcDetailClose = () => {
-        this.setState(
-            {
-                detailOpen: false
-            }
-        )
-    };
+    // CliskcDetailClose = () => {
+    //     this.setState(
+    //         {
+    //             isDetailOpen: false
+    //         }
+    //     )
+    // };
 
 
     // ****************************************************************///
@@ -212,11 +213,13 @@ class Detail extends React.Component {
     render() {
         let createDetail;
         let detailDisplay
-        const {status} = this.props.detail_todolist
+        const { status } = this.props.detail_todolist
+        console.log(this.state, 'DISPLAY')
         let login_user = this.props.login_user
 
         if (this.state.form) {
-            this.state.updateform
+            console.log(this.state, 'DISPLAY_1')
+            this.state.isUpdateFormOpen
                 ? detailDisplay = (
                     <Form
                         {...this.props}
@@ -230,8 +233,9 @@ class Detail extends React.Component {
                     />
                 )
         } else {
-            if (this.state.spnner) {
+            if (this.state.isGoodCheck) {
 
+                console.log(this.state, 'DISPLAY_2')
                 if (status) {
                     createDetail = (
                         <React.Fragment>
@@ -256,7 +260,7 @@ class Detail extends React.Component {
                                     </div>
                                 </section>
                             </div>
-                            </React.Fragment>
+                        </React.Fragment>
                     )
                 } else {
 
@@ -274,13 +278,13 @@ class Detail extends React.Component {
                                     </EditorJs>
                                 </div>
                                 <FormButton
-                                    ClickDisplayForm={this.ClickDisplayForm}
-                                    state={status}
+                                    ClickDisplayForm={this.props.actionMethod.ClickDisplayForm}
+                                    isStatus={status}
                                     detail_todolist={this.props.detail_todolist}
                                     login_user={login_user}
                                 />
                             </div>
-                            </React.Fragment>
+                        </React.Fragment>
                     )
                 }
             } else {
@@ -293,15 +297,15 @@ class Detail extends React.Component {
 
         return (
             <React.Fragment>
-                {this.state.spnner
+                {this.state.isGoodCheck
                     ? <Display
                         {...this.props}
                         detail={true}
                         isGood={this.state.isGood}
-                        updateform={this.state.updateform}
+                        isUpdateFormOpen={this.state.isUpdateFormOpen}
 
-                        ClickDetailUpdate={this.ClickDetailUpdate}
-                        handleClickOpen={this.handleClickOpen}
+                        updateFormOpen={this.updateFormOpen}
+                        deleteDialogOpen={this.deleteDialogOpen}
 
                         _id={this.state._id}
                     />
@@ -312,8 +316,8 @@ class Detail extends React.Component {
                 {createDetail}
 
                 <Dialog
-                    open={this.state.setOpen}
-                    onClose={this.handleClose}
+                    open={this.state.isDeleteDialogOpen}
+                    onClose={this.deleteDialogClose}
                     aria-labelledby="alert-dialog-title"
                     aria-describedby="alert-dialog-description"
                 >
@@ -324,7 +328,7 @@ class Detail extends React.Component {
                         </DialogContentText>
                     </DialogContent>
                     <DialogActions>
-                        <Button onClick={this.handleClose} color="primary">
+                        <Button onClick={this.deleteDialogClose} color="primary">
                             キャンセル
                         </Button>
                         <Button onClick={this.listDelete} color="primary" autoFocus>
@@ -333,10 +337,10 @@ class Detail extends React.Component {
                     </DialogActions>
                 </Dialog>
 
-                <Modal
+                {/* <Modal
                     aria-labelledby="transition-modal-title"
                     aria-describedby="transition-modal-description"
-                    open={this.state.detailOpen}
+                    open={this.state.isDetailOpen}
                     onClose={this.CliskcDetailClose}
                     closeAfterTransition
                     BackdropComponent={Backdrop}
@@ -344,14 +348,14 @@ class Detail extends React.Component {
                         timeout: 500,
                     }}
                 >
-                    <Fade in={this.state.detailOpen}>
+                    <Fade in={this.state.isDetailOpen}>
                         <div className="modal">
                             <h2 className="modal-header" id="transition-modal-title">悩みの詳細</h2>
                             <EditorJs data={this.state.data_worry} tools={EDITOR_JS_TOOLS} enableReInitialize={true} />
                         </div>
                     </Fade>
-                </Modal>
-                </React.Fragment>
+                </Modal> */}
+            </React.Fragment>
         );
     }
 }
