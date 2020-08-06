@@ -37,15 +37,16 @@ class Detail extends React.Component {
             worry_id: this.props.detail_todolist.worry_id,
             _id: this.props.detail_todolist._id,
             isDeleteDialogOpen: false,
-            isDetailOpen: false,
-            isGoodCheck: false
+            // isDetailOpen: false,
+            isGoodCheck: false,
+            isOpenDetail: this.props.isOpenDetail,
+            isStatus: this.props.detail_todolist.status,
         }
-        // this.ClickDisplayForm = this.ClickDisplayForm.bind(this)
+        this.resolveFormOpen = this.resolveFormOpen.bind(this)
         this.listDelete = this.listDelete.bind(this)
         this.updateFormOpen = this.updateFormOpen.bind(this)
         this.deleteDialogOpen = this.deleteDialogOpen.bind(this)
         this.goodCheck = this.goodCheck.bind(this)
-        console.log(this.props)
     }
 
     // ****************************************************************///
@@ -133,16 +134,17 @@ class Detail extends React.Component {
 
 
     // ****************************************************************///
-    // 詳細ページを閉じる
+    // 詳細ページを表示する
     // ****************************************************************///
 
-    // ClickDisplayForm() {
-    //     this.setState(
-    //         {
-    //             form: true
-    //         }
-    //     )
-    // }
+    resolveFormOpen() {
+        this.setState(
+            {
+                isOpenDetail: false,
+                isResolveFormOpen: true
+            }
+        )
+    }
 
     // ****************************************************************///
     // 投稿したものを編集するフォームを表示
@@ -151,8 +153,20 @@ class Detail extends React.Component {
     updateFormOpen() {
         this.setState(
             {
-                form: true,
+                isResolveFormOpen: true,
                 isUpdateFormOpen: true
+            }
+        )
+    }
+    // ****************************************************************///
+    // 投稿したものを編集するフォームを閉じる
+    // ****************************************************************///
+
+    updateFormClose() {
+        this.setState(
+            {
+                // form: true,
+                isUpdateFormOpen: false
             }
         )
     }
@@ -213,30 +227,46 @@ class Detail extends React.Component {
     render() {
         let createDetail;
         let detailDisplay
-        const { status } = this.props.detail_todolist
-        console.log(this.state, 'DISPLAY')
+        // const { status } = this.props.detail_todolist
         let login_user = this.props.login_user
 
-        if (this.state.form) {
-            console.log(this.state, 'DISPLAY_1')
+        // 詳細の画面かたformがtrueになった時
+        if (this.state.isResolveFormOpen) {
+            // 詳細の画面かたformがtrueになったとき、投稿を更新する画面かどうか
             this.state.isUpdateFormOpen
-                ? detailDisplay = (
+            ? detailDisplay = (
                     <Form
                         {...this.props}
+                        // displayForm={status}
+                        isResolveFormOpen={this.state.isResolveFormOpen}
+                        isUpdateFormOpen={this.state.isUpdateFormOpen}
                         data_worry={this.state.data_worry}
                         data_resolve={this.state.data_resolve}
+                        isStatus={this.state.isStatus}
                     />
                 )
                 : detailDisplay = (
                     <Form
                         {...this.props}
+                        isResolveFormOpen={this.state.isResolveFormOpen}
+                        // isUpdateFormOpen={this.state.isUpdateFormOpen}
+                        isStatus={this.state.isStatus}
+                        // isStatus={status}
+                        isOpenDetail={this.state.isOpenDetail}
+                    // displayForm={true}
                     />
                 )
         } else {
+            // 詳細の画面かたformがfalseの時、goodしてるかどうかを判定できたら表示
             if (this.state.isGoodCheck) {
 
-                console.log(this.state, 'DISPLAY_2')
-                if (status) {
+                // 詳細の画面かたformがfalseの時、詳細の画面を表示する
+                // その時STATUSの状態で画面を表示
+                // if (status) {
+                if (this.state.isStatus) {
+                    console.log(this.state.data_worry, 'this.state.data_worry')
+                    console.log(this.state.data_resolve, 'this.state.data_worry')
+                    console.log(this.props.detail_todolist, 'this.props.detail_todolist')
                     createDetail = (
                         <React.Fragment>
 
@@ -263,7 +293,8 @@ class Detail extends React.Component {
                         </React.Fragment>
                     )
                 } else {
-
+                    console.log(this.state.data_worry, 'this.state.data_worry')
+                    console.log(this.props.detail_todolist, 'this.props.detail_todolist')
                     createDetail = (
                         <React.Fragment>
                             <div className="detail-wrapper">
@@ -278,10 +309,15 @@ class Detail extends React.Component {
                                     </EditorJs>
                                 </div>
                                 <FormButton
-                                    ClickDisplayForm={this.props.actionMethod.ClickDisplayForm}
-                                    isStatus={status}
+                                    resolveFormOpen={this.resolveFormOpen}
+                                    // addLists={this.props.actionMethod.addLists}
+                                    // worryUpdate={this.props.actionMethod.worryUpdate}
+                                    actionMethod={this.props.actionMethod}
+                                    isStatus={this.state.isStatus}
                                     detail_todolist={this.props.detail_todolist}
                                     login_user={login_user}
+                                    isUpdateFormOpen={this.state.isUpdateFormOpen}
+                                    isOpenDetail={this.state.isOpenDetail}
                                 />
                             </div>
                         </React.Fragment>
@@ -296,11 +332,24 @@ class Detail extends React.Component {
 
 
         return (
+
             <React.Fragment>
-                {this.state.isGoodCheck
+                <Display
+                    {...this.props}
+                    isOpenDetail={this.props.isOpenDetail}
+                    // isOpenDetail={true}
+                    isGood={this.state.isGood}
+                    isUpdateFormOpen={this.state.isUpdateFormOpen}
+
+                    updateFormOpen={this.updateFormOpen}
+                    deleteDialogOpen={this.deleteDialogOpen}
+
+                    _id={this.state._id}
+                />
+                {/* {this.state.isGoodCheck
                     ? <Display
                         {...this.props}
-                        detail={true}
+                        isOpenDetail={true}
                         isGood={this.state.isGood}
                         isUpdateFormOpen={this.state.isUpdateFormOpen}
 
@@ -309,8 +358,8 @@ class Detail extends React.Component {
 
                         _id={this.state._id}
                     />
-                    : <CircularProgress />
-                }
+                  : <CircularProgress />
+                } */}
 
                 {detailDisplay}
                 {createDetail}
@@ -321,7 +370,7 @@ class Detail extends React.Component {
                     aria-labelledby="alert-dialog-title"
                     aria-describedby="alert-dialog-description"
                 >
-                    <DialogTitle id="alert-dialog-title">{status ? "解決したものを削除しようとしています" : "悩み中のものを削除しようとしています"}</DialogTitle>
+                    <DialogTitle id="alert-dialog-title">{this.state.isStatus ? "解決したものを削除しようとしています" : "悩み中のものを削除しようとしています"}</DialogTitle>
                     <DialogContent>
                         <DialogContentText id="alert-dialog-description">
                             削除してもよろしいですか？
@@ -337,24 +386,7 @@ class Detail extends React.Component {
                     </DialogActions>
                 </Dialog>
 
-                {/* <Modal
-                    aria-labelledby="transition-modal-title"
-                    aria-describedby="transition-modal-description"
-                    open={this.state.isDetailOpen}
-                    onClose={this.CliskcDetailClose}
-                    closeAfterTransition
-                    BackdropComponent={Backdrop}
-                    BackdropProps={{
-                        timeout: 500,
-                    }}
-                >
-                    <Fade in={this.state.isDetailOpen}>
-                        <div className="modal">
-                            <h2 className="modal-header" id="transition-modal-title">悩みの詳細</h2>
-                            <EditorJs data={this.state.data_worry} tools={EDITOR_JS_TOOLS} enableReInitialize={true} />
-                        </div>
-                    </Fade>
-                </Modal> */}
+
             </React.Fragment>
         );
     }

@@ -11,22 +11,14 @@ import FormButton from './FormButton';
 class Form extends React.Component {
   constructor(props) {
     super(props);
-    const { detail_todolist = ''} = this.props
-    const { title = '', tag = '', worry = '', status = ''  } = detail_todolist
+    const { detail_todolist = '' } = this.props
+    const { title = '', tag = '', worry = '', status = '' } = detail_todolist
 
     this.state = {
       clickbutton: false,
       form: true,
       input: {
         title: title,
-        // tag: tag,
-        // worry: worry,
-        // resolve: this.props.resolve,
-        // title: this.props.detail_todolist.title || '',
-        // tag: this.props.detail_todolist.tag || '',
-        // worry: this.props.detail_todolist.worry || '',
-        // resolve: this.props.resolve,
-
       },
       message: {
         title: '',
@@ -36,9 +28,7 @@ class Form extends React.Component {
       },
       isSending: false,
       tags: tag || [],
-      // tags: this.props.detail_todolist.tag || [],
       savedData: worry,
-      // savedData: this.props.detail_todolist.worry || '',
       status: status,
       suggestions,
     }
@@ -46,7 +36,7 @@ class Form extends React.Component {
     this.canSubmit = this.canSubmit.bind(this)
     this.startSending = this.startSending.bind(this)
     this.endSending = this.endSending.bind(this)
-    console.log(this.props)
+    console.log(this.props, 'FORMのPROPS')
   }
 
   // ****************************************************************///
@@ -75,6 +65,7 @@ class Form extends React.Component {
   // ****************************************************************///
 
   canSubmit = () => {
+    console.log(this.state, 'DDDD')
     let validInput;
     let validMessage;
     const { input, isSending } = this.state;
@@ -169,27 +160,21 @@ class Form extends React.Component {
 
   render() {
     let displayForm
-    const { input , message, status} = this.state;
+    let test = true
+    const { input, message, status } = this.state;
     const { worryUpdate } = this.props.actionMethod || '';
-    console.log(this.state, 'FORM')
+    
 
-    // const sendMethod = {
-    //   canSubmit: this.canSubmit,
-    //   startSending: this.startSending,
-    //   endSending: this.endSending,
-    // }
-
-    // let title = this.state.input.title
+    // Formを表示するとき、Detailコンポーネントからstatusがfalse or true
     // if (this.props.displayForm) {
-    // if (this.props.detail_todolist.status) {
-    if (status) {
+    if (this.props.isResolveFormOpen) {
       displayForm = (
         <form className="form-wrapper">
           <section className="form-wrapper-sec" style={{ position: 'relative' }}>
             <label>どうやって解決しましたか</label>
             {message.resolve && (
               <span style={{ color: 'red', fontSize: 8, position: 'absolute', right: 0, bottom: 0 }}>{message.resolve}</span>
-            )}
+              )}
           </section>
           <div className="resolvetest">
             {this.props.data_resolve
@@ -199,28 +184,29 @@ class Form extends React.Component {
 
             <FormButton
               {...this.props}
-
+              
               savedData={this.state.savedData}
               sendMethod={this.sendMethod}
-
+              
               canSubmit={this.canSubmit}
               startSending={this.startSending}
               endSending={this.endSending}
-            />
+              />
           </div>
         </form>
       )
     } else {
+      // Formを表示するとき、Detailコンポーネントからstatusがfalse or statusが空白
       displayForm = (
         <form className="form-wrapper">
+
           <section className="form-wrapper-sec" style={{ position: 'relative' }}>
             <label>タイトル</label>
             {message.title && (
-              <span style={{ color: 'red', fontSize: 8, position: 'absolute', right: 0, top: 3}}>{message.title}</span>
+              <span style={{ color: 'red', fontSize: 8, position: 'absolute', right: 0, top: 3 }}>{message.title}</span>
             )}
-            {/* {this.props.detail_todolist.title */}
             {this.state.input.title
-              ? <input 
+              ? <input
                 value={input.title}
                 type="text"
                 name="title"
@@ -233,6 +219,8 @@ class Form extends React.Component {
                 className="input-area" placeholder="悩みのタイトルを入力してください ※50文字以内"></input>
             }
           </section>
+
+          {/* フォームのタグ部分 */}
 
           <section className="form-wrapper-sec" style={{ position: 'relative' }}>
             <label>タグ</label>
@@ -250,18 +238,21 @@ class Form extends React.Component {
             />
           </section>
 
+          {/* フォームの悩み入力部分 */}
+
           <section className="form-wrapper-sec" style={{ position: 'relative' }}>
             <label>悩み</label>
             {message.worry && (
               <span style={{ color: 'red', fontSize: 8, position: 'absolute', right: 0, bottom: 0 }}>{message.worry}</span>
             )}
-          {/* {this.props.detail_todolist.title */}
-          {input.title
-            ? <EditorJs onChange={this.saveEditor} instanceRef={instance => this.editorInstance = instance} data={this.props.data_worry} tools={EDITOR_JS_TOOLS} enableReInitialize={false} />
-            
-            : <EditorJs onChange={this.saveEditor} instanceRef={instance => this.editorInstance = instance} data={this.props.data_resolve} tools={EDITOR_JS_TOOLS} enableReInitialize={false} />
-          }
+            {input.title
+              ? <EditorJs onChange={this.saveEditor} instanceRef={instance => this.editorInstance = instance} data={this.props.data_worry} tools={EDITOR_JS_TOOLS} enableReInitialize={false} />
+
+              : <EditorJs onChange={this.saveEditor} instanceRef={instance => this.editorInstance = instance} data={this.props.data_resolve} tools={EDITOR_JS_TOOLS} enableReInitialize={false} />
+            }
           </section>
+
+
 
           {worryUpdate
             ? <FormButton
@@ -294,7 +285,7 @@ class Form extends React.Component {
         </form>
       )
     }
-    
+
 
     return (
       <React.Fragment>

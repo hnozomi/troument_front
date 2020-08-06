@@ -22,7 +22,7 @@ class Display extends React.Component {
       isMypage: this.props.isMypage,
       isSearch: this.props.isSearch
     }
-    this.handleClickDisplay = this.handleClickDisplay.bind(this)
+    this.callDisplayDetail = this.callDisplayDetail.bind(this)
     this.handleGoodChange = this.handleGoodChange.bind(this)
   }
 
@@ -31,11 +31,11 @@ class Display extends React.Component {
   // Detailを表示する
   // ****************************************************************///
 
-  handleClickDisplay(worry_id) {
+  callDisplayDetail(worry_id) {
     this.props.history.push({
       pathname: '/'
     })
-    this.props.actionMethod.handleDetail(worry_id)
+    this.props.actionMethod.displayDetail(worry_id)
   }
 
 
@@ -58,7 +58,7 @@ class Display extends React.Component {
 
   render() {
     let createDetail;
-    if (this.props.detail) {
+    if (this.props.isOpenDetail) {
       createDetail = (
         <div className={"contents-wrappers " + (this.state.isMypage ? "mypage-diplay-wrapper" : '')}>
           <div className="contents-wrapper">
@@ -126,7 +126,7 @@ class Display extends React.Component {
           {
             this.props.todolists.map((todolist, i) => {
               return <div key={i} className={"contents-wrappers " + (this.state.isSearch ? 'search-contents-wrappers' : this.state.isMypage ? 'mypage-contents-wrappers' : '')}>
-                <div onClick={() => { this.handleClickDisplay(todolist.worry_id) }} className="contents-wrapper">
+                <div onClick={() => { this.callDisplayDetail(todolist.worry_id) }} className="contents-wrapper">
 
                   <div className="content-icon-wrap">
                     <Avatar size={"50px"} round={"10px"} src={"https://troument.s3-ap-northeast-1.amazonaws.com/" + todolist.user.thumbnail} alt="" />
