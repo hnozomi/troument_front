@@ -7,6 +7,7 @@ class FormButton extends React.Component {
     super(props);
     this.state = {
       isOpen: false,
+      detail_todolist: this.props.detail_todolist || ''
     }
     this.togglePopover = this.togglePopover.bind(this)
     console.log(this.props, 'this.props.displayForm')
@@ -35,15 +36,14 @@ class FormButton extends React.Component {
       // console.log(this.props.isUpdateFormOpen, 'this.props.isUpdateFormOpen')
       // console.log(this.props.isStatus, 'this.props.isStatus')
       // console.log(this.props.isResolveFormOpen, 'this.props.isResolveFormOpen')
-      console.log(this.props, 'FORMBUTTON')
       this.props.isUpdateFormOpen
-      ?(this.props.isStatus
+      ?(this.state.detail_todolist.status
         ?  await resolveUpdate(savedData)
-        :  await this.props.actionMethod.worryUpdate(title, tags, savedData)
+        :  await worryUpdate(title, tags, savedData)
         // :  await worryUpdate(title, tags, savedData)
         )
 
-      : (this.props.isResolveFormOpen
+      : (this.props.isOpenDetail
          ? await resolveAdd(savedData)
          : await addLists(title, tags, savedData)
          )
@@ -93,15 +93,18 @@ class FormButton extends React.Component {
     
 
     // isStatusにすると解決前はfalseのためボタンがおかしくなる
-    if (this.props.isOpenDetail) {
+    if (this.props.isOpenDetail && !this.props.isFormOpen) {
+      console.log(this.props.test, 'TESTTEST1111')
       if (this.props.login_user === this.props.detail_todolist.username) {
+        console.log(this.props.test, 'TESTTEST2222')
         createButton = (
           <div className="button-wrapper">
-            <button onClick={this.props.resolveFormOpen} className="button">解決投稿</button>
+            <button onClick={this.props.actionMethod.hiddenDetail} className="button">解決投稿</button>
             {/* <button onClick={this.props.resolveFormOpen} className="button">解決投稿</button> */}
           </div>
         );}
       } else {
+        console.log(this.props.test, 'TESTTEST3333')
         createButton = (
           <div className="button-wrapper">
             <button onClick={ClickCloseForm} className="first-button button">キャンセル</button>
@@ -123,7 +126,7 @@ class FormButton extends React.Component {
             >
               {
                 // this.props.displayForm
-                this.props.isResolveFormOpen
+                this.props.isStatus
                   ? <button onClick={this.submit} type="submit" className="button">投稿</button>
                   : <button onClick={this.submit} type="submit" className="button">投稿</button>
                   // : <button disabled={!this.props.canSubmit} onClick={this.submit} type="submit" className="button">投稿</button>

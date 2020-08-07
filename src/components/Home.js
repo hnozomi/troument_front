@@ -28,6 +28,7 @@ class Home extends React.Component {
         super(props);
         this.state = {
             isFormOpen: false,
+            isResolveFormOpen: false,
             todolists: [] || this.props.todolists,
             userinfo: [] || this.props.userinfo,
             isOpenDetail: false,
@@ -47,6 +48,9 @@ class Home extends React.Component {
         this.handleGoodCount = this.handleGoodCount.bind(this)
         this.goodCheck = this.goodCheck.bind(this)
         this.getTodolists = this.getTodolists.bind(this)
+        this.updateFormOpen = this.updateFormOpen.bind(this)
+        this.hiddenDetail = this.hiddenDetail.bind(this)
+        console.log(this.state, 'CONSTRUCT')
     }
 
 
@@ -99,7 +103,7 @@ class Home extends React.Component {
             .catch(err => {
                 console.error(new Error(err))
             })
-            var time = this.createTime()
+        var time = this.createTime()
     }
 
     // ****************************************************************///
@@ -107,6 +111,7 @@ class Home extends React.Component {
     // ****************************************************************///
 
     async addLists(title, tags, savedData) {
+        console.log('addLIST実行')
         this.setState((state => {
             return { loading: false }
         }))
@@ -128,7 +133,7 @@ class Home extends React.Component {
             worry_id: worry_id
         }
 
-    
+
         Axios.post('/api/worryadd', {
             list: list,
         })
@@ -153,6 +158,7 @@ class Home extends React.Component {
     // ****************************************************************///
 
     async resolveAdd(savedData) {
+        console.log('resolveADD実行')
         var time = this.createTime()
 
         await this.TodolistsDelete(this.state.detail_todolist.worry_id)
@@ -190,9 +196,9 @@ class Home extends React.Component {
 
     async TodolistsDelete(worry_id) {
         const new_todolists =
-        this.state.todolists.filter((todolist) => {
-            return todolist.worry_id !== worry_id
-        })
+            this.state.todolists.filter((todolist) => {
+                return todolist.worry_id !== worry_id
+            })
         this.setState(
             {
                 todolists: new_todolists
@@ -208,7 +214,7 @@ class Home extends React.Component {
     async worryUpdate(title, tag, savedData) {
         console.log('worryupdate実行')
         var time = this.createTime()
-        this.TodolistsDelete(this.state.detail_todolist.worry_id)
+        await this.TodolistsDelete(this.state.detail_todolist.worry_id)
 
         var detail_todolist = this.state.detail_todolist
 
@@ -233,7 +239,7 @@ class Home extends React.Component {
             })
 
 
-            this.ClickCloseForm()
+        this.ClickCloseForm()
 
     }
 
@@ -244,7 +250,7 @@ class Home extends React.Component {
     async resolveUpdate(savedData) {
         console.log('resolvupdate実行')
         var time = this.createTime()
-        this.TodolistsDelete(this.state.detail_todolist.worry_id)
+        await this.TodolistsDelete(this.state.detail_todolist.worry_id)
 
 
         var detail_todolist = this.state.detail_todolist
@@ -268,7 +274,7 @@ class Home extends React.Component {
                 console.error(new Error(err))
             })
 
-            this.ClickCloseForm()
+        this.ClickCloseForm()
     }
 
 
@@ -290,6 +296,19 @@ class Home extends React.Component {
     }
 
     // ****************************************************************///
+    // 詳細ページを閉じる
+    // ****************************************************************///
+
+    hiddenDetail() {
+        this.setState({
+            // isOpenDetail: false,
+            isResolveFormOpen: true,
+            isFormOpen: true
+        })
+    }
+
+
+    // ****************************************************************///
     // 悩み・解決を投稿するFormを表示
     // ****************************************************************///
 
@@ -309,9 +328,36 @@ class Home extends React.Component {
 
         this.setState(
             {
+                isResolveFormOpen: false,
+                isUpdateFormOpen: false,
                 isFormOpen: false,
                 isOpenDetail: false,
                 pop_open: true,
+            }
+        )
+    }
+
+    // ****************************************************************///
+    // 投稿したものを編集するフォームを表示
+    // ****************************************************************///
+
+    updateFormOpen() {
+        this.setState(
+            {
+                isFormOpen: true,
+                isUpdateFormOpen: true
+            }
+        )
+    }
+    // ****************************************************************///
+    // 投稿したものを編集するフォームを閉じる
+    // ****************************************************************///
+
+    updateFormClose() {
+        this.setState(
+            {
+                isFormOpen: false,
+                isUpdateFormOpen: false
             }
         )
     }
@@ -328,7 +374,7 @@ class Home extends React.Component {
         } else {
             var now_time = new Date()
         }
-        
+
         return now_time
     }
 
@@ -422,6 +468,7 @@ class Home extends React.Component {
     // ****************************************************************///
 
     render() {
+        console.log(this.state, 'HOME_STATE')
         let homeDisplay
         const actionMethod = {
             resolveAdd: this.resolveAdd,
@@ -434,42 +481,79 @@ class Home extends React.Component {
             handleGoodCount: this.handleGoodCount,
             goodaddCheck: this.goodaddCheck,
             gooddeleteCheck: this.gooddeleteCheck,
-            displayDetail:this.displayDetail,
-            addLists: this.addLists
+            displayDetail: this.displayDetail,
+            addLists: this.addLists,
+            updateFormOpen: this.updateFormOpen,
+            hiddenDetail: this.hiddenDetail
         }
 
 
         // FORMがtrueになり、FORM画面を表示
         if (this.state.isFormOpen) {
-            homeDisplay = (
-                <Form
-                    login_user={this.state.login_user}
+
+            // this.state.isUpdateFormOpen
+            this.state.isOpenDetail
+
+                ? homeDisplay = (
+                    <React.Fragment>
+                    <Display
+                    {...this.props}
+                    isOpenDetail={this.state.isOpenDetail}
+                    // isOpenDetail={true}
+                    isGood={this.state.isGood}
+                    detail_todolist={this.state.detail_todolist}
+                    isUpdateFormOpen={this.state.isUpdateFormOpen}
+
+                    // updateFormOpen={this.updateFormOpen}
+                    deleteDialogOpen={this.deleteDialogOpen}
                     actionMethod={actionMethod}
+
+                    _id={this.state.detail_todolist._id}
                 />
-            )
+                    <Form
+                        // isResolveFormOpen={this.state.isResolveFormOpen}
+                        isUpdateFormOpen={this.state.isUpdateFormOpen}
+                        detail_todolist={this.state.detail_todolist}
+                        isOpenDetail={this.state.isOpenDetail}
+                        // isStatus={this.state.isStatus}
+                        actionMethod={actionMethod}
+                        isFormOpen={this.state.isFormOpen}
+                        isResolveFormOpen={this.state.isResolveFormOpen}
+                    />
+                    </React.Fragment>
+                )
+                : homeDisplay = (
+                    <Form
+                        isOpenDetail={this.state.isOpenDetail}
+                        login_user={this.state.login_user}
+                        actionMethod={actionMethod}
+                    // 悩みの投稿か解決の方法の投稿か
+                    />
+                )
+
         } else {
             // FORMがfalseのとき、詳細の画面かホーム画面は判定
             if (this.state.isOpenDetail) {
                 homeDisplay = (
-                        <Detail
-                            todolists={this.state.todolists}
-                            detail_todolist={this.state.detail_todolist}
-                            count={this.state.count}
-                            login_user={this.state.login_user}
-                            isOpenDetail={this.state.isOpenDetail}
-                            actionMethod={actionMethod}
-                        />
+                    <Detail
+                        todolists={this.state.todolists}
+                        detail_todolist={this.state.detail_todolist}
+                        count={this.state.count}
+                        login_user={this.state.login_user}
+                        isOpenDetail={this.state.isOpenDetail}
+                        actionMethod={actionMethod}
+                    />
                 )
 
             } else {
                 this.state.loading
                     ? homeDisplay = (
                         <div className="display-title-wrapper">
-                                <Display
-                                    todolists={this.state.todolists}
-                                    userinfo={this.state.userinfo}
-                                    actionMethod={actionMethod}
-                                />
+                            <Display
+                                todolists={this.state.todolists}
+                                userinfo={this.state.userinfo}
+                                actionMethod={actionMethod}
+                            />
 
 
                             <div onClick={this.postFormOpen} className="create-form">
@@ -496,8 +580,8 @@ class Home extends React.Component {
                         </Route>
 
                         <Route exact path='/Search'
-                            render={props => <Search todolists={this.state.todolists} loginuser={this.state.username} actionMethod={actionMethod}/>} />
-                            {/* render={props => <Search todolists={this.state.todolists} loginuser={this.state.username} createTime={this.createTime} displayDetail={this.displayDetail} />} /> */}
+                            render={props => <Search todolists={this.state.todolists} loginuser={this.state.username} actionMethod={actionMethod} />} />
+                        {/* render={props => <Search todolists={this.state.todolists} loginuser={this.state.username} createTime={this.createTime} displayDetail={this.displayDetail} />} /> */}
 
                         <Route exact path='/Notify'>
                             <Notify />
@@ -506,7 +590,7 @@ class Home extends React.Component {
 
                         <Route exact path='/Mypage'
                             render={props => <Mypage getTodolists={this.getTodolists} getUserinfo={this.getUserinfo} userinfo={this.state.userinfo} todolists={this.state.todolists} loginuser={this.state.login_user} actionMethod={actionMethod} />} />
-                            {/* render={props => <Mypage getTodolists={this.getTodolists} getUserinfo={this.getUserinfo} userinfo={this.state.userinfo} todolists={this.state.todolists} loginuser={this.state.login_user} createTime={this.createTime} displayDetail={this.displayDetail} />} /> */}
+                        {/* render={props => <Mypage getTodolists={this.getTodolists} getUserinfo={this.getUserinfo} userinfo={this.state.userinfo} todolists={this.state.todolists} loginuser={this.state.login_user} createTime={this.createTime} displayDetail={this.displayDetail} />} /> */}
 
 
                     </Switch>

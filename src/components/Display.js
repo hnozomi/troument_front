@@ -104,7 +104,7 @@ class Display extends React.Component {
                   </div>
                   {this.props.login_user === this.props.detail_todolist.username &&
                     <div className="content-edit-button">
-                      <button className="content-button" onClick={this.props.updateFormOpen}>編集
+                      <button className="content-button" onClick={this.props.actionMethod.updateFormOpen}>編集
                         <EditIcon className="content-button-icon" style={{ fontSize: 18 }} />
                       </button>
                       <button className="content-button" onClick={this.props.deleteDialogOpen}>

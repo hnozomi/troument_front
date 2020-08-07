@@ -34,17 +34,18 @@ class Detail extends React.Component {
         super(props);
         this.state = {
             isUpdateFormOpen: false,
-            worry_id: this.props.detail_todolist.worry_id,
-            _id: this.props.detail_todolist._id,
+            // worry_id: this.props.detail_todolist.worry_id,
+            // _id: this.props.detail_todolist._id,
             isDeleteDialogOpen: false,
             // isDetailOpen: false,
             isGoodCheck: false,
             isOpenDetail: this.props.isOpenDetail,
             isStatus: this.props.detail_todolist.status,
+            detail_todolist: this.props.detail_todolist
         }
-        this.resolveFormOpen = this.resolveFormOpen.bind(this)
+        // this.resolveFormOpen = this.resolveFormOpen.bind(this)
         this.listDelete = this.listDelete.bind(this)
-        this.updateFormOpen = this.updateFormOpen.bind(this)
+        // this.updateFormOpen = this.updateFormOpen.bind(this)
         this.deleteDialogOpen = this.deleteDialogOpen.bind(this)
         this.goodCheck = this.goodCheck.bind(this)
     }
@@ -64,26 +65,26 @@ class Detail extends React.Component {
 
     getDetailTodolist() {
         const param = {
-            worry_id: this.state.worry_id,
-            _id: this.state._id,
+            worry_id: this.state.detail_todolist.worry_id,
+            _id: this.state.detail_todolist._id,
             username: this.props.login_user,
         }
         this.goodCheck(param)
 
-        Axios.get('/api/detail_display', { params: param })
-            .then(response => {
-                this.setState((state) => {
-                    return {
-                        data_worry: response.data.worry,
-                        data_resolve: response.data.resolve,
-                    }
-                })
+        // Axios.get('/api/detail_display', { params: param })
+        //     .then(response => {
+        //         this.setState((state) => {
+        //             return {
+        //                 data_worry: response.data.worry,
+        //                 data_resolve: response.data.resolve,
+        //             }
+        //         })
 
-            }
-            )
-            .catch(err => {
-                console.error(new Error(err))
-            })
+        //     }
+        //     )
+        //     .catch(err => {
+        //         console.error(new Error(err))
+        //     })
 
     }
 
@@ -117,10 +118,10 @@ class Detail extends React.Component {
     // ****************************************************************///
 
     listDelete() {
-        this.props.actionMethod.TodolistsDelete(this.state.worry_id)
+        this.props.actionMethod.TodolistsDelete(this.state.detail_todolist.worry_id)
 
         Axios.delete('/api/delete', {
-            data: { worry_id: this.state.worry_id }
+            data: { worry_id: this.state.detail_todolist.worry_id }
         })
             .then(response => {
             })
@@ -137,39 +138,39 @@ class Detail extends React.Component {
     // 詳細ページを表示する
     // ****************************************************************///
 
-    resolveFormOpen() {
-        this.setState(
-            {
-                isOpenDetail: false,
-                isResolveFormOpen: true
-            }
-        )
-    }
+    // resolveFormOpen() {
+    //     this.setState(
+    //         {
+    //             isOpenDetail: false,
+    //             isResolveFormOpen: true
+    //         }
+    //     )
+    // }
 
     // ****************************************************************///
     // 投稿したものを編集するフォームを表示
     // ****************************************************************///
 
-    updateFormOpen() {
-        this.setState(
-            {
-                isResolveFormOpen: true,
-                isUpdateFormOpen: true
-            }
-        )
-    }
+    // updateFormOpen() {
+    //     this.setState(
+    //         {
+    //             isResolveFormOpen: true,
+    //             isUpdateFormOpen: true
+    //         }
+    //     )
+    // }
     // ****************************************************************///
     // 投稿したものを編集するフォームを閉じる
     // ****************************************************************///
 
-    updateFormClose() {
-        this.setState(
-            {
-                // form: true,
-                isUpdateFormOpen: false
-            }
-        )
-    }
+    // updateFormClose() {
+    //     this.setState(
+    //         {
+    //             // form: true,
+    //             isUpdateFormOpen: false
+    //         }
+    //     )
+    // }
 
     // ****************************************************************///
     // 投稿したものを削除するとき、モーダルを表示する
@@ -227,36 +228,28 @@ class Detail extends React.Component {
     render() {
         let createDetail;
         let detailDisplay
-        // const { status } = this.props.detail_todolist
         let login_user = this.props.login_user
 
-        // 詳細の画面かたformがtrueになった時
-        if (this.state.isResolveFormOpen) {
-            // 詳細の画面かたformがtrueになったとき、投稿を更新する画面かどうか
-            this.state.isUpdateFormOpen
-            ? detailDisplay = (
-                    <Form
-                        {...this.props}
-                        // displayForm={status}
-                        isResolveFormOpen={this.state.isResolveFormOpen}
-                        isUpdateFormOpen={this.state.isUpdateFormOpen}
-                        data_worry={this.state.data_worry}
-                        data_resolve={this.state.data_resolve}
-                        isStatus={this.state.isStatus}
-                    />
-                )
-                : detailDisplay = (
-                    <Form
-                        {...this.props}
-                        isResolveFormOpen={this.state.isResolveFormOpen}
-                        // isUpdateFormOpen={this.state.isUpdateFormOpen}
-                        isStatus={this.state.isStatus}
-                        // isStatus={status}
-                        isOpenDetail={this.state.isOpenDetail}
-                    // displayForm={true}
-                    />
-                )
-        } else {
+        // if (this.state.isResolveFormOpen) {
+        //     this.state.isUpdateFormOpen
+        //     ? detailDisplay = (
+        //             <Form
+        //                 {...this.props}
+        //                 isResolveFormOpen={this.state.isResolveFormOpen}
+        //                 isUpdateFormOpen={this.state.isUpdateFormOpen}
+        //                 detail_todolist={this.state.detail_todolist}
+        //                 isStatus={this.state.isStatus}
+        //             />
+        //         )
+        //         : detailDisplay = (
+        //             <Form
+        //                 {...this.props}
+        //                 isResolveFormOpen={this.state.isResolveFormOpen}
+        //                 isStatus={this.state.isStatus}
+        //                 isOpenDetail={this.state.isOpenDetail}
+        //             />
+        //         )
+        // } else {
             // 詳細の画面かたformがfalseの時、goodしてるかどうかを判定できたら表示
             if (this.state.isGoodCheck) {
 
@@ -264,9 +257,6 @@ class Detail extends React.Component {
                 // その時STATUSの状態で画面を表示
                 // if (status) {
                 if (this.state.isStatus) {
-                    console.log(this.state.data_worry, 'this.state.data_worry')
-                    console.log(this.state.data_resolve, 'this.state.data_worry')
-                    console.log(this.props.detail_todolist, 'this.props.detail_todolist')
                     createDetail = (
                         <React.Fragment>
 
@@ -276,7 +266,8 @@ class Detail extends React.Component {
                                         <h1 className="detail-header">
                                             悩みの詳細
                                             </h1>
-                                        <EditorJs holder="worry" data={this.state.data_worry} enableReInitialize={true} instanceRef={instance => this.editorInstance = instance} tools={EDITOR_JS_TOOLS}>
+                                        <EditorJs holder="worry" data={this.state.detail_todolist.worry} enableReInitialize={true} instanceRef={instance => this.editorInstance = instance} tools={EDITOR_JS_TOOLS}>
+                                        {/* <EditorJs holder="worry" data={this.state.data_worry} enableReInitialize={true} instanceRef={instance => this.editorInstance = instance} tools={EDITOR_JS_TOOLS}> */}
                                             <div id="worry" />
                                         </EditorJs>
                                     </div>
@@ -284,7 +275,8 @@ class Detail extends React.Component {
                                         解決詳細
                                             </h1>
                                     <div className="detail-area">
-                                        <EditorJs holder="resolve" data={this.state.data_resolve} enableReInitialize={true} instanceRef={instance => this.editorInstance = instance} tools={EDITOR_JS_TOOLS}>
+                                        <EditorJs holder="resolve" data={this.state.detail_todolist.resolve} enableReInitialize={true} instanceRef={instance => this.editorInstance = instance} tools={EDITOR_JS_TOOLS}>
+                                        {/* <EditorJs holder="resolve" data={this.state.data_resolve} enableReInitialize={true} instanceRef={instance => this.editorInstance = instance} tools={EDITOR_JS_TOOLS}> */}
                                             <div id="resolve" />
                                         </EditorJs>
                                     </div>
@@ -293,8 +285,6 @@ class Detail extends React.Component {
                         </React.Fragment>
                     )
                 } else {
-                    console.log(this.state.data_worry, 'this.state.data_worry')
-                    console.log(this.props.detail_todolist, 'this.props.detail_todolist')
                     createDetail = (
                         <React.Fragment>
                             <div className="detail-wrapper">
@@ -304,12 +294,13 @@ class Detail extends React.Component {
                                             </h1>
                                 </section>
                                 <div className="detail-area">
-                                    <EditorJs holder="custom" data={this.state.data_worry} enableReInitialize={true} instanceRef={instance => this.editorInstance = instance} tools={EDITOR_JS_TOOLS}>
+                                    <EditorJs holder="custom" data={this.state.detail_todolist.worry} enableReInitialize={true} instanceRef={instance => this.editorInstance = instance} tools={EDITOR_JS_TOOLS}>
+                                    {/* <EditorJs holder="custom" data={this.state.data_worry} enableReInitialize={true} instanceRef={instance => this.editorInstance = instance} tools={EDITOR_JS_TOOLS}> */}
                                         <div id="custom" />
                                     </EditorJs>
                                 </div>
                                 <FormButton
-                                    resolveFormOpen={this.resolveFormOpen}
+                                    // resolveFormOpen={this.resolveFormOpen}
                                     // addLists={this.props.actionMethod.addLists}
                                     // worryUpdate={this.props.actionMethod.worryUpdate}
                                     actionMethod={this.props.actionMethod}
@@ -328,7 +319,7 @@ class Detail extends React.Component {
                     <CircularProgress />
                 )
             }
-        }
+        // }
 
 
         return (
@@ -337,14 +328,13 @@ class Detail extends React.Component {
                 <Display
                     {...this.props}
                     isOpenDetail={this.props.isOpenDetail}
-                    // isOpenDetail={true}
                     isGood={this.state.isGood}
                     isUpdateFormOpen={this.state.isUpdateFormOpen}
 
-                    updateFormOpen={this.updateFormOpen}
                     deleteDialogOpen={this.deleteDialogOpen}
+                    actionMethod={this.props.actionMethod}
 
-                    _id={this.state._id}
+                    _id={this.state.detail_todolist._id}
                 />
                 {/* {this.state.isGoodCheck
                     ? <Display

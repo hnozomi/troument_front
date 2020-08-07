@@ -33,10 +33,12 @@ class Form extends React.Component {
       suggestions,
     }
     this.changeInputText = this.changeInputText.bind(this)
+    this.saveEditor = this.saveEditor.bind(this)
     this.canSubmit = this.canSubmit.bind(this)
     this.startSending = this.startSending.bind(this)
     this.endSending = this.endSending.bind(this)
     console.log(this.props, 'FORMのPROPS')
+    console.log(this.state, 'FORMのSTATE')
   }
 
   // ****************************************************************///
@@ -163,11 +165,14 @@ class Form extends React.Component {
     let test = true
     const { input, message, status } = this.state;
     const { worryUpdate } = this.props.actionMethod || '';
+    console.log(status, '大事')
     
 
     // Formを表示するとき、Detailコンポーネントからstatusがfalse or true
     // if (this.props.displayForm) {
-    if (this.props.isResolveFormOpen) {
+    // if (this.props.isResolveFormOpen) {
+    // if (this.props.isOpenDetail) {
+    if (status || this.props.isResolveFormOpen) {
       displayForm = (
         <form className="form-wrapper">
           <section className="form-wrapper-sec" style={{ position: 'relative' }}>
@@ -177,14 +182,15 @@ class Form extends React.Component {
               )}
           </section>
           <div className="resolvetest">
-            {this.props.data_resolve
-              ? <EditorJs onChange={this.saveEditor} instanceRef={instance => this.editorInstance = instance} data={this.props.data_resolve} tools={EDITOR_JS_TOOLS} enableReInitialize={false} />
+            {this.props.detail_todolist
+              ? <EditorJs onChange={this.saveEditor} instanceRef={instance => this.editorInstance = instance} data={this.props.detail_todolist.resolve} tools={EDITOR_JS_TOOLS} enableReInitialize={false} />
+              // ? <EditorJs onChange={this.saveEditor} instanceRef={instance => this.editorInstance = instance} data={this.props.data_resolve} tools={EDITOR_JS_TOOLS} enableReInitialize={false} />
               : <EditorJs onChange={this.saveEditor} instanceRef={instance => this.editorInstance = instance} tools={EDITOR_JS_TOOLS} enableReInitialize={false} />
             }
 
             <FormButton
               {...this.props}
-              
+              isFormOpen={this.props.isFormOpen}
               savedData={this.state.savedData}
               sendMethod={this.sendMethod}
               
@@ -245,10 +251,11 @@ class Form extends React.Component {
             {message.worry && (
               <span style={{ color: 'red', fontSize: 8, position: 'absolute', right: 0, bottom: 0 }}>{message.worry}</span>
             )}
-            {input.title
-              ? <EditorJs onChange={this.saveEditor} instanceRef={instance => this.editorInstance = instance} data={this.props.data_worry} tools={EDITOR_JS_TOOLS} enableReInitialize={false} />
-
-              : <EditorJs onChange={this.saveEditor} instanceRef={instance => this.editorInstance = instance} data={this.props.data_resolve} tools={EDITOR_JS_TOOLS} enableReInitialize={false} />
+            {/* {input.title */}
+            {this.props.detail_todolist
+              ? <EditorJs onChange={this.saveEditor} instanceRef={instance => this.editorInstance = instance} data={this.props.detail_todolist.worry} tools={EDITOR_JS_TOOLS} enableReInitialize={false} />
+              : <EditorJs onChange={this.saveEditor} instanceRef={instance => this.editorInstance = instance} tools={EDITOR_JS_TOOLS} enableReInitialize={false} />
+              // : <EditorJs onChange={this.saveEditor} instanceRef={instance => this.editorInstance = instance} data={this.props.detail_todolist.resolve} tools={EDITOR_JS_TOOLS} enableReInitialize={false} />
             }
           </section>
 
