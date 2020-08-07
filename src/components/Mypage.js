@@ -475,8 +475,7 @@ class Mypage extends React.Component {
           {this.state.resultLists
             ? <Display
               todolists={this.state.resultLists}
-              // handleDetail={this.props.handleDetail}
-              // createTime={this.props.createTime}
+
               actionMethod={this.props.actionMethod}
               isMypage={this.state.isMypage}
             />

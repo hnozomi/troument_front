@@ -37,11 +37,10 @@ class Search extends React.Component {
       const filterList =
         this.props.todolists &&
         this.props.todolists.filter((todolist) => {
-          console.log(todolist.tag)
           return (
-            (todolist.title && todolist.title.toString().toLowerCase().indexOf(searchWord.toLowerCase()) !== -1) ||
-            (todolist.tag[0].name && todolist.tag[0].name.toString().toLowerCase().indexOf(searchWord.toLowerCase()) !== -1) ||
-            (todolist.worry.blocks[0].data.text && todolist.worry.blocks[0].data.text.toString().toLowerCase().indexOf(searchWord.toLowerCase()) !== -1)
+            (todolist.title && todolist.title.toString().toLowerCase().indexOf(searchWord.toLowerCase()) !== -1)
+            // (todolist.tag[0].name && todolist.tag[0].name.toString().toLowerCase().indexOf(searchWord.toLowerCase()) !== -1) ||
+            // (todolist.worry.blocks[0].data.text && todolist.worry.blocks[0].data.text.toString().toLowerCase().indexOf(searchWord.toLowerCase()) !== -1)
           )
         }
         )

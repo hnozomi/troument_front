@@ -6,18 +6,13 @@ const titleValidation = (title) => {
 };
 
 const tagValidation = (tag) => {
-  if (!tag) return 'タグを入力してください';
-  if (tag.length > 3) return 'タグが5つまでしか登録できません';
+  if (tag.length === 0) return 'タグを入力してください';
+  if (tag.length > 5) return 'タグは5つまでしか登録できません';
   return '';
 };
 
-const worryValidation = (worry) => {
-  if (!worry) return '悩みを入力してください';
-  return '';
-};
-
-const resolveValidation = (resolve) => {
-  if (!resolve) return '解決した方法を入力してください';
+const savedDataValidation = (savedData) => {
+  if (savedData.blocks.length === 0) return '内容を入力してください';
   return '';
 };
 
@@ -38,12 +33,10 @@ class Validation {
     switch (type) {
       case 'title':
         return titleValidation(value);
-      case 'tag':
+      case 'tags':
         return tagValidation(value);
-      case 'worry':
-        return worryValidation(value);
-      case 'resolve':
-        return resolveValidation(value);
+      case 'savedData':
+        return savedDataValidation(value);
       case 'account':
         return accountValidation(value);
       case 'password':

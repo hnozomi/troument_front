@@ -25,6 +25,7 @@ class Form extends React.Component {
         tag: '',
         worry: '',
         resolve: '',
+        savedData: ''
       },
       isSending: false,
       tags: tag || [],
@@ -37,8 +38,6 @@ class Form extends React.Component {
     this.canSubmit = this.canSubmit.bind(this)
     this.startSending = this.startSending.bind(this)
     this.endSending = this.endSending.bind(this)
-    console.log(this.props, 'FORMのPROPS')
-    console.log(this.state, 'FORMのSTATE')
   }
 
   // ****************************************************************///
@@ -67,11 +66,19 @@ class Form extends React.Component {
   // ****************************************************************///
 
   canSubmit = () => {
-    console.log(this.state, 'DDDD')
     let validInput;
     let validMessage;
-    const { input, isSending } = this.state;
+    let validSavedDataInput
+    let validSavedDataMessage
+    let validTagsInput
+    let validTagsMessage
+    const { isSending } = this.state;
 
+
+    // 
+    // タイトルが入力されているか確認
+    // 
+    
     if (this.state.input.title === '') {
       validInput = false
     } else {
@@ -84,7 +91,42 @@ class Form extends React.Component {
       validMessage = true
     }
 
-    return validInput && validMessage && !isSending
+    // 
+    // タグが入力されているか確認
+    // 
+
+    if (this.state.tags.length === 0) {
+      validTagsInput = false
+    } else {
+      validTagsInput = true
+    }
+
+    if (this.state.message.tag !== "") {
+      validTagsMessage = false
+    } else {
+      validTagsMessage = true
+    }
+    
+    // 
+    // 悩みが入力されているか確認
+    // 
+
+    if (this.state.savedData === '' || this.state.savedData.blocks.length === 0) {
+      validSavedDataInput = false
+    } else {
+      validSavedDataInput = true
+    }
+
+    if (this.state.message.savedData !== "") {
+      validSavedDataMessage = false
+    } else {
+      validSavedDataMessage = true
+    }
+
+    return validInput && validMessage && 
+           validSavedDataInput && validSavedDataMessage &&
+           validTagsInput && validTagsMessage &&
+           !isSending
   };
 
 
@@ -111,33 +153,49 @@ class Form extends React.Component {
 
   handleDelete(i) {
     const tags = this.state.tags.slice(0)
+    const { message } = this.state;
     tags.splice(i, 1)
-    this.setState({ tags })
+    this.setState({
+      message: {
+        ...message,
+        tag: Validation.formValidate('tags', tags)
+      },
+      tags: tags
+    })
   }
 
 
   handleAddition(tag) {
     const tags = [].concat(this.state.tags, tag)
-    if (this.state.tags.length < 5) {
-      this.setState({ tags })
-    } else {
-      const { message } = this.state;
-      this.setState({
-        message: {
-          ...message,
-          tag: Validation.formValidate('tag', this.state.tags)
-        }
-      })
-    }
-  }
-
-  handleBlur = (tag) => {
     const { message } = this.state;
     this.setState({
       message: {
         ...message,
-        tag: ''
-      }
+        tag: Validation.formValidate('tags', tags)
+      },
+      tags: tags
+    })
+  }
+
+  handleBlur = () => {
+    const { message } = this.state;
+    this.setState({
+      message: {
+        ...message,
+        tag: Validation.formValidate('tags', this.state.tags)
+      },
+    })
+  }
+
+  handleBlurTitle = (event) => {
+    const key = event.target.name;
+    const value = event.target.value;
+    const { message } = this.state;
+    this.setState({
+      message: {
+        ...message,
+        [key]: Validation.formValidate(key, value)
+      },
     })
   }
 
@@ -148,10 +206,16 @@ class Form extends React.Component {
 
 
   saveEditor = async () => {
+    const { message } = this.state;
     let savedData = await this.editorInstance.save()
     this.setState({
+      message: {
+        ...message,
+        savedData: Validation.formValidate('savedData', savedData)
+      },
       savedData: savedData
     })
+
   }
 
 
@@ -162,24 +226,16 @@ class Form extends React.Component {
 
   render() {
     let displayForm
-    let test = true
     const { input, message, status } = this.state;
-    const { worryUpdate } = this.props.actionMethod || '';
-    console.log(status, '大事')
-    
 
-    // Formを表示するとき、Detailコンポーネントからstatusがfalse or true
-    // if (this.props.displayForm) {
-    // if (this.props.isResolveFormOpen) {
-    // if (this.props.isOpenDetail) {
     if (status || this.props.isResolveFormOpen) {
       displayForm = (
         <form className="form-wrapper">
           <section className="form-wrapper-sec" style={{ position: 'relative' }}>
             <label>どうやって解決しましたか</label>
-            {message.resolve && (
-              <span style={{ color: 'red', fontSize: 8, position: 'absolute', right: 0, bottom: 0 }}>{message.resolve}</span>
-              )}
+            {message.savedData && (
+              <span style={{ color: 'red', fontSize: 8, position: 'absolute', right: 0, top: 3 }}>{message.savedData}</span>
+            )}
           </section>
           <div className="resolvetest">
             {this.props.detail_todolist
@@ -193,16 +249,15 @@ class Form extends React.Component {
               isFormOpen={this.props.isFormOpen}
               savedData={this.state.savedData}
               sendMethod={this.sendMethod}
-              
+
               canSubmit={this.canSubmit}
               startSending={this.startSending}
               endSending={this.endSending}
-              />
+            />
           </div>
         </form>
       )
     } else {
-      // Formを表示するとき、Detailコンポーネントからstatusがfalse or statusが空白
       displayForm = (
         <form className="form-wrapper">
 
@@ -217,10 +272,12 @@ class Form extends React.Component {
                 type="text"
                 name="title"
                 onChange={event => this.changeInputText(event)}
+                onBlur={this.handleBlurTitle}
                 className="input-area" placeholder="悩みのタイトルを入力してください ※50文字以内"></input>
               : <input
                 name="title"
                 value={input.title}
+                onBlur={this.handleBlurTitle}
                 onChange={event => this.changeInputText(event)}
                 className="input-area" placeholder="悩みのタイトルを入力してください ※50文字以内"></input>
             }
@@ -231,7 +288,7 @@ class Form extends React.Component {
           <section className="form-wrapper-sec" style={{ position: 'relative' }}>
             <label>タグ</label>
             {message.tag && (
-              <span style={{ color: 'red', fontSize: 8, position: 'absolute', right: 0, bottom: 0 }}>{message.tag}</span>
+              <span style={{ color: 'red', fontSize: 8, position: 'absolute', right: 0, top: 3 }}>{message.tag}</span>
             )}
 
             <ReactTags
@@ -248,8 +305,8 @@ class Form extends React.Component {
 
           <section className="form-wrapper-sec" style={{ position: 'relative' }}>
             <label>悩み</label>
-            {message.worry && (
-              <span style={{ color: 'red', fontSize: 8, position: 'absolute', right: 0, bottom: 0 }}>{message.worry}</span>
+            {message.savedData && (
+              <span style={{ color: 'red', fontSize: 8, position: 'absolute', right: 0, top: 3 }}>{message.savedData}</span>
             )}
             {/* {input.title */}
             {this.props.detail_todolist
@@ -259,36 +316,19 @@ class Form extends React.Component {
             }
           </section>
 
+          <FormButton
+            {...this.props}
 
 
-          {worryUpdate
-            ? <FormButton
-              {...this.props}
+            title={input.title}
+            tags={this.state.tags}
+            savedData={this.state.savedData}
+            sendMethod={this.sendMethod}
 
-
-              title={input.title}
-              tags={this.state.tags}
-              savedData={this.state.savedData}
-              sendMethod={this.sendMethod}
-
-              canSubmit={this.canSubmit}
-              startSending={this.startSending}
-              endSending={this.endSending}
-            />
-            : <FormButton
-              {...this.props}
-
-              title={input.title}
-              tags={this.state.tags}
-              savedData={this.state.savedData}
-              sendMethod={this.sendMethod}
-
-              canSubmit={this.canSubmit}
-              startSending={this.startSending}
-              endSending={this.endSending}
-            />
-
-          }
+            canSubmit={this.canSubmit}
+            startSending={this.startSending}
+            endSending={this.endSending}
+          />
         </form>
       )
     }
