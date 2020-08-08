@@ -46,7 +46,7 @@ class Home extends React.Component {
         this.TodolistsDelete = this.TodolistsDelete.bind(this)
         this.createTime = this.createTime.bind(this)
         this.handleGoodCount = this.handleGoodCount.bind(this)
-        this.goodCheck = this.goodCheck.bind(this)
+        this.gooStatusCheck = this.gooStatusCheck.bind(this)
         this.getTodolists = this.getTodolists.bind(this)
         this.updateFormOpen = this.updateFormOpen.bind(this)
         this.resolveFormOpen = this.resolveFormOpen.bind(this)
@@ -367,14 +367,14 @@ class Home extends React.Component {
     // ****************************************************************///
 
     handleGoodCount(_id, isGood) {
-        this.goodCheck(_id, isGood)
+        this.gooStatusCheck(_id, isGood)
     }
 
     // ****************************************************************///
     // goodした履歴があるかチェック
     // ****************************************************************///
 
-    async goodCheck(_id, isGood) {
+    async gooStatusCheck(_id, isGood) {
 
         if (isGood) {
             this.gooddeleteCheck(_id)
@@ -391,40 +391,48 @@ class Home extends React.Component {
         let CountUp = []
         CountUp = this.state.detail_todolist
         CountUp.count = CountUp.count + 1
-
+        CountUp.user.goodlist.push(_id)
+        
         this.setState((state => {
             return {
                 detail_todolist: CountUp
             }
         })
         )
-
+        
         const param = {
             _id: _id,
             username: this.state.login_user,
             count: this.state.detail_todolist.count
         }
-
-        // const url = constUrl + '/api/goodadd'
+        
         Axios.get('/api/goodadd', {
             params: param
         })
-            .then(response => {
-            })
-            .catch(err => {
-                console.error(new Error(err))
-            })
+        .then(response => {
+        })
+        .catch(err => {
+            console.error(new Error(err))
+        })
     }
-
+    
     // ****************************************************************///
     // goodした履歴がある場合、削除
     // ****************************************************************///
-
+    
     async gooddeleteCheck(_id) {
         let CountUp = []
         CountUp = this.state.detail_todolist
         CountUp.count = CountUp.count - 1
 
+        
+        const goodcheck =
+        this.state.detail_todolist.user.goodlist.findIndex((good) => {
+            return good === _id
+        })
+
+        CountUp.user.goodlist.splice(goodcheck, 1)
+
         this.setState((state => {
             return {
                 detail_todolist: CountUp
@@ -437,7 +445,6 @@ class Home extends React.Component {
             count: this.state.detail_todolist.count
         }
 
-        // const url = constUrl + '/api/gooddelete'
         Axios.get('/api/gooddelete', { params: param })
             .then(response => {
             })

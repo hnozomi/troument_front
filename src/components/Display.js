@@ -18,12 +18,14 @@ class Display extends React.Component {
     this.state = {
       todolists: this.props.todolists,
       userinfo: this.props.userinfo,
-      isGood: this.props.isGood,
+      // isGood: this.props.isGood,
+      isGood: false,
       isMypage: this.props.isMypage,
       isSearch: this.props.isSearch
     }
     this.callDisplayDetail = this.callDisplayDetail.bind(this)
     this.handleGoodChange = this.handleGoodChange.bind(this)
+    this.goodCheck = this.goodCheck.bind(this)
   }
 
 
@@ -39,6 +41,50 @@ class Display extends React.Component {
   }
 
 
+
+  // ****************************************************************///
+  // 詳細を取得
+  // ****************************************************************///
+
+  componentDidMount() {
+    this.goodCheck()
+  }
+
+
+  // ****************************************************************///
+  // グッドをしたことがあるかチェック
+  // ****************************************************************///
+
+  async goodCheck() {
+
+    if (this.props.detail_todolist) {
+
+      const goodcheck =
+        this.props.detail_todolist.user.goodlist.findIndex((good) => {
+          return good === this.props.detail_todolist._id
+        })
+
+      if (goodcheck === -1) {
+        this.setState(
+          {
+            isGood: false,
+            isGoodCheck: true
+          }
+        )
+      } else {
+        this.setState(
+          {
+            isGood: true,
+            isGoodCheck: true
+          }
+        )
+
+      }
+
+    }
+  }
+
+
   // ****************************************************************///
   // goodしているか判定
   // ****************************************************************///
@@ -49,7 +95,6 @@ class Display extends React.Component {
       }
     }), () => this.props.actionMethod.handleGoodCount(this.props._id, !this.state.isGood)
     )
-
   }
 
   // ****************************************************************///
@@ -58,6 +103,7 @@ class Display extends React.Component {
 
   render() {
     let createDetail;
+
     if (this.props.isOpenDetail) {
       createDetail = (
         <div className={"contents-wrappers " + (this.state.isMypage ? "mypage-diplay-wrapper" : '')}>
@@ -85,27 +131,25 @@ class Display extends React.Component {
             </div>
           </div>
           {
-            this.props.isUpdateFormOpen
-              ? (<div className="content-button-wrapper">
-              </div>)
-              : (
+            !this.props.isUpdateFormOpen && 
+              (
                 <div className="content-button-wrapper">
 
-
-                  <div className="content-button-wrapper">
-                    {this.state.isGood
+                  {this.props.detail_todolist.status && (
+                    this.state.isGood
                       ? <button className="content-button" onClick={this.handleGoodChange}>参考になった
-                        <ThumbUpIcon className="content-button-icon" style={{ fontSize: 18 }} />
+                              <ThumbUpIcon className="content-button-icon" style={{ fontSize: 18 }} />
                       </button>
                       : <button className="content-button" onClick={this.handleGoodChange}>参考になった
-                        <ThumbUpAltOutlinedIcon className="content-button-icon" style={{ fontSize: 18 }} />
+                              <ThumbUpAltOutlinedIcon className="content-button-icon" style={{ fontSize: 18 }} />
                       </button>
-                    }
-                  </div>
+
+                  )}
+
                   {this.props.login_user === this.props.detail_todolist.username &&
                     <div className="content-edit-button">
                       <button className="content-button" onClick={this.props.actionMethod.updateFormOpen}>編集
-                        <EditIcon className="content-button-icon" style={{ fontSize: 18 }} />
+                            <EditIcon className="content-button-icon" style={{ fontSize: 18 }} />
                       </button>
                       <button className="content-button" onClick={this.props.deleteDialogOpen}>
                         <span className="content-button-text">削除</span>
@@ -115,6 +159,8 @@ class Display extends React.Component {
                   }
                 </div>
               )
+
+
           }
         </div >
 

@@ -32,65 +32,100 @@ class Detail extends React.Component {
             isUpdateFormOpen: false,
             isDeleteDialogOpen: false,
             isGoodCheck: false,
+            isGood: false,
             isOpenDetail: this.props.isOpenDetail,
             isStatus: this.props.detail_todolist.status,
             detail_todolist: this.props.detail_todolist
         }
         this.listDelete = this.listDelete.bind(this)
         this.deleteDialogOpen = this.deleteDialogOpen.bind(this)
-        this.goodCheck = this.goodCheck.bind(this)
+        // this.goodCheck = this.goodCheck.bind(this)
     }
 
     // ****************************************************************///
     // 詳細を取得
     // ****************************************************************///
 
-    componentDidMount() {
-        this.getDetailTodolist()
-    }
+    // componentDidMount() {
+    //     this.getDetailTodolist()
+    // }
 
 
     // ****************************************************************///
-    // 詳細を取得
+    // いいねをしているかチェック
     // ****************************************************************///
 
-    getDetailTodolist() {
-        const param = {
-            worry_id: this.state.detail_todolist.worry_id,
-            _id: this.state.detail_todolist._id,
-            username: this.props.login_user,
-        }
-        this.goodCheck(param)
-
-    }
+    // getDetailTodolist() {
+    //     const param = {
+    //         worry_id: this.state.detail_todolist.worry_id,
+    //         _id: this.state.detail_todolist._id,
+    //         username: this.props.login_user,
+    //     }
+    //     this.goodCheck(param)
+    // }
 
     // ****************************************************************///
     // グッドをしたことがあるかチェック
     // ****************************************************************///
 
-    goodCheck(param) {
-        Axios.get('/api/goodcheck', { params: param })
-            .then(response => {
-                if (response.data.length === 0) {
-                    this.setState({
-                        isGood: false,
-                        isGoodCheck: true
-                    })
-                } else {
-                    this.setState({
-                        isGood: true,
-                        isGoodCheck: true
-                    })
-                }
-            })
-            .catch(err => {
-                console.error(new Error(err))
-            })
-    }
+    // async goodCheck() {
+
+    //     console.log('Detail_goodcheck')
+
+    //     const param = {
+    //         worry_id: this.state.detail_todolist.worry_id,
+    //         _id: this.state.detail_todolist._id,
+    //         username: this.props.login_user,
+    //     }
+
+    //     const goodcheck =
+    //         this.state.detail_todolist.user.goodlist.filter((good) => {
+    //             return good === param._id
+    //         })
+
+    //     if (goodcheck.length === 0) {
+    //         this.setState(
+    //             {
+    //                 isGood: false,
+    //                 isGoodCheck: true
+    //             }
+    //         )
+    //     } else {
+    //         this.setState(
+    //             {
+    //                 isGood: true,
+    //                 isGoodCheck: true
+    //             }
+    //         )
+
+    //     }
+
+        // console.log(param._id, '_id')
+        // console.log(this.state.detail_todolist.user.goodlist, 'this.state.detail_todolist')
+
+        // Axios.get('/api/goodcheck', { params: param })
+        //     .then(response => {
+        //         console.log(response)
+        //         if (response.data.length === 0) {
+        //             this.setState({
+        //                 isGood: false,
+        //                 isGoodCheck: true
+        //             })
+        //         } else {
+        //             this.setState({
+        //                 isGood: true,
+        //                 isGoodCheck: true
+        //             })
+        //         }
+        //     })
+        //     .catch(err => {
+        //         console.error(new Error(err))
+        //     })
+    // }
 
 
     // ****************************************************************///
-    // リストから消去  (state)
+    // いいねの実績をリストから消去  (state)
     // ****************************************************************///
 
     listDelete() {
@@ -137,16 +172,15 @@ class Detail extends React.Component {
     // ****************************************************************///    
 
     render() {
+
         let createDetail;
-        let detailDisplay
         let login_user = this.props.login_user
 
-        if (this.state.isGoodCheck) {
+        // if (this.state.isGoodCheck) {
 
             if (this.state.isStatus) {
                 createDetail = (
                     <React.Fragment>
-
                         <div className="detail-wrapper">
                             <section className="detail-section">
                                 <div className="detail-area">
@@ -197,15 +231,15 @@ class Detail extends React.Component {
                     </React.Fragment>
                 )
             }
-        } else {
-            createDetail = (
-                <CircularProgress />
-            )
-        }
+        // } 
+        // else {
+        //     createDetail = (
+        //         <CircularProgress />
+        //     )
+        // }
 
 
         return (
-
             <React.Fragment>
                 <Display
                     {...this.props}
@@ -214,12 +248,13 @@ class Detail extends React.Component {
                     isUpdateFormOpen={this.state.isUpdateFormOpen}
 
                     deleteDialogOpen={this.deleteDialogOpen}
+                    goodCheck={this.goodCheck}
                     actionMethod={this.props.actionMethod}
 
                     _id={this.state.detail_todolist._id}
                 />
 
-                {detailDisplay}
+                {/* {detailDisplay} */}
                 {createDetail}
 
                 <Dialog

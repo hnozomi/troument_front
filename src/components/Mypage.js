@@ -22,9 +22,6 @@ class Mypage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      // worrylists: [],
-      // resolvelists: [],
-      // usefullists: [],
       resultLists: [],
       todolists: [],
       worryCount: [],
@@ -33,7 +30,6 @@ class Mypage extends React.Component {
       open: false,
       files: [],
       userInfo: this.props.userinfo,
-      // loading: false,
       thumbnail: this.props.userinfo.thumbnail,
       isMypage: true,
       alltodolists: this.props.todolists,
@@ -216,52 +212,6 @@ class Mypage extends React.Component {
   }
 
   // ****************************************************************///
-  // ドラッグ＆ドロップの表示
-  // ****************************************************************///
-
-  // handleOpen() {
-  //   this.setState({
-  //     open: true,
-  //   });
-  // }
-
-  // ****************************************************************///
-  // ドラッグ＆ドロップのキャンセル
-  // ****************************************************************///
-
-  // handleClose() {
-  //   this.setState({
-  //     open: false
-  //   });
-  // }
-
-  // ****************************************************************///
-  // ドロップされたファイルを取得  
-  // ****************************************************************///
-
-  // onDrop = (files) => {
-  //   const formData = new FormData();
-  //   files.forEach(file => {
-  //     formData.append('Files', file)
-  //     formData.append('username', this.state.username)
-  //   })
-
-  //   Axios.post('/api/files',
-  //     formData,
-  //   ).then(response => {
-  //     this.setState((state => {
-  //       return { thumbnail: response.data.Files[0].filename }
-  //     }), () => this.handleReload()
-  //     )
-  //   }
-  //   )
-  //   this.setState({
-  //     open: false
-  //   })
-
-  // }
-
-  // ****************************************************************///
   // トリミングされた画像を保存
   // ****************************************************************///
 
@@ -381,18 +331,6 @@ class Mypage extends React.Component {
     this.getTodoListCount()
   }
 
-
-  // ****************************************************************///
-  // 悩みの詳細を表示
-  // ****************************************************************///
-
-  // ClickPicOpen = () => {
-  //   this.setState(
-  //     {
-  //       isPicOpen: true
-  //     }
-  //   )
-  // };
 
   // ****************************************************************///
   // 画像のトリミングをキャンセル
