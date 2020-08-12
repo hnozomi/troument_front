@@ -3,6 +3,8 @@ import User from './User';
 import { withRouter, Link } from "react-router-dom";
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 
+import './App.css'
+
 class Header extends React.Component {
   constructor(props) {
     super(props);

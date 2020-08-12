@@ -38,9 +38,9 @@ class Search extends React.Component {
         this.props.todolists &&
         this.props.todolists.filter((todolist) => {
           return (
-            (todolist.title && todolist.title.toString().toLowerCase().indexOf(searchWord.toLowerCase()) !== -1)
-            // (todolist.tag[0].name && todolist.tag[0].name.toString().toLowerCase().indexOf(searchWord.toLowerCase()) !== -1) ||
-            // (todolist.worry.blocks[0].data.text && todolist.worry.blocks[0].data.text.toString().toLowerCase().indexOf(searchWord.toLowerCase()) !== -1)
+            (todolist.title && todolist.title.toString().toLowerCase().indexOf(searchWord.toLowerCase()) !== -1) ||
+            (todolist.tag[0].name && todolist.tag[0].name.toString().toLowerCase().indexOf(searchWord.toLowerCase()) !== -1) ||
+            (todolist.worry.blocks[0].data.text && todolist.worry.blocks[0].data.text.toString().toLowerCase().indexOf(searchWord.toLowerCase()) !== -1)
           )
         }
         )
@@ -73,13 +73,11 @@ class Search extends React.Component {
       )
     } else {
       searchResult = (
-        <div className="display-title-wrapper">
           <Display
             actionMethod={this.props.actionMethod}
             todolists={this.state.searchLists}
             isSearch={this.state.isSearch}
           />
-        </div>
       )
     }
 

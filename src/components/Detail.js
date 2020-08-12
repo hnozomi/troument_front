@@ -10,7 +10,6 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import EditorJs from 'react-editor-js';
-import { CircularProgress } from '@material-ui/core';
 
 import { EDITOR_JS_TOOLS } from "./editor-tool";
 
@@ -39,97 +38,14 @@ class Detail extends React.Component {
         }
         this.listDelete = this.listDelete.bind(this)
         this.deleteDialogOpen = this.deleteDialogOpen.bind(this)
-        // this.goodCheck = this.goodCheck.bind(this)
     }
 
     // ****************************************************************///
-    // 詳細を取得
-    // ****************************************************************///
-
-    // componentDidMount() {
-    //     this.getDetailTodolist()
-    // }
-
-
-    // ****************************************************************///
-    // いいねをしているかチェック
-    // ****************************************************************///
-
-    // getDetailTodolist() {
-    //     const param = {
-    //         worry_id: this.state.detail_todolist.worry_id,
-    //         _id: this.state.detail_todolist._id,
-    //         username: this.props.login_user,
-    //     }
-    //     this.goodCheck(param)
-    // }
-
-    // ****************************************************************///
-    // グッドをしたことがあるかチェック
-    // ****************************************************************///
-
-    // async goodCheck() {
-
-    //     console.log('Detail_goodcheck')
-
-    //     const param = {
-    //         worry_id: this.state.detail_todolist.worry_id,
-    //         _id: this.state.detail_todolist._id,
-    //         username: this.props.login_user,
-    //     }
-
-    //     const goodcheck =
-    //         this.state.detail_todolist.user.goodlist.filter((good) => {
-    //             return good === param._id
-    //         })
-
-    //     if (goodcheck.length === 0) {
-    //         this.setState(
-    //             {
-    //                 isGood: false,
-    //                 isGoodCheck: true
-    //             }
-    //         )
-    //     } else {
-    //         this.setState(
-    //             {
-    //                 isGood: true,
-    //                 isGoodCheck: true
-    //             }
-    //         )
-
-    //     }
-
-        // console.log(param._id, '_id')
-        // console.log(this.state.detail_todolist.user.goodlist, 'this.state.detail_todolist')
-
-        // Axios.get('/api/goodcheck', { params: param })
-        //     .then(response => {
-        //         console.log(response)
-        //         if (response.data.length === 0) {
-        //             this.setState({
-        //                 isGood: false,
-        //                 isGoodCheck: true
-        //             })
-        //         } else {
-        //             this.setState({
-        //                 isGood: true,
-        //                 isGoodCheck: true
-        //             })
-        //         }
-        //     })
-        //     .catch(err => {
-        //         console.error(new Error(err))
-        //     })
-    // }
-
-
-    // ****************************************************************///
-    // いいねの実績をリストから消去  (state)
+    // 投稿した内容をリストから消去
     // ****************************************************************///
 
     listDelete() {
-        this.props.actionMethod.TodolistsDelete(this.state.detail_todolist.worry_id)
+        this.props.actionMethod.handleTodolistsDelete(this.state.detail_todolist.worry_id)
 
         Axios.delete('/api/delete', {
             data: { worry_id: this.state.detail_todolist.worry_id }
@@ -140,11 +56,11 @@ class Detail extends React.Component {
                 console.error(new Error(err))
             })
 
-        this.props.actionMethod.ClickCloseForm()
+        this.props.actionMethod.clickFormClose()
     }
 
     // ****************************************************************///
-    // 投稿したものを削除するとき、モーダルを表示する
+    // 投稿したものを削除するとき、モーダルを表示する (実行)
     // ****************************************************************///
 
     deleteDialogOpen = () => {
@@ -156,7 +72,7 @@ class Detail extends React.Component {
     };
 
     // ****************************************************************///
-    // 削除時のモーダルを閉じる 
+    // 削除時のモーダルを閉じる (キャンセル)
     // ****************************************************************///
 
     deleteDialogClose = () => {
@@ -168,7 +84,7 @@ class Detail extends React.Component {
     };
 
     // ****************************************************************///
-    // render
+    // レンダリング
     // ****************************************************************///    
 
     render() {
@@ -176,111 +92,102 @@ class Detail extends React.Component {
         let createDetail;
         let login_user = this.props.login_user
 
-        // if (this.state.isGoodCheck) {
-
-            if (this.state.isStatus) {
-                createDetail = (
-                    <React.Fragment>
-                        <div className="detail-wrapper">
-                            <section className="detail-section">
-                                <div className="detail-area">
-                                    <h1 className="detail-header">
-                                        悩みの詳細
-                                            </h1>
-                                    <EditorJs holder="worry" data={this.state.detail_todolist.worry} enableReInitialize={true} instanceRef={instance => this.editorInstance = instance} tools={EDITOR_JS_TOOLS}>
-                                        {/* <EditorJs holder="worry" data={this.state.data_worry} enableReInitialize={true} instanceRef={instance => this.editorInstance = instance} tools={EDITOR_JS_TOOLS}> */}
-                                        <div id="worry" />
-                                    </EditorJs>
-                                </div>
-                                <h1 className="detail-header">
-                                    解決詳細
-                                            </h1>
-                                <div className="detail-area">
-                                    <EditorJs holder="resolve" data={this.state.detail_todolist.resolve} enableReInitialize={true} instanceRef={instance => this.editorInstance = instance} tools={EDITOR_JS_TOOLS}>
-                                        {/* <EditorJs holder="resolve" data={this.state.data_resolve} enableReInitialize={true} instanceRef={instance => this.editorInstance = instance} tools={EDITOR_JS_TOOLS}> */}
-                                        <div id="resolve" />
-                                    </EditorJs>
-                                </div>
-                            </section>
-                        </div>
-                    </React.Fragment>
-                )
-            } else {
-                createDetail = (
-                    <React.Fragment>
-                        <div className="detail-wrapper">
-                            <section className="detail-section">
-                                <h1 className="detail-section">
-                                    悩み中
-                                            </h1>
-                            </section>
+        if (this.state.isStatus) {
+            createDetail = (
+                <React.Fragment>
+                    <div className="detail-wrapper">
+                        <section className="detail-section">
                             <div className="detail-area">
-                                <EditorJs holder="custom" data={this.state.detail_todolist.worry} enableReInitialize={true} instanceRef={instance => this.editorInstance = instance} tools={EDITOR_JS_TOOLS}>
-                                    <div id="custom" />
+                                <h1 className="detail-header">
+                                    悩みの詳細
+                                            </h1>
+                                <EditorJs holder="worry" data={this.state.detail_todolist.worry} enableReInitialize={true} instanceRef={instance => this.editorInstance = instance} tools={EDITOR_JS_TOOLS}>
+                                    {/* <EditorJs holder="worry" data={this.state.data_worry} enableReInitialize={true} instanceRef={instance => this.editorInstance = instance} tools={EDITOR_JS_TOOLS}> */}
+                                    <div id="worry" />
                                 </EditorJs>
                             </div>
-                            <FormButton
-                                actionMethod={this.props.actionMethod}
-                                isStatus={this.state.isStatus}
-                                detail_todolist={this.props.detail_todolist}
-                                login_user={login_user}
-                                isUpdateFormOpen={this.state.isUpdateFormOpen}
-                                isOpenDetail={this.state.isOpenDetail}
-                            />
+                            <h1 className="detail-header">
+                                解決詳細
+                                            </h1>
+                            <div className="detail-area">
+                                <EditorJs holder="resolve" data={this.state.detail_todolist.resolve} enableReInitialize={true} instanceRef={instance => this.editorInstance = instance} tools={EDITOR_JS_TOOLS}>
+                                    {/* <EditorJs holder="resolve" data={this.state.data_resolve} enableReInitialize={true} instanceRef={instance => this.editorInstance = instance} tools={EDITOR_JS_TOOLS}> */}
+                                    <div id="resolve" />
+                                </EditorJs>
+                            </div>
+                        </section>
+                    </div>
+                </React.Fragment>
+            )
+        } else {
+            createDetail = (
+                <React.Fragment>
+                    <div className="detail-wrapper">
+                        <section className="detail-section">
+                            <h1 className="detail-section">
+                                悩み中
+                                            </h1>
+                        </section>
+                        <div className="detail-area">
+                            <EditorJs holder="custom" data={this.state.detail_todolist.worry} enableReInitialize={true} instanceRef={instance => this.editorInstance = instance} tools={EDITOR_JS_TOOLS}>
+                                <div id="custom" />
+                            </EditorJs>
                         </div>
-                    </React.Fragment>
-                )
-            }
-        // } 
-        // else {
-        //     createDetail = (
-        //         <CircularProgress />
-        //     )
-        // }
-
+                        <FormButton
+                            actionMethod={this.props.actionMethod}
+                            isStatus={this.state.isStatus}
+                            detail_todolist={this.props.detail_todolist}
+                            login_user={login_user}
+                            isUpdateFormOpen={this.state.isUpdateFormOpen}
+                            isOpenDetail={this.state.isOpenDetail}
+                        />
+                    </div>
+                </React.Fragment>
+            )
+        }
 
         return (
-            <React.Fragment>
-                <Display
-                    {...this.props}
-                    isOpenDetail={this.props.isOpenDetail}
-                    isGood={this.state.isGood}
-                    isUpdateFormOpen={this.state.isUpdateFormOpen}
+            // <React.Fragment>
+            <div className="display-title-wrapper">
+            <Display
+                {...this.props}
+                isOpenDetail={this.props.isOpenDetail}
+                isGood={this.state.isGood}
+                isUpdateFormOpen={this.state.isUpdateFormOpen}
 
-                    deleteDialogOpen={this.deleteDialogOpen}
-                    goodCheck={this.goodCheck}
-                    actionMethod={this.props.actionMethod}
+                deleteDialogOpen={this.deleteDialogOpen}
+                goodCheck={this.goodCheck}
+                actionMethod={this.props.actionMethod}
 
-                    _id={this.state.detail_todolist._id}
-                />
+                _id={this.state.detail_todolist._id}
+            />
 
-                {/* {detailDisplay} */}
-                {createDetail}
+                { createDetail }
 
-                <Dialog
-                    open={this.state.isDeleteDialogOpen}
-                    onClose={this.deleteDialogClose}
-                    aria-labelledby="alert-dialog-title"
-                    aria-describedby="alert-dialog-description"
-                >
-                    <DialogTitle id="alert-dialog-title">{this.state.isStatus ? "解決したものを削除しようとしています" : "悩み中のものを削除しようとしています"}</DialogTitle>
-                    <DialogContent>
-                        <DialogContentText id="alert-dialog-description">
-                            削除してもよろしいですか？
+        <Dialog
+            open={this.state.isDeleteDialogOpen}
+            onClose={this.deleteDialogClose}
+            aria-labelledby="alert-dialog-title"
+            aria-describedby="alert-dialog-description"
+        >
+            <DialogTitle id="alert-dialog-title">{this.state.isStatus ? "解決したものを削除しようとしています" : "悩み中のものを削除しようとしています"}</DialogTitle>
+            <DialogContent>
+                <DialogContentText id="alert-dialog-description">
+                    削除してもよろしいですか？
                         </DialogContentText>
-                    </DialogContent>
-                    <DialogActions>
-                        <Button onClick={this.deleteDialogClose} color="primary">
-                            キャンセル
+            </DialogContent>
+            <DialogActions>
+                <Button onClick={this.deleteDialogClose} color="primary">
+                    キャンセル
                         </Button>
-                        <Button onClick={this.listDelete} color="primary" autoFocus>
-                            OK
+                <Button onClick={this.listDelete} color="primary" autoFocus>
+                    OK
                         </Button>
-                    </DialogActions>
-                </Dialog>
+            </DialogActions>
+        </Dialog>
 
-
-            </React.Fragment>
+         </div >
+            // </React.Fragment>
         );
     }
 }

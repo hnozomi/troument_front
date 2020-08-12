@@ -1,6 +1,6 @@
 const titleValidation = (title) => {
   if (!title) return 'タイトルを入力してください';
-  if (title.length > 40) return 'タイトルは40文字以内で入力してください';
+  if (title.length > 40) return 'タイトルは50文字以内で入力してください';
 
   return '';
 };

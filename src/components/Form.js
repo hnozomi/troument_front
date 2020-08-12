@@ -297,7 +297,7 @@ class Form extends React.Component {
               handleDelete={this.handleDelete.bind(this)}
               handleAddition={this.handleAddition.bind(this)}
               handleBlur={this.handleBlur}
-              placeholder={"タグを追加してください"}
+              placeholderText={"タグを追加してください"}
             />
           </section>
 

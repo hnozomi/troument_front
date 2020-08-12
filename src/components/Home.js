@@ -37,13 +37,13 @@ class Home extends React.Component {
             loading: false
 
         }
-        this.ClickCloseForm = this.ClickCloseForm.bind(this)
-        this.addLists = this.addLists.bind(this)
-        this.resolveAdd = this.resolveAdd.bind(this)
+        this.clickFormClose = this.clickFormClose.bind(this)
+        this.handleWorryAdd = this.handleWorryAdd.bind(this)
+        this.handleResolveAdd = this.handleResolveAdd.bind(this)
         this.displayDetail = this.displayDetail.bind(this)
-        this.worryUpdate = this.worryUpdate.bind(this)
-        this.resolveUpdate = this.resolveUpdate.bind(this)
-        this.TodolistsDelete = this.TodolistsDelete.bind(this)
+        this.handleWorryUpdate = this.handleWorryUpdate.bind(this)
+        this.handleResolveUpdate = this.handleResolveUpdate.bind(this)
+        this.handleTodolistsDelete = this.handleTodolistsDelete.bind(this)
         this.createTime = this.createTime.bind(this)
         this.handleGoodCount = this.handleGoodCount.bind(this)
         this.gooStatusCheck = this.gooStatusCheck.bind(this)
@@ -69,7 +69,6 @@ class Home extends React.Component {
         this.setState({
             login_user: login_user
         })
-        // const url = constUrl + '/api/display'
         Axios.get('/api/display')
             .then(response => {
                 this.setState((state => {
@@ -95,7 +94,6 @@ class Home extends React.Component {
             .then(response => {
                 this.setState((state => {
                     return { userinfo: response.data, loading: true }
-                    // return { userinfo: response.data[0], loading: true }
                 })
                 )
             })
@@ -108,13 +106,13 @@ class Home extends React.Component {
     //  悩みを投稿  ホーム画面のボタンから投稿
     // ****************************************************************///
 
-    async addLists(title, tags, savedData) {
+    async handleWorryAdd(title, tags, savedData) {
         this.setState((state => {
             return { loading: false }
         }))
         let time = this.createTime()
 
-        this.ClickCloseForm()
+        this.clickFormClose()
         const shortid = require('shortid');
         let worry_id = shortid.generate()
 
@@ -154,11 +152,11 @@ class Home extends React.Component {
     // 解決方法の投稿   detailコンポーネントのresolveAddから実行
     // ****************************************************************///
 
-    async resolveAdd(savedData) {
-        var time = this.createTime()
+    async handleResolveAdd(savedData) {
+        let time = this.createTime()
 
-        await this.TodolistsDelete(this.state.detail_todolist.worry_id)
-        var detail_todolist = this.state.detail_todolist
+        await this.handleTodolistsDelete(this.state.detail_todolist.worry_id)
+        let detail_todolist = this.state.detail_todolist
 
         detail_todolist.resolve = savedData
         detail_todolist.status = true
@@ -182,7 +180,7 @@ class Home extends React.Component {
                 console.error(new Error(err))
             })
 
-        this.ClickCloseForm()
+        this.clickFormClose()
     }
 
     // ****************************************************************///
@@ -190,7 +188,7 @@ class Home extends React.Component {
     // ****************************************************************///
 
 
-    async TodolistsDelete(worry_id) {
+    async handleTodolistsDelete(worry_id) {
         const new_todolists =
             this.state.todolists.filter((todolist) => {
                 return todolist.worry_id !== worry_id
@@ -207,11 +205,11 @@ class Home extends React.Component {
     // 悩みの編集 Detailコンポーネントの1worryUpdateから実行
     // ****************************************************************///
 
-    async worryUpdate(title, tag, savedData) {
-        var time = this.createTime()
-        await this.TodolistsDelete(this.state.detail_todolist.worry_id)
+    async handleWorryUpdate(title, tag, savedData) {
+        let time = this.createTime()
+        await this.handleTodolistsDelete(this.state.detail_todolist.worry_id)
 
-        var detail_todolist = this.state.detail_todolist
+        let detail_todolist = this.state.detail_todolist
 
         detail_todolist.title = title
         detail_todolist.tag = tag
@@ -234,7 +232,7 @@ class Home extends React.Component {
             })
 
 
-        this.ClickCloseForm()
+        this.clickFormClose()
 
     }
 
@@ -242,12 +240,12 @@ class Home extends React.Component {
     // 解決の編集DetailコンポーネントのresolveUpdateから実行
     // ****************************************************************///
 
-    async resolveUpdate(savedData) {
-        var time = this.createTime()
-        await this.TodolistsDelete(this.state.detail_todolist.worry_id)
+    async handleResolveUpdate(savedData) {
+        let time = this.createTime()
+        await this.handleTodolistsDelete(this.state.detail_todolist.worry_id)
 
 
-        var detail_todolist = this.state.detail_todolist
+        let detail_todolist = this.state.detail_todolist
 
         detail_todolist.resolve = savedData
         detail_todolist.time = time
@@ -258,7 +256,6 @@ class Home extends React.Component {
         })
         );
 
-        // const url = constUrl + '/api/listdelete'
         Axios.post('/api/listupdate', {
             detail_todolist: this.state.detail_todolist,
         })
@@ -268,7 +265,7 @@ class Home extends React.Component {
                 console.error(new Error(err))
             })
 
-        this.ClickCloseForm()
+        this.clickFormClose()
     }
 
 
@@ -317,7 +314,7 @@ class Home extends React.Component {
     // 悩み・解決を投稿するFormをクローズ. 投稿後のポップアップ表示
     // ****************************************************************///
 
-    ClickCloseForm() {
+    clickFormClose() {
 
         this.setState(
             {
@@ -377,9 +374,9 @@ class Home extends React.Component {
     async gooStatusCheck(_id, isGood) {
 
         if (isGood) {
-            this.gooddeleteCheck(_id)
+            this.goodDeleteCheck(_id)
         } else {
-            this.goodaddCheck(_id)
+            this.goodAddCheck(_id)
         }
     }
 
@@ -387,7 +384,7 @@ class Home extends React.Component {
     //  goodした履歴がない場合追加する
     // ****************************************************************///
 
-    async goodaddCheck(_id) {
+    async goodAddCheck(_id) {
         let CountUp = []
         CountUp = this.state.detail_todolist
         CountUp.count = CountUp.count + 1
@@ -420,7 +417,7 @@ class Home extends React.Component {
     // goodした履歴がある場合、削除
     // ****************************************************************///
     
-    async gooddeleteCheck(_id) {
+    async goodDeleteCheck(_id) {
         let CountUp = []
         CountUp = this.state.detail_todolist
         CountUp.count = CountUp.count - 1
@@ -460,18 +457,18 @@ class Home extends React.Component {
     render() {
         let homeDisplay
         const actionMethod = {
-            resolveAdd: this.resolveAdd,
-            worryUpdate: this.worryUpdate,
-            resolveUpdate: this.resolveUpdate,
-            TodolistsDelete: this.TodolistsDelete,
-            ClickCloseForm: this.ClickCloseForm,
+            handleResolveAdd: this.handleResolveAdd,
+            handleWorryUpdate: this.handleWorryUpdate,
+            handleResolveUpdate: this.handleResolveUpdate,
+            handleTodolistsDelete: this.handleTodolistsDelete,
+            clickFormClose: this.clickFormClose,
             postFormOpen: this.postFormOpen,
             createTime: this.createTime,
             handleGoodCount: this.handleGoodCount,
-            goodaddCheck: this.goodaddCheck,
-            gooddeleteCheck: this.gooddeleteCheck,
+            goodAddCheck: this.goodAddCheck,
+            goodDeleteCheck: this.goodDeleteCheck,
             displayDetail: this.displayDetail,
-            addLists: this.addLists,
+            handleWorryAdd: this.handleWorryAdd,
             updateFormOpen: this.updateFormOpen,
             resolveFormOpen: this.resolveFormOpen
         }
@@ -540,6 +537,11 @@ class Home extends React.Component {
                             <div onClick={this.postFormOpen} className="create-form">
                                 <img alt="CreateForm" src="/icon/create-form.svg" className="create-form-icon" />
                             </div>
+                            <div onClick={this.postFormOpen} className="create-form-PC">
+                                投稿する
+                                {/* <p className="create-form-text-PC">投稿する</p> */}
+                                <img alt="CreateForm" src="/icon/create-form.svg" className="create-form-icon" />
+                            </div>
 
                         </div>
                     )
@@ -575,7 +577,7 @@ class Home extends React.Component {
                 </Auth>
 
                 <Navigation
-                    ClickCloseForm={this.ClickCloseForm}
+                    clickFormClose={this.clickFormClose}
                     SearchList={this.SearchList}
                     todolists={this.state.todolists}
                 />

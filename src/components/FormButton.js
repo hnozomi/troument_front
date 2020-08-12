@@ -20,22 +20,24 @@ class FormButton extends React.Component {
     let title = this.props.title
     let tags = this.props.tags
     let savedData = this.props.savedData
-    const { worryUpdate, addLists, resolveUpdate, resolveAdd } = this.props.actionMethod || ''
+    const { handleWorryUpdate, handleWorryAdd, handleResolveUpdate, handleResolveAdd } = this.props.actionMethod || ''
     this.setState(
       {
         isOpen: !this.state.isOpen,
       }
     );
 
+    console.log(title, tags, savedData)
+
     this.props.isUpdateFormOpen
       ? (this.state.detail_todolist.status
-        ? await resolveUpdate(savedData)
-        : await worryUpdate(title, tags, savedData)
+        ? await handleResolveUpdate(savedData)
+        : await handleWorryUpdate(title, tags, savedData)
       )
 
       : (this.props.isOpenDetail
-        ? await resolveAdd(savedData)
-        : await addLists(title, tags, savedData)
+        ? await handleResolveAdd(savedData)
+        : await handleWorryAdd(title, tags, savedData)
       )
 
   };
@@ -58,7 +60,7 @@ class FormButton extends React.Component {
 
   render() {
     let createButton;
-    const { ClickCloseForm } = this.props.actionMethod || ''
+    const { clickFormClose } = this.props.actionMethod || ''
 
     if (this.props.isOpenDetail && !this.props.isFormOpen) {
       if (this.props.login_user === this.props.detail_todolist.username) {
@@ -71,15 +73,15 @@ class FormButton extends React.Component {
     } else {
       createButton = (
         <div className="button-wrapper">
-          <button onClick={ClickCloseForm} className="first-button button">キャンセル</button>
+          <button onClick={clickFormClose} className="first-button button">キャンセル</button>
           <Popover
             isOpen={this.state.isOpen}
             body={
               this.props.isResolveFormOpen
-                ? (this.props.resolveUpdate
+                ? (this.props.handleResolveUpdate
                   ? <div className="popover"><p className="popover-text">修正が完了しました！</p><p className="popover-text">その調子！</p></div>
                   : <div className="popover"><p className="popover-text">お疲れ様です！</p><p className="popover-text">その調子！</p></div>)
-                : (this.props.worryUpdate)
+                : (this.props.handleWorryUpdate)
                   ? (<div className="popover"><p className="popover-text">修正が完了しました</p><p className="popover-text">頑張れー！</p></div>)
                   : (<div className="popover"><p className="popover-text">頑張ってください！</p><p className="popover-text">応援しています！</p></div>)
 
@@ -89,7 +91,7 @@ class FormButton extends React.Component {
           >
             {
               this.props.isStatus
-                ? <button onClick={this.submit} type="submit" className="button">投稿</button>
+                ? <button disabled={!this.props.canSubmit()} onClick={this.submit} type="submit" className="button">投稿</button>
                 // : <button onClick={this.submit} type="submit" className="button">投稿</button>
                 : <button disabled={!this.props.canSubmit()} onClick={this.submit} type="submit" className="button">投稿</button>
             }

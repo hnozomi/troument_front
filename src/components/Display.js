@@ -18,7 +18,6 @@ class Display extends React.Component {
     this.state = {
       todolists: this.props.todolists,
       userinfo: this.props.userinfo,
-      // isGood: this.props.isGood,
       isGood: false,
       isMypage: this.props.isMypage,
       isSearch: this.props.isSearch

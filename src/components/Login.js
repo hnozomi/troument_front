@@ -139,7 +139,7 @@ class Login extends React.Component {
                             <span className="account-form-bg"></span>
                         </div>
                         <div className="form-label-wrap">
-                            <label className="account-form-label">パスワード<span className="form-span">パスワードをお忘れですか？</span></label>
+                            <label className="account-form-label">パスワード<span className="form-span">必須</span></label>
                             <input className="form-input"
                                 type="text"
                                 name="password"
