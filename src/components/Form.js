@@ -295,7 +295,8 @@ class Form extends React.Component {
               tags={this.state.tags}
               suggestions={this.state.suggestions}
               handleDelete={this.handleDelete.bind(this)}
-              handleAddition={this.handleAddition.bind(this)}
+              // handleAddition={this.handleAddition.bind(this)}
+              onAddition={this.handleAddition.bind(this)}
               handleBlur={this.handleBlur}
               placeholderText={"タグを追加してください"}
             />

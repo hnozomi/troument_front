@@ -14,6 +14,8 @@ import './App.css'
 // import AxiosBase from 'axios';
 import Axios from 'axios';
 
+import PostAddIcon from '@material-ui/icons/PostAdd';
+
 // ****************************************************************///
 //  初期画面
 // ****************************************************************///
@@ -534,14 +536,15 @@ class Home extends React.Component {
                             />
 
 
-                            <div onClick={this.postFormOpen} className="create-form">
+                            {/* <div onClick={this.postFormOpen} className="create-form">
                                 <img alt="CreateForm" src="/icon/create-form.svg" className="create-form-icon" />
-                            </div>
-                            <div onClick={this.postFormOpen} className="create-form-PC">
+                            </div> */}
+                            {/* <div onClick={this.postFormOpen} className="create-form-PC">
                                 投稿する
-                                {/* <p className="create-form-text-PC">投稿する</p> */}
+                                <PostAddIcon fontSize="small"/>
+                                <p className="create-form-text-PC">投稿する</p>
                                 <img alt="CreateForm" src="/icon/create-form.svg" className="create-form-icon" />
-                            </div>
+                            </div> */}
 
                         </div>
                     )
@@ -578,6 +581,7 @@ class Home extends React.Component {
 
                 <Navigation
                     clickFormClose={this.clickFormClose}
+                    postFormOpen={this.postFormOpen}
                     SearchList={this.SearchList}
                     todolists={this.state.todolists}
                 />
