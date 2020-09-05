@@ -539,6 +539,7 @@ class Home extends React.Component {
                 homeDisplay = (
                     <Detail
                         todolists={this.state.todolists}
+                        userinfo={this.state.userinfo}
                         detail_todolist={this.state.detail_todolist}
                         count={this.state.count}
                         login_user={this.state.login_user}
