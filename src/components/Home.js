@@ -11,8 +11,8 @@ import User from './User';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import './App.css'
-// import AxiosBase from 'axios';
-import Axios from 'axios';
+import AxiosBase from 'axios';
+// import Axios from 'axios';
 
 import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
@@ -22,9 +22,9 @@ import Fade from '@material-ui/core/Fade';
 //  初期画面
 // ****************************************************************///
 
-// const Axios = AxiosBase.create({
-//     baseURL: "https://troument-api.net"
-//   });
+const Axios = AxiosBase.create({
+    baseURL: "https://troument-api.net"
+  });
 
 
 class Home extends React.Component {
