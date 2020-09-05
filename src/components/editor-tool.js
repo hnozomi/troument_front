@@ -16,31 +16,82 @@ import InlineCode from '@editorjs/inline-code'
 import SimpleImage from '@editorjs/simple-image'
 
 export const EDITOR_JS_TOOLS = {
-    embed: Embed,
-    table: Table,
+    embed: {
+        class: Embed,
+        config: {
+            youtube: true,
+        },
+        inlineToolbar: true
+    },
+    table: {
+        class: Table,
+        inlineToolbar: true,
+    },
     paragraph: {
         class: Paragraph,
+        inlineToolbar: true,
         config: {
-            placeholder: "メモを残そう！",
-            contenteditable: false
+            placeholder: "ここに入力してください",
         }
     },
-    list: List,
-    warning: Warning,
-    code: Code,
+    list: {
+        class: List,
+        inlineToolbar: true
+    },
+    warning: {
+        class: Warning,
+        inlineToolbar: true,
+        config: {
+            titlePlaceholder: 'Title',
+            messagePlaceholder: 'Message',
+        },
+    },
+    code: {
+        class: Code,
+    },
     linkTool: {
         class: LinkTool,
+        inlineToolbar: true,
         config: {
             endpoint: 'http://localhost:8008/fetchUrl', // Your backend endpoint for url data fetching
         }
     },
-    image: Image,
-    raw: Raw,
-    header: Header,
-    quote: Quote,
+    // image: Image,
+    raw: {
+        class: Raw,
+        inlineToolbar: true,
+    },
+    header: {
+        class: Header,
+        config: {
+            placeholder: 'Enter a header',
+        },
+        inlineToolbar: true,
+    },
+    quote: {
+        class: Quote,
+        inlineToolbar: true,
+        config: {
+            quotePlaceholder: '引用する',
+            captionPlaceholder: '筆者 or 引用元',
+        },
+    },
     marker: Marker,
-    checklist: CheckList,
-    delimiter: Delimiter,
-    inlineCode: InlineCode,
-    simpleImage: SimpleImage
+    checklist: {
+        class: CheckList,
+        inlineToolbar: true,
+    },
+
+    delimiter: {
+        class: Delimiter,
+        inlineToolbar: true,
+    },
+    inlineCode: {
+        class: InlineCode,
+        inlineToolbar: true,
+    },
+    simpleImage: {
+        class: SimpleImage,
+        inlineToolbar: true,
+    },
 }

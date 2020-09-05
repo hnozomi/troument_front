@@ -14,7 +14,9 @@ import './App.css'
 // import AxiosBase from 'axios';
 import Axios from 'axios';
 
-import PostAddIcon from '@material-ui/icons/PostAdd';
+import Modal from '@material-ui/core/Modal';
+import Backdrop from '@material-ui/core/Backdrop';
+import Fade from '@material-ui/core/Fade';
 
 // ****************************************************************///
 //  初期画面
@@ -391,44 +393,44 @@ class Home extends React.Component {
         CountUp = this.state.detail_todolist
         CountUp.count = CountUp.count + 1
         CountUp.user.goodlist.push(_id)
-        
+
         this.setState((state => {
             return {
                 detail_todolist: CountUp
             }
         })
         )
-        
+
         const param = {
             _id: _id,
             username: this.state.login_user,
             count: this.state.detail_todolist.count
         }
-        
+
         Axios.get('/api/goodadd', {
             params: param
         })
-        .then(response => {
-        })
-        .catch(err => {
-            console.error(new Error(err))
-        })
+            .then(response => {
+            })
+            .catch(err => {
+                console.error(new Error(err))
+            })
     }
-    
+
     // ****************************************************************///
     // goodした履歴がある場合、削除
     // ****************************************************************///
-    
+
     async goodDeleteCheck(_id) {
         let CountUp = []
         CountUp = this.state.detail_todolist
         CountUp.count = CountUp.count - 1
 
-        
+
         const goodcheck =
-        this.state.detail_todolist.user.goodlist.findIndex((good) => {
-            return good === _id
-        })
+            this.state.detail_todolist.user.goodlist.findIndex((good) => {
+                return good === _id
+            })
 
         CountUp.user.goodlist.splice(goodcheck, 1)
 
@@ -451,6 +453,24 @@ class Home extends React.Component {
                 console.error(new Error(err))
             })
     }
+
+
+
+
+    handleOpen = () => {
+        this.setState({
+            setOpen: true
+        })
+      };
+
+    handleClose = () => {
+        this.setState({
+            setOpen: false
+        })
+      };
+    
+
+
 
     // ****************************************************************///
     // render    stateとpropsに変化があった場合に呼び出される
@@ -482,26 +502,26 @@ class Home extends React.Component {
 
                 ? homeDisplay = (
                     <React.Fragment>
-                    <Display
-                    {...this.props}
-                    isOpenDetail={this.state.isOpenDetail}
-                    isGood={this.state.isGood}
-                    detail_todolist={this.state.detail_todolist}
-                    isUpdateFormOpen={this.state.isUpdateFormOpen}
+                        <Display
+                            {...this.props}
+                            isOpenDetail={this.state.isOpenDetail}
+                            isGood={this.state.isGood}
+                            detail_todolist={this.state.detail_todolist}
+                            isUpdateFormOpen={this.state.isUpdateFormOpen}
 
-                    deleteDialogOpen={this.deleteDialogOpen}
-                    actionMethod={actionMethod}
+                            deleteDialogOpen={this.deleteDialogOpen}
+                            actionMethod={actionMethod}
 
-                    _id={this.state.detail_todolist._id}
-                />
-                    <Form
-                        isUpdateFormOpen={this.state.isUpdateFormOpen}
-                        detail_todolist={this.state.detail_todolist}
-                        isOpenDetail={this.state.isOpenDetail}
-                        actionMethod={actionMethod}
-                        isFormOpen={this.state.isFormOpen}
-                        isResolveFormOpen={this.state.isResolveFormOpen}
-                    />
+                            _id={this.state.detail_todolist._id}
+                        />
+                        <Form
+                            isUpdateFormOpen={this.state.isUpdateFormOpen}
+                            detail_todolist={this.state.detail_todolist}
+                            isOpenDetail={this.state.isOpenDetail}
+                            actionMethod={actionMethod}
+                            isFormOpen={this.state.isFormOpen}
+                            isResolveFormOpen={this.state.isResolveFormOpen}
+                        />
                     </React.Fragment>
                 )
                 : homeDisplay = (
@@ -509,6 +529,8 @@ class Home extends React.Component {
                         isOpenDetail={this.state.isOpenDetail}
                         login_user={this.state.login_user}
                         actionMethod={actionMethod}
+                        handleClose={this.handleClose}
+                        handleOpen={this.handleOpen}
                     />
                 )
 
@@ -562,6 +584,26 @@ class Home extends React.Component {
                         <Route exact path='/'>
 
                             {homeDisplay}
+
+                            <Modal
+                                aria-labelledby="transition-modal-title"
+                                aria-describedby="transition-modal-description"
+                                open={this.state.setOpen}
+                                onClose={this.handleClose}
+                                className={"modal"}
+                                closeAfterTransition
+                                BackdropComponent={Backdrop}
+                                BackdropProps={{
+                                    timeout: 500,
+                                }}
+                            >
+                                <Fade in={this.state.setOpen}>
+                                    <div className="paper">
+                                        <h2 id="transition-modal-title" className="modal-title modal-cons">送信完了!</h2>
+                                        <p id="transition-modal-description" className="modal-description modal-cons">これからも頑張ってください</p>
+                                    </div>
+                                </Fade>
+                            </Modal>
 
                         </Route>
 

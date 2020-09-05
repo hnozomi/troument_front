@@ -27,8 +27,6 @@ class FormButton extends React.Component {
       }
     );
 
-    console.log(title, tags, savedData)
-
     this.props.isUpdateFormOpen
       ? (this.state.detail_todolist.status
         ? await handleResolveUpdate(savedData)
@@ -52,6 +50,8 @@ class FormButton extends React.Component {
     this.props.startSending()
     await this.togglePopover()
     setTimeout(this.props.endSending, 1000)
+    this.props.handleOpen()
+    setTimeout(this.props.handleClose, 1500)
   }
 
   // ****************************************************************///

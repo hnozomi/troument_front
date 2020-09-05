@@ -50,9 +50,10 @@ class Login extends React.Component {
             params: params,
           })
           .then(response => {
-            if (response.data === '') {
+            if (typeof(response.data) === 'string') {
               this.setState({
                 isOpen: !this.state.isOpen,
+                message: response.data
               })
             } else {
                 User.login(this.state.input.account, this.state.input.password);
@@ -123,7 +124,7 @@ class Login extends React.Component {
                                 place={'above'}
                                 body={
                                     <div className="popover">
-                                        <p className="popover-text">アカウント名かパスワードに誤りがあります</p>
+                                        <p className="popover-text">{this.state.message}</p>
                                     </div>
                                 }
                                 enterExitTransitionDurationMs={800}

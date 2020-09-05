@@ -154,6 +154,7 @@ class Form extends React.Component {
   handleDelete(i) {
     const tags = this.state.tags.slice(0)
     const { message } = this.state;
+    console.log(message)
     tags.splice(i, 1)
     this.setState({
       message: {
@@ -208,6 +209,7 @@ class Form extends React.Component {
   saveEditor = async () => {
     const { message } = this.state;
     let savedData = await this.editorInstance.save()
+    console.log(savedData)
     this.setState({
       message: {
         ...message,
@@ -227,6 +229,7 @@ class Form extends React.Component {
   render() {
     let displayForm
     const { input, message, status } = this.state;
+    {this.props.detail_todolist && console.log(this.props.detail_todolist.resolve)}
 
     if (status || this.props.isResolveFormOpen) {
       displayForm = (
@@ -294,7 +297,7 @@ class Form extends React.Component {
             <ReactTags
               tags={this.state.tags}
               suggestions={this.state.suggestions}
-              handleDelete={this.handleDelete.bind(this)}
+              onDelete={this.handleDelete.bind(this)}
               // handleAddition={this.handleAddition.bind(this)}
               onAddition={this.handleAddition.bind(this)}
               handleBlur={this.handleBlur}
@@ -329,6 +332,8 @@ class Form extends React.Component {
             canSubmit={this.canSubmit}
             startSending={this.startSending}
             endSending={this.endSending}
+            handleOpen={this.props.handleOpen}
+            handleClose={this.props.handleClose}
           />
         </form>
       )

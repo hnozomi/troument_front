@@ -13,10 +13,11 @@ html {
     padding: 1em;
 }
 
-@media screen and (min-width: 960px) {
+@media screen and (min-width: 760px) {
     /* 960px以上に適用されるCSS（PC用） */
     .wrappers {
         width: 60%;
+        background: radial-gradient(#F2B9A1, #EA6264)
     }
 }
 
