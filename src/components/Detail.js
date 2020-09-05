@@ -1,8 +1,8 @@
 import React from 'react';
 import FormButton from './FormButton';
 import Display from './Display';
-import Axios from 'axios';
-// import AxiosBase from 'axios';
+// import Axios from 'axios';
+import AxiosBase from 'axios';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -19,9 +19,9 @@ import { EDITOR_JS_TOOLS } from "./editor-tool";
 // ****************************************************************///
 
 
-// const Axios = AxiosBase.create({
-//     baseURL: "https://troument-api.net"
-// });
+const Axios = AxiosBase.create({
+    baseURL: "https://troument-api.net"
+});
 
 
 class Detail extends React.Component {
