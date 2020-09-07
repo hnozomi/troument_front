@@ -44,6 +44,7 @@ class Mypage extends React.Component {
     this.resolveListDisplay = this.resolveListDisplay.bind(this)
     this.usefulListDisplay = this.usefulListDisplay.bind(this)
     this.getMypageTodolists = this.getMypageTodolists.bind(this)
+    console.log(this.props.userinfo.thumbnail)
   }
 
 

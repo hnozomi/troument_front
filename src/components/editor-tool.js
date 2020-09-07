@@ -30,9 +30,9 @@ export const EDITOR_JS_TOOLS = {
     paragraph: {
         class: Paragraph,
         inlineToolbar: true,
-        config: {
-            placeholder: "ここに入力してください",
-        }
+        // config: {
+        //     placeholder: "ここに入力してください",
+        // }
     },
     list: {
         class: List,

@@ -38,7 +38,8 @@ class Home extends React.Component {
             isOpenDetail: false,
             popover: false,
             isGood: false,
-            loading: false
+            loading: false,
+            isHome: true
 
         }
         this.clickFormClose = this.clickFormClose.bind(this)
@@ -461,14 +462,14 @@ class Home extends React.Component {
         this.setState({
             setOpen: true
         })
-      };
+    };
 
     handleClose = () => {
         this.setState({
             setOpen: false
         })
-      };
-    
+    };
+
 
 
 
@@ -477,6 +478,7 @@ class Home extends React.Component {
     // ****************************************************************///
 
     render() {
+        console.log(this.state, 'HOME')
         let homeDisplay
         const actionMethod = {
             handleResolveAdd: this.handleResolveAdd,
@@ -502,26 +504,28 @@ class Home extends React.Component {
 
                 ? homeDisplay = (
                     <React.Fragment>
-                        <Display
-                            {...this.props}
-                            isOpenDetail={this.state.isOpenDetail}
-                            isGood={this.state.isGood}
-                            detail_todolist={this.state.detail_todolist}
-                            isUpdateFormOpen={this.state.isUpdateFormOpen}
+                        <div className="display-title-wrapper">
+                            <Display
+                                {...this.props}
+                                isOpenDetail={this.state.isOpenDetail}
+                                isGood={this.state.isGood}
+                                detail_todolist={this.state.detail_todolist}
+                                isUpdateFormOpen={this.state.isUpdateFormOpen}
 
-                            deleteDialogOpen={this.deleteDialogOpen}
-                            actionMethod={actionMethod}
-
-                            _id={this.state.detail_todolist._id}
-                        />
-                        <Form
-                            isUpdateFormOpen={this.state.isUpdateFormOpen}
-                            detail_todolist={this.state.detail_todolist}
-                            isOpenDetail={this.state.isOpenDetail}
-                            actionMethod={actionMethod}
-                            isFormOpen={this.state.isFormOpen}
-                            isResolveFormOpen={this.state.isResolveFormOpen}
-                        />
+                                deleteDialogOpen={this.deleteDialogOpen}
+                                actionMethod={actionMethod}
+                                userinfo={this.state.userinfo}
+                                _id={this.state.detail_todolist._id}
+                            />
+                                <Form
+                                    isUpdateFormOpen={this.state.isUpdateFormOpen}
+                                    detail_todolist={this.state.detail_todolist}
+                                    isOpenDetail={this.state.isOpenDetail}
+                                    actionMethod={actionMethod}
+                                    isFormOpen={this.state.isFormOpen}
+                                    isResolveFormOpen={this.state.isResolveFormOpen}
+                                />
+                            </div>
                     </React.Fragment>
                 )
                 : homeDisplay = (
@@ -549,7 +553,7 @@ class Home extends React.Component {
                 )
 
             } else {
-                this.state.loading
+                this.state.loading && this.state.isHome
                     ? homeDisplay = (
                         <div className="display-title-wrapper">
                             <Display
@@ -557,17 +561,6 @@ class Home extends React.Component {
                                 userinfo={this.state.userinfo}
                                 actionMethod={actionMethod}
                             />
-
-
-                            {/* <div onClick={this.postFormOpen} className="create-form">
-                                <img alt="CreateForm" src="/icon/create-form.svg" className="create-form-icon" />
-                            </div> */}
-                            {/* <div onClick={this.postFormOpen} className="create-form-PC">
-                                投稿する
-                                <PostAddIcon fontSize="small"/>
-                                <p className="create-form-text-PC">投稿する</p>
-                                <img alt="CreateForm" src="/icon/create-form.svg" className="create-form-icon" />
-                            </div> */}
 
                         </div>
                     )

@@ -23,7 +23,8 @@ class Header extends React.Component {
 
   returnHome() {
     this.props.history.push({
-      pathname: '/'
+      pathname: '/',
+      state: { isHome: true }
   })
   }
 

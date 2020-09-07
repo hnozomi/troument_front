@@ -10,7 +10,6 @@ import Popover from "react-popover";
 const Axios = AxiosBase.create({
   baseURL: "https://troument-api.net"
 });
-// const constUrl = "https://troument-api.net"
 
 class Register extends React.Component {
   constructor(props) {

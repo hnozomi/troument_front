@@ -8,7 +8,8 @@ class Search extends React.Component {
       searchLists: [],
       todolists: this.props.todolists,
       searchWord: '',
-      isSearch: true
+      isSearch: true,
+      isHome: false
     }
     this.filterSearchWord = this.filterSearchWord.bind(this)
   }
@@ -58,6 +59,7 @@ class Search extends React.Component {
   // ****************************************************************///
 
   render() {
+    console.log(this.state, 'Search')
     let searchResult;
 
     if (this.state.searchWord === '') {
