@@ -2,8 +2,8 @@ import React from 'react';
 import './Toppage.css'
 import Validation from './Validation';
 import User from './User';
-// import Axios from 'axios';
-import AxiosBase from 'axios';
+import Axios from 'axios';
+// import AxiosBase from 'axios';
 import { withRouter, Link } from "react-router-dom";
 import Popover from "react-popover";
 
@@ -17,9 +17,9 @@ const descriptiontext = {
 }
 
 
-const Axios = AxiosBase.create({
-    baseURL: "https://troument-api.net"
-  });
+// const Axios = AxiosBase.create({
+//     baseURL: "https://troument-api.net"
+//   });
 
 class Login extends React.Component {
     constructor(props) {

@@ -1,5 +1,6 @@
 import React from 'react';
 import DeleteIcon from '@material-ui/icons/Delete';
+import Tooltip from '@material-ui/core/Tooltip';
 import EditIcon from '@material-ui/icons/Edit';
 import { withRouter } from "react-router-dom";
 import Avatar from 'react-avatar';
@@ -108,8 +109,10 @@ class Display extends React.Component {
         <div className={"contents-wrappers " + (this.state.isMypage ? "mypage-diplay-wrapper" : '')}>
           <div className="contents-wrapper">
             <div className="content-icon-wrap">
+            <Tooltip title="Add" placement="top-end">
               <Avatar size={"50px"} round={"10px"} className="content-icon" src={"https://troument.s3-ap-northeast-1.amazonaws.com/" + this.state.userinfo.thumbnail} alt="" />
               {/* <Avatar size={"50px"} round={"10px"} className="content-icon" src={"https://troument.s3-ap-northeast-1.amazonaws.com/" + this.props.thumbnail} alt="" /> */}
+            </Tooltip>
             </div>
             <div className="content-wrapper">
               <div className="content-image-time">
@@ -175,7 +178,9 @@ class Display extends React.Component {
                 <div onClick={() => { this.callDisplayDetail(todolist.worry_id) }} className="contents-wrapper">
 
                   <div className="content-icon-wrap">
+                  <Tooltip title="Add" placement="top-end">
                     <Avatar size={"50px"} round={"10px"} src={"https://troument.s3-ap-northeast-1.amazonaws.com/" + todolist.user.thumbnail} alt="" />
+                    </Tooltip>
                   </div>
 
                   <div className="content-wrapper">

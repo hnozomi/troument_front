@@ -1,15 +1,15 @@
 import React from 'react';
 import './Toppage.css'
 import Validation from './Validation';
-import AxiosBase from 'axios';
-// import Axios from 'axios';
+// import AxiosBase from 'axios';
+import Axios from 'axios';
 import { withRouter } from "react-router-dom";
 import Popover from "react-popover";
 
 
-const Axios = AxiosBase.create({
-  baseURL: "https://troument-api.net"
-});
+// const Axios = AxiosBase.create({
+//   baseURL: "https://troument-api.net"
+// });
 
 class Register extends React.Component {
   constructor(props) {

@@ -46,6 +46,8 @@ class FormButton extends React.Component {
 
   submit = async(event) => {
     event.preventDefault();
+    console.log(this.state, 'state')
+    console.log(this.props, 'props')
 
     this.props.startSending()
     await this.togglePopover()

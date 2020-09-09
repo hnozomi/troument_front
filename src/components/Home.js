@@ -11,8 +11,8 @@ import User from './User';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import './App.css'
-import AxiosBase from 'axios';
-// import Axios from 'axios';
+// import AxiosBase from 'axios';
+import Axios from 'axios';
 
 import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
@@ -22,9 +22,9 @@ import Fade from '@material-ui/core/Fade';
 //  初期画面
 // ****************************************************************///
 
-const Axios = AxiosBase.create({
-    baseURL: "https://troument-api.net"
-  });
+// const Axios = AxiosBase.create({
+//     baseURL: "https://troument-api.net"
+//   });
 
 
 class Home extends React.Component {
@@ -478,7 +478,6 @@ class Home extends React.Component {
     // ****************************************************************///
 
     render() {
-        console.log(this.state, 'HOME')
         let homeDisplay
         const actionMethod = {
             handleResolveAdd: this.handleResolveAdd,
@@ -524,6 +523,8 @@ class Home extends React.Component {
                                     actionMethod={actionMethod}
                                     isFormOpen={this.state.isFormOpen}
                                     isResolveFormOpen={this.state.isResolveFormOpen}
+                                    handleClose={this.handleClose}
+                                    handleOpen={this.handleOpen}
                                 />
                             </div>
                     </React.Fragment>
@@ -593,8 +594,10 @@ class Home extends React.Component {
                             >
                                 <Fade in={this.state.setOpen}>
                                     <div className="paper">
-                                        <h2 id="transition-modal-title" className="modal-title modal-cons">送信完了!</h2>
-                                        <p id="transition-modal-description" className="modal-description modal-cons">これからも頑張ってください</p>
+                                        <img className="pop-icon" src="/image/paperplane.svg" alt="紙飛行機" />
+                                        <div className="pop-message">投稿が完了しました！</div>
+                                        {/* <h2 id="transition-modal-title" className="modal-title modal-cons">送信完了!</h2>
+                                        <p id="transition-modal-description" className="modal-description modal-cons">頑張って解決させましょう!</p> */}
                                     </div>
                                 </Fade>
                             </Modal>

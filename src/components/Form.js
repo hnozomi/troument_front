@@ -209,7 +209,6 @@ class Form extends React.Component {
   saveEditor = async () => {
     const { message } = this.state;
     let savedData = await this.editorInstance.save()
-    console.log(savedData)
     this.setState({
       message: {
         ...message,
@@ -229,7 +228,7 @@ class Form extends React.Component {
   render() {
     let displayForm
     const { input, message, status } = this.state;
-    {this.props.detail_todolist && console.log(this.props.detail_todolist.resolve)}
+    // {this.props.detail_todolist && console.log(this.props.detail_todolist.resolve)}
 
     if (status || this.props.isResolveFormOpen) {
       displayForm = (
