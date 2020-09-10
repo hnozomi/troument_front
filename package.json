@@ -20,6 +20,7 @@
     "react-dropzone": "^11.0.1",
     "react-dropzone-material-ui": "^2.0.0",
     "react-image-crop": "^8.6.4",
+    "react-js-pagination": "^3.0.3",
     "react-popover": "^0.5.10",
     "react-router-dom": "^5.1.2",
     "react-scripts": "^3.4.1",

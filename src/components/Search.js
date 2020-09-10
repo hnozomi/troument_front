@@ -59,7 +59,6 @@ class Search extends React.Component {
   // ****************************************************************///
 
   render() {
-    console.log(this.state, 'Search')
     let searchResult;
 
     if (this.state.searchWord === '') {

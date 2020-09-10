@@ -310,7 +310,10 @@ class Home extends React.Component {
     postFormOpen = () => {
         this.setState(
             {
-                isFormOpen: true
+                isFormOpen: true,
+                isResolveFormOpen: false,
+                isUpdateFormOpen: false,
+                isOpenDetail: false,
             }
         )
     }
@@ -325,8 +328,8 @@ class Home extends React.Component {
             {
                 isResolveFormOpen: false,
                 isUpdateFormOpen: false,
-                isFormOpen: false,
                 isOpenDetail: false,
+                isFormOpen: false,
                 pop_open: true,
             }
         )

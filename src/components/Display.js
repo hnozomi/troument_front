@@ -5,6 +5,8 @@ import EditIcon from '@material-ui/icons/Edit';
 import { withRouter } from "react-router-dom";
 import Avatar from 'react-avatar';
 
+import Pagination from "react-js-pagination";
+
 import ThumbUpIcon from '@material-ui/icons/ThumbUp';
 import ThumbUpAltOutlinedIcon from '@material-ui/icons/ThumbUpAltOutlined';
 
@@ -21,11 +23,21 @@ class Display extends React.Component {
       userinfo: this.props.userinfo,
       isGood: false,
       isMypage: this.props.isMypage,
-      isSearch: this.props.isSearch
+      isSearch: this.props.isSearch,
+      activePage: 15
     }
     this.callDisplayDetail = this.callDisplayDetail.bind(this)
     this.handleGoodChange = this.handleGoodChange.bind(this)
     this.goodCheck = this.goodCheck.bind(this)
+  }
+
+  // ****************************************************************///
+  // Pagenationテスト
+  // ****************************************************************///
+
+  handlePageChange(pageNumber) {
+    console.log(`active page is ${pageNumber}`);
+    this.setState({activePage: pageNumber});
   }
 
 
@@ -109,10 +121,8 @@ class Display extends React.Component {
         <div className={"contents-wrappers " + (this.state.isMypage ? "mypage-diplay-wrapper" : '')}>
           <div className="contents-wrapper">
             <div className="content-icon-wrap">
-            <Tooltip title="Add" placement="top-end">
               <Avatar size={"50px"} round={"10px"} className="content-icon" src={"https://troument.s3-ap-northeast-1.amazonaws.com/" + this.state.userinfo.thumbnail} alt="" />
               {/* <Avatar size={"50px"} round={"10px"} className="content-icon" src={"https://troument.s3-ap-northeast-1.amazonaws.com/" + this.props.thumbnail} alt="" /> */}
-            </Tooltip>
             </div>
             <div className="content-wrapper">
               <div className="content-image-time">
@@ -219,7 +229,13 @@ class Display extends React.Component {
     return (
       <React.Fragment>
         {createDetail}
-
+        {/* <Pagination
+          activePage={this.state.activePage}
+          itemsCountPerPage={10}
+          totalItemsCount={450}
+          pageRangeDisplayed={5}
+          onChange={this.handlePageChange.bind(this)}
+        /> */}
       </React.Fragment>
     );
 
