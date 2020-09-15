@@ -275,13 +275,15 @@ class Form extends React.Component {
                 name="title"
                 onChange={event => this.changeInputText(event)}
                 onBlur={this.handleBlurTitle}
-                className="input-area" placeholder="悩みのタイトルを入力してください ※50文字以内"></input>
+                className="input-area" 
+                placeholder="悩みのタイトルを入力してください ※50文字以内"></input>
               : <input
                 name="title"
                 value={input.title}
                 onBlur={this.handleBlurTitle}
                 onChange={event => this.changeInputText(event)}
-                className="input-area" placeholder="悩みのタイトルを入力してください ※50文字以内"></input>
+                className="input-area" 
+                placeholder="悩みのタイトルを入力してください ※50文字以内"></input>
             }
           </section>
 

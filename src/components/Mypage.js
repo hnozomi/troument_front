@@ -30,7 +30,7 @@ class Mypage extends React.Component {
       open: false,
       files: [],
       userInfo: this.props.userinfo,
-      thumbnail: this.props.userinfo.thumbnail,
+      // thumbnail: this.props.userinfo.thumbnail,
       isMypage: true,
       alltodolists: this.props.todolists,
       src: null,
@@ -44,7 +44,6 @@ class Mypage extends React.Component {
     this.resolveListDisplay = this.resolveListDisplay.bind(this)
     this.usefulListDisplay = this.usefulListDisplay.bind(this)
     this.getMypageTodolists = this.getMypageTodolists.bind(this)
-    console.log(this.props.userinfo.thumbnail)
   }
 
 

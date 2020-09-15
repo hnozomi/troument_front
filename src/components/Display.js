@@ -121,7 +121,7 @@ class Display extends React.Component {
         <div className={"contents-wrappers " + (this.state.isMypage ? "mypage-diplay-wrapper" : '')}>
           <div className="contents-wrapper">
             <div className="content-icon-wrap">
-              <Avatar size={"50px"} round={"10px"} className="content-icon" src={"https://troument.s3-ap-northeast-1.amazonaws.com/" + this.state.userinfo.thumbnail} alt="" />
+              <Avatar size={"50px"} round={"10px"} className="content-icon" src={"https://troument.s3-ap-northeast-1.amazonaws.com/" + this.props.detail_todolist.user.thumbnail} alt="" />
               {/* <Avatar size={"50px"} round={"10px"} className="content-icon" src={"https://troument.s3-ap-northeast-1.amazonaws.com/" + this.props.thumbnail} alt="" /> */}
             </div>
             <div className="content-wrapper">

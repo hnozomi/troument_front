@@ -96,24 +96,26 @@ class Detail extends React.Component {
             createDetail = (
                 <React.Fragment>
                     <div className="detail-wrapper">
-                        <section className="detail-section">
+                        <section>
+                            <h1 className="detail-section">
+                                悩みの詳細
+                            </h1>
+                        </section>
                             <div className="detail-area">
-                                <h1 className="detail-header">
-                                    悩みの詳細
-                                </h1>
                                 <EditorJs holder="worry" data={this.state.detail_todolist.worry} enableReInitialize={true} instanceRef={instance => this.editorInstance = instance} tools={EDITOR_JS_TOOLS}>
                                     <div id="worry" />
                                 </EditorJs>
                             </div>
-                            <h1 className="detail-header">
+                        <section>
+                            <h1 className="detail-section">
                                 解決詳細
                              </h1>
+                        </section>
                             <div className="detail-area">
                                 <EditorJs holder="resolve" data={this.state.detail_todolist.resolve} enableReInitialize={true} instanceRef={instance => this.editorInstance = instance} tools={EDITOR_JS_TOOLS}>
                                     <div id="resolve" />
                                 </EditorJs>
                             </div>
-                        </section>
                     </div>
                 </React.Fragment>
             )
@@ -147,44 +149,44 @@ class Detail extends React.Component {
         return (
             // <React.Fragment>
             <div className="display-title-wrapper">
-            <Display
-                {...this.props}
-                isOpenDetail={this.props.isOpenDetail}
-                isGood={this.state.isGood}
-                isUpdateFormOpen={this.state.isUpdateFormOpen}
+                <Display
+                    {...this.props}
+                    isOpenDetail={this.props.isOpenDetail}
+                    isGood={this.state.isGood}
+                    isUpdateFormOpen={this.state.isUpdateFormOpen}
 
-                deleteDialogOpen={this.deleteDialogOpen}
-                goodCheck={this.goodCheck}
-                actionMethod={this.props.actionMethod}
+                    deleteDialogOpen={this.deleteDialogOpen}
+                    goodCheck={this.goodCheck}
+                    actionMethod={this.props.actionMethod}
 
-                _id={this.state.detail_todolist._id}
-            />
+                    _id={this.state.detail_todolist._id}
+                />
 
-                { createDetail }
+                {createDetail}
 
-        <Dialog
-            open={this.state.isDeleteDialogOpen}
-            onClose={this.deleteDialogClose}
-            aria-labelledby="alert-dialog-title"
-            aria-describedby="alert-dialog-description"
-        >
-            <DialogTitle id="alert-dialog-title">{this.state.isStatus ? "解決したものを削除しようとしています" : "悩み中のものを削除しようとしています"}</DialogTitle>
-            <DialogContent>
-                <DialogContentText id="alert-dialog-description">
-                    削除してもよろしいですか？
+                <Dialog
+                    open={this.state.isDeleteDialogOpen}
+                    onClose={this.deleteDialogClose}
+                    aria-labelledby="alert-dialog-title"
+                    aria-describedby="alert-dialog-description"
+                >
+                    <DialogTitle id="alert-dialog-title">{this.state.isStatus ? "解決したものを削除しようとしています" : "悩み中のものを削除しようとしています"}</DialogTitle>
+                    <DialogContent>
+                        <DialogContentText id="alert-dialog-description">
+                            削除してもよろしいですか？
                         </DialogContentText>
-            </DialogContent>
-            <DialogActions>
-                <Button onClick={this.deleteDialogClose} color="primary">
-                    キャンセル
+                    </DialogContent>
+                    <DialogActions>
+                        <Button onClick={this.deleteDialogClose} color="primary">
+                            キャンセル
                         </Button>
-                <Button onClick={this.listDelete} color="primary" autoFocus>
-                    OK
+                        <Button onClick={this.listDelete} color="primary" autoFocus>
+                            OK
                         </Button>
-            </DialogActions>
-        </Dialog>
+                    </DialogActions>
+                </Dialog>
 
-         </div >
+            </div >
             // </React.Fragment>
         );
     }

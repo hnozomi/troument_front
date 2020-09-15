@@ -210,7 +210,15 @@
 
 }
 
-
+.input-area {
+  /* color: black;
+  max-width: 140%;
+  min-width: 100%;
+  padding: 0; */
+  border: 0;
+  outline: none;
+  /* line-height: inherit; */
+}
 
 .input-area,
 .codex-editor__redactor,
@@ -237,10 +245,12 @@
   /* font-family: A-OTF Gothic BBB Pr6N, sans-serif; */
 }
 
-.input-area {
+/* .input-area {
   padding: 0.5em 0.3em;
   font-size: 14px;
-}
+} */
+
+
 
 .codex-editor__redactor {
   padding-bottom: 1em !important;
