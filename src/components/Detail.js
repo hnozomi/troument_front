@@ -1,8 +1,8 @@
 import React from 'react';
 import FormButton from './FormButton';
 import Display from './Display';
-import Axios from 'axios';
-// import AxiosBase from 'axios';
+// import Axios from 'axios';
+import AxiosBase from 'axios';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -19,9 +19,9 @@ import { EDITOR_JS_TOOLS } from "./editor-tool";
 // ****************************************************************///
 
 
-// const Axios = AxiosBase.create({
-//     baseURL: "https://troument-api.net"
-// });
+const Axios = AxiosBase.create({
+    baseURL: "https://troument-api.net"
+});
 
 
 class Detail extends React.Component {
@@ -100,18 +100,16 @@ class Detail extends React.Component {
                             <div className="detail-area">
                                 <h1 className="detail-header">
                                     悩みの詳細
-                                            </h1>
+                                </h1>
                                 <EditorJs holder="worry" data={this.state.detail_todolist.worry} enableReInitialize={true} instanceRef={instance => this.editorInstance = instance} tools={EDITOR_JS_TOOLS}>
-                                    {/* <EditorJs holder="worry" data={this.state.data_worry} enableReInitialize={true} instanceRef={instance => this.editorInstance = instance} tools={EDITOR_JS_TOOLS}> */}
                                     <div id="worry" />
                                 </EditorJs>
                             </div>
                             <h1 className="detail-header">
                                 解決詳細
-                                            </h1>
+                             </h1>
                             <div className="detail-area">
                                 <EditorJs holder="resolve" data={this.state.detail_todolist.resolve} enableReInitialize={true} instanceRef={instance => this.editorInstance = instance} tools={EDITOR_JS_TOOLS}>
-                                    {/* <EditorJs holder="resolve" data={this.state.data_resolve} enableReInitialize={true} instanceRef={instance => this.editorInstance = instance} tools={EDITOR_JS_TOOLS}> */}
                                     <div id="resolve" />
                                 </EditorJs>
                             </div>
@@ -123,10 +121,10 @@ class Detail extends React.Component {
             createDetail = (
                 <React.Fragment>
                     <div className="detail-wrapper">
-                        <section className="detail-section">
+                        <section>
                             <h1 className="detail-section">
                                 悩み中
-                                            </h1>
+                            </h1>
                         </section>
                         <div className="detail-area">
                             <EditorJs holder="custom" data={this.state.detail_todolist.worry} enableReInitialize={true} instanceRef={instance => this.editorInstance = instance} tools={EDITOR_JS_TOOLS}>
