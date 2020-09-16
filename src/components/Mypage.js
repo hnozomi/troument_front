@@ -383,7 +383,6 @@ class Mypage extends React.Component {
           >
             <Fade in={this.state.isPicOpen}>
               <div className="modal">
-                <p>画像トリミング</p>
                 {src && (
                   <ReactCrop
                     src={src}
@@ -394,8 +393,10 @@ class Mypage extends React.Component {
                     onChange={this.onCropChange}
                   />
                 )}
-                <button onClick={this.canSendPic}>キャンセル</button>
-                <button onClick={this.sendPicToS3}>決定</button>
+                <div className="button-wrapper crop-button">
+                  <button className="button" onClick={this.canSendPic}>キャンセル</button>
+                  <button className="button" onClick={this.sendPicToS3}>決定</button>
+                </div>
               </div>
             </Fade>
           </Modal>

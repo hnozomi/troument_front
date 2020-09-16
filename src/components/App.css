@@ -374,6 +374,17 @@
   transition: .0s;
 }
 
+.crop-button {
+  padding: 0.5em;
+}
+
+.ReactCrop__image {
+  width: 20em;
+  height: 20em;
+}
+
+
+
 .notify-wrapper {
   position: relative;
   margin-top: 3em;
@@ -940,12 +951,12 @@
   margin: 0;
 }
 
-.modal {
+/* .modal {
   display: flex;
   align-items: center;
   justify-content: center;
   margin: 0;
-}
+} */
 
 
 .paper {
