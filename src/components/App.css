@@ -420,8 +420,6 @@
 .listbutton {
   flex-grow: 1;
   max-width: none;
-  /* max-width: 264px;
-  min-width: 72px; */
   width: 33%;
   flex-basis: 0;
   flex-shrink: 1;
