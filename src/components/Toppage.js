@@ -44,16 +44,16 @@ class Toppage extends React.Component {
                             <img alt="Resolve" className="todo-troument-image" src="./image/toppage-2.svg" />
                         </div>
 
-                        <div className="todo-troument-content">
+                        {/* <div className="todo-troument-content">
                             <p className="todo-troument-number">3</p>
                             <h3 className="todo-troument-head">解決通知機能</h3>
                             <p className="todo-troument-text">「あの人の悩みが気になる... 」</p>
                             <p className="todo-troument-text">そんなときは気になるボタンを押しておくと解決したときに通知が来ます！</p>
                             <img alt="Notify" className="todo-troument-image" src="./image/toppage-3.svg" />
-                        </div>
+                        </div> */}
 
                         <div className="todo-troument-content">
-                            <p className="todo-troument-number">4</p>
+                            <p className="todo-troument-number">3</p>
                             <h3 className="todo-troument-head">検索機能</h3>
                             <p className="todo-troument-text">これはどうしたらいいのだろうか... </p>
                             <p className="todo-troument-text">そんなときは過去のナレッジを検索してみよう！</p>

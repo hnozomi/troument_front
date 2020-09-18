@@ -113,7 +113,7 @@ class Login extends React.Component {
         return (
 
             <div className="wrappers">
-                <div>
+                {/* <div> */}
                     <h1 className="login">ログイン</h1>
 
                     <form className="account-form">
@@ -159,7 +159,7 @@ class Login extends React.Component {
                         <p style={descriptiontext}>アカウントは持っていますか？</p>
                         <p style={descriptiontext}>まだの方はこちらから登録お願いします ⇨ <Link to="/Register">会員登録</Link></p>
                     </div>
-                </div>
+                {/* </div> */}
 
             </div>
         )
