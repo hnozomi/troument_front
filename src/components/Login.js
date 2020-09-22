@@ -53,7 +53,7 @@ class Login extends React.Component {
             if (typeof(response.data) === 'string') {
               this.setState({
                 isOpen: !this.state.isOpen,
-                message: response.data
+                response_message: response.data
               })
             } else {
                 User.login(this.state.input.account, this.state.input.password);
@@ -68,6 +68,7 @@ class Login extends React.Component {
         }
 
     inputCheck(event) {
+        event.preventDefault();
         const key = event.target.name;
         const value = event.target.value;
         const { input, message } = this.state;
@@ -124,7 +125,7 @@ class Login extends React.Component {
                                 place={'above'}
                                 body={
                                     <div className="popover">
-                                        <p className="popover-text">{this.state.message}</p>
+                                        <p className="popover-text">{this.state.response_message}</p>
                                     </div>
                                 }
                                 enterExitTransitionDurationMs={800}
