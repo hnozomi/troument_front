@@ -73,11 +73,7 @@ class Form extends React.Component {
     let validTagsInput
     let validTagsMessage
     const { isSending } = this.state;
-
-
-    // 
-    // タイトルが入力されているか確認
-    // 
+    
     
     if (this.state.input.title === '') {
       validInput = false
@@ -91,10 +87,6 @@ class Form extends React.Component {
       validMessage = true
     }
 
-    // 
-    // タグが入力されているか確認
-    // 
-
     if (this.state.tags.length === 0) {
       validTagsInput = false
     } else {
@@ -107,10 +99,6 @@ class Form extends React.Component {
       validTagsMessage = true
     }
     
-    // 
-    // 悩みが入力されているか確認
-    // 
-
     if (this.state.savedData === '' || this.state.savedData.blocks.length === 0) {
       validSavedDataInput = false
     } else {
@@ -154,7 +142,6 @@ class Form extends React.Component {
   handleDelete(i) {
     const tags = this.state.tags.slice(0)
     const { message } = this.state;
-    console.log(message)
     tags.splice(i, 1)
     this.setState({
       message: {
@@ -264,7 +251,7 @@ class Form extends React.Component {
         <form className="form-wrapper">
 
           <section className="form-wrapper-sec" style={{ position: 'relative' }}>
-            <label>タイトル</label>
+            <label>タイトル</label><span className="form-span">必須</span>
             {message.title && (
               <span style={{ color: 'red', fontSize: 8, position: 'absolute', right: 0, top: 3 }}>{message.title}</span>
             )}
@@ -290,7 +277,7 @@ class Form extends React.Component {
           {/* フォームのタグ部分 */}
 
           <section className="form-wrapper-sec" style={{ position: 'relative' }}>
-            <label>タグ</label>
+            <label>タグ</label><span className="form-span">必須</span>
             {message.tag && (
               <span style={{ color: 'red', fontSize: 8, position: 'absolute', right: 0, top: 3 }}>{message.tag}</span>
             )}
@@ -301,7 +288,7 @@ class Form extends React.Component {
               onDelete={this.handleDelete.bind(this)}
               // handleAddition={this.handleAddition.bind(this)}
               onAddition={this.handleAddition.bind(this)}
-              handleBlur={this.handleBlur}
+              onBlur={this.handleBlur}
               placeholderText={"タグを追加してください"}
             />
           </section>
@@ -309,7 +296,7 @@ class Form extends React.Component {
           {/* フォームの悩み入力部分 */}
 
           <section className="form-wrapper-sec" style={{ position: 'relative' }}>
-            <label>悩み</label>
+            <label>悩み</label><span className="form-span">必須</span>
             {message.savedData && (
               <span style={{ color: 'red', fontSize: 8, position: 'absolute', right: 0, top: 3 }}>{message.savedData}</span>
             )}

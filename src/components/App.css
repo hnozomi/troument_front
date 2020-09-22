@@ -264,6 +264,7 @@
   line-height: 1.2;
   font-style: normal;
   font-family: arial;
+  font-size: 14px;
 }
 
 .input-area::placeholder,
@@ -983,12 +984,12 @@
   margin: 0;
 }
 
-/* .modal {
+.modal {
   display: flex;
   align-items: center;
   justify-content: center;
   margin: 0;
-} */
+}
 
 
 .paper {
@@ -1004,6 +1005,8 @@
   background-color: white;
   /* display: flex; */
   align-items: center;
+  justify-content: center; 
+  margin: auto;
   box-shadow: 10px 10px 4px -2px black
 }
 
