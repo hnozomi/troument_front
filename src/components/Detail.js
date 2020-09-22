@@ -84,6 +84,28 @@ class Detail extends React.Component {
     };
 
     // ****************************************************************///
+    // Editor.js readonly対応
+    // ****************************************************************///
+
+    getReadOnly = () => {
+        let worryElements = document.getElementById("worry"); // id of editor element
+        let resolveElements = document.getElementById("resolve"); // id of editor element
+
+        worryElements.style.pointerEvents = "none";
+
+        try {
+            resolveElements.style.pointerEvents = "none";
+        } catch (e) {
+            
+        }
+
+        let tool = document.querySelectorAll(".ce-toolbar");
+        for (let i = 0; i < tool.length; i++) {
+            tool[i].style.display = "none"
+        }
+    }
+
+    // ****************************************************************///
     // レンダリング
     // ****************************************************************///    
 
@@ -101,21 +123,21 @@ class Detail extends React.Component {
                                 悩みの詳細
                             </h1>
                         </section>
-                            <div className="detail-area">
-                                <EditorJs holder="worry" data={this.state.detail_todolist.worry} enableReInitialize={true} instanceRef={instance => this.editorInstance = instance} tools={EDITOR_JS_TOOLS}>
-                                    <div id="worry" />
-                                </EditorJs>
-                            </div>
+                        <div className="detail-area">
+                            <EditorJs onReady={this.getReadOnly} holder="worry" data={this.state.detail_todolist.worry} enableReInitialize={true} instanceRef={instance => this.editorInstance = instance} tools={EDITOR_JS_TOOLS}>
+                                <div id="worry" />
+                            </EditorJs>
+                        </div>
                         <section>
                             <h1 className="detail-section">
                                 解決詳細
                              </h1>
                         </section>
-                            <div className="detail-area">
-                                <EditorJs holder="resolve" data={this.state.detail_todolist.resolve} enableReInitialize={true} instanceRef={instance => this.editorInstance = instance} tools={EDITOR_JS_TOOLS}>
-                                    <div id="resolve" />
-                                </EditorJs>
-                            </div>
+                        <div className="detail-area">
+                            <EditorJs holder="resolve" data={this.state.detail_todolist.resolve} enableReInitialize={true} instanceRef={instance => this.editorInstance = instance} tools={EDITOR_JS_TOOLS}>
+                                <div id="resolve" />
+                            </EditorJs>
+                        </div>
                     </div>
                 </React.Fragment>
             )
@@ -129,8 +151,8 @@ class Detail extends React.Component {
                             </h1>
                         </section>
                         <div className="detail-area">
-                            <EditorJs holder="custom" data={this.state.detail_todolist.worry} enableReInitialize={true} instanceRef={instance => this.editorInstance = instance} tools={EDITOR_JS_TOOLS}>
-                                <div id="custom" />
+                            <EditorJs onReady={this.getReadOnly} holder="worry" data={this.state.detail_todolist.worry} enableReInitialize={true} instanceRef={instance => this.editorInstance = instance} tools={EDITOR_JS_TOOLS}>
+                                <div id="worry" />
                             </EditorJs>
                         </div>
                         <FormButton

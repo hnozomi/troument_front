@@ -191,8 +191,8 @@ class Form extends React.Component {
   // ****************************************************************///
   // Editorの保存
   // ****************************************************************///
-
-
+  
+  
   saveEditor = async () => {
     const { message } = this.state;
     let savedData = await this.editorInstance.save()
@@ -203,8 +203,9 @@ class Form extends React.Component {
       },
       savedData: savedData
     })
-
+    
   }
+
 
 
   // ****************************************************************///

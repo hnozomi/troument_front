@@ -188,9 +188,9 @@ class Display extends React.Component {
                 <div onClick={() => { this.callDisplayDetail(todolist.worry_id) }} className="contents-wrapper">
 
                   <div className="content-icon-wrap">
-                  <Tooltip title="Add" placement="top-end">
+                  {/* <Tooltip title="Add" placement="top-end"> */}
                     <Avatar size={"50px"} round={"10px"} src={"https://troument.s3-ap-northeast-1.amazonaws.com/" + todolist.user.thumbnail} alt="" />
-                    </Tooltip>
+                    {/* </Tooltip> */}
                   </div>
 
                   <div className="content-wrapper">
