@@ -603,13 +603,15 @@
   /* font-family: A-OTF 中ゴシックBBB Pr6N Med; */
   z-index: 999;
   border: 0.5px solid gray;
-  box-shadow: 5px 5px 15px
+  box-shadow: 5px 5px 15px;
+  width: auto;
 }
 
 .popover-text {
   margin: 0;
   color: #000;
   font-weight: bold;
+  text-align: center;
 }
 
 .profile-wrapper {
@@ -1052,18 +1054,23 @@
     font-size: 2em;
   }
 
+  .ce-toolbar{
+    /* margin-top: 2em; */
+    background-color: #fff;
+  }
 
   .ce-block__content {
     max-width: 1200px;
+    border-bottom-color: #d5d7db
   }
 
   .ce-toolbar__plus {
-    transform: translate3d(-4em, calc(19px - 50%), 0px) !important;
-    /* transform: translate3d(-280%, calc(19px - 50%), 0px) !important; */
+    /* transform: translate3d(-4em, calc(19px - 50%), 0px) !important; */
+    transform: translate3d(-650%, calc(19px - 50%), 0px) !important;
   }
 
   .ce-toolbar__actions {
-    right: -90px;
+    right: -250px;
   }
 
 }
