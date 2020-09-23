@@ -349,6 +349,7 @@ class Mypage extends React.Component {
   // ****************************************************************///
 
   render() {
+    console.log(this.state.resultLists)
     const { crop, src } = this.state;
     return (
       <React.Fragment>
@@ -411,14 +412,14 @@ class Mypage extends React.Component {
         </div>
         <div className="display-title-wrapper">
 
-          {this.state.resultLists
+          {this.state.resultLists.length !== 0
             ? <Display
               todolists={this.state.resultLists}
-
               actionMethod={this.props.actionMethod}
               isMypage={this.state.isMypage}
             />
-            : <CircularProgress />
+            : <p className="mypage-contents-wrappers mypage-no-data">データが存在しません</p>
+            // : <CircularProgress />
           }
         </div>
       </React.Fragment>

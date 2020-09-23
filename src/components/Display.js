@@ -32,16 +32,6 @@ class Display extends React.Component {
   }
 
   // ****************************************************************///
-  // Pagenationテスト
-  // ****************************************************************///
-
-  handlePageChange(pageNumber) {
-    console.log(`active page is ${pageNumber}`);
-    this.setState({activePage: pageNumber});
-  }
-
-
-  // ****************************************************************///
   // Detailを表示する
   // ****************************************************************///
 
@@ -229,13 +219,6 @@ class Display extends React.Component {
     return (
       <React.Fragment>
         {createDetail}
-        {/* <Pagination
-          activePage={this.state.activePage}
-          itemsCountPerPage={10}
-          totalItemsCount={450}
-          pageRangeDisplayed={5}
-          onChange={this.handlePageChange.bind(this)}
-        /> */}
       </React.Fragment>
     );
 
