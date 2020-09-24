@@ -1,5 +1,6 @@
 import React from 'react';
 import Display from './Display';
+import Search from './Search';
 import User from './User';
 import AxiosBase from 'axios';
 // import Axios from 'axios';
@@ -22,6 +23,8 @@ class Mypage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      searchWord: '',
+      searchLists: [],
       resultLists: [],
       todolists: [],
       worryCount: [],
@@ -44,6 +47,7 @@ class Mypage extends React.Component {
     this.resolveListDisplay = this.resolveListDisplay.bind(this)
     this.usefulListDisplay = this.usefulListDisplay.bind(this)
     this.getMypageTodolists = this.getMypageTodolists.bind(this)
+    this.filterSearchWord = this.filterSearchWord.bind(this)
   }
 
 
@@ -87,6 +91,7 @@ class Mypage extends React.Component {
       resolveCount: resolveCount,
       goodCount: this.state.goodlist.length || 0,
       resultLists: filterList,
+      searchLists: filterList,
     })
 
   }
@@ -169,6 +174,7 @@ class Mypage extends React.Component {
       )
     this.setState({
       resultLists: filterList,
+      searchLists: filterList,
       isActive: 0
     })
   }
@@ -186,6 +192,7 @@ class Mypage extends React.Component {
       )
     this.setState({
       resultLists: filterList,
+      searchLists: filterList,
       isActive: 1
     }
     )
@@ -199,6 +206,7 @@ class Mypage extends React.Component {
     if (this.state.goodlist) {
       this.setState({
         resultLists: this.state.goodlist,
+        searchLists: this.state.goodlist,
         isActive: 2
       }
       )
@@ -344,12 +352,48 @@ class Mypage extends React.Component {
     )
   };
 
+  filterSearchWord(e) {
+    const value = e.target.value;
+    this.setState({
+      searchWord: value
+    }, () => {
+      this.searchDisplay(this.state.searchWord)
+    })
+  }
+
+  searchDisplay(searchWord) {
+
+    if (searchWord !== '') {
+      const filterList =
+      this.state.resultLists &&
+      this.state.resultLists.filter((todolist) => {
+        console.log(todolist)
+          return (
+            (todolist.title && todolist.title.toString().toLowerCase().indexOf(searchWord.toLowerCase()) !== -1) ||
+            (todolist.tag[0].name && todolist.tag[0].name.toString().toLowerCase().indexOf(searchWord.toLowerCase()) !== -1) ||
+            (todolist.worry.blocks[0].data.text && todolist.worry.blocks[0].data.text.toString().toLowerCase().indexOf(searchWord.toLowerCase()) !== -1) ||
+            (todolist.resolve && todolist.resolve.blocks[0].data.text.toString().toLowerCase().indexOf(searchWord.toLowerCase()) !== -1)
+          )
+        }
+        )
+
+      this.setState({
+        searchLists: filterList,
+      }
+      )
+    }else{
+      this.setState({
+        searchLists: this.state.resultLists,
+      }
+      )
+    }
+  }
+
   // ****************************************************************///
   // render
   // ****************************************************************///
 
   render() {
-    console.log(this.state.resultLists)
     const { crop, src } = this.state;
     return (
       <React.Fragment>
@@ -411,10 +455,16 @@ class Mypage extends React.Component {
           </div>
         </div>
         <div className="display-title-wrapper">
+        <div className="search-form-wrapper mypage-search">
+          <form className="search-form">
+            <input onChange={e => this.filterSearchWord(e)} value={this.state.searchWord} className="search-input input-area"  placeholder="検索"></input>
+          </form>
+        </div>
 
           {this.state.resultLists.length !== 0
             ? <Display
-              todolists={this.state.resultLists}
+              // todolists={this.state.resultLists}
+              todolists={this.state.searchLists}
               actionMethod={this.props.actionMethod}
               isMypage={this.state.isMypage}
             />

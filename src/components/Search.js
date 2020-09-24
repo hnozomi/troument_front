@@ -7,7 +7,7 @@ class Search extends React.Component {
     this.state = {
       searchLists: [],
       todolists: this.props.todolists,
-      searchWord: '',
+      searchWord: this.props.searchTest || '',
       isSearch: true,
       isHome: false
     }
