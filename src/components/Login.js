@@ -2,8 +2,8 @@ import React from 'react';
 import './Toppage.css'
 import Validation from './Validation';
 import User from './User';
-// import Axios from 'axios';
-import AxiosBase from 'axios';
+import Axios from 'axios';
+// import AxiosBase from 'axios';
 import { withRouter, Link } from "react-router-dom";
 import Popover from "react-popover";
 // import Popover from '@material-ui/core/Popover';
@@ -18,9 +18,9 @@ const descriptiontext = {
 }
 
 
-const Axios = AxiosBase.create({
-    baseURL: "https://troument-api.net"
-});
+// const Axios = AxiosBase.create({
+//     baseURL: "https://troument-api.net"
+// });
 
 class Login extends React.Component {
     constructor(props) {
@@ -44,27 +44,29 @@ class Login extends React.Component {
 
     loginUser = async (event) => {
         console.log('ログイン実行されました')
-        // event.preventDefault();
-        const params = {
+        event.preventDefault();
+        // const params = {
+        //     user_name: this.state.input.account,
+        //     password: this.state.input.password,
+        // }
+        Axios.post('/api/user_login', {
+            // params: params,
             user_name: this.state.input.account,
             password: this.state.input.password,
-        }
-        Axios.get('/api/user_login', {
-            params: params,
         })
-        .then(response => {
-            console.log(response.data, 'responseが返ってきました')
+            .then(response => {
+                console.log(response.data, 'responseが返ってきました')
                 if (typeof (response.data) === 'string') {
-                    if(response.data === 'パスワードが一致していません'){
+                    if (response.data === 'パスワードが一致していません') {
                         this.setState({
                             isPassOpen: !this.state.isOpen,
                             response_message: response.data
                         })
-                    }else{
-                            this.setState({
-                                isOpen: !this.state.isOpen,
-                                response_message: response.data
-                            })
+                    } else {
+                        this.setState({
+                            isOpen: !this.state.isOpen,
+                            response_message: response.data
+                        })
 
                     }
                 } else {
@@ -171,13 +173,13 @@ class Login extends React.Component {
                             }
                             enterExitTransitionDurationMs={800}
                         >
-                        <input className="form-input"
-                            type="text"
-                            name="password"
-                            value={this.state.input.password}
-                            onChange={event => this.inputCheck(event)}
-                            onClick={this.handleClose}
-                        ></input>
+                            <input className="form-input"
+                                type="text"
+                                name="password"
+                                value={this.state.input.password}
+                                onChange={event => this.inputCheck(event)}
+                                onClick={this.handleClose}
+                            ></input>
                         </Popover>
                         <span className="account-form-bg"></span>
                     </div>
