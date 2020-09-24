@@ -367,7 +367,6 @@ class Mypage extends React.Component {
       const filterList =
       this.state.resultLists &&
       this.state.resultLists.filter((todolist) => {
-        console.log(todolist)
           return (
             (todolist.title && todolist.title.toString().toLowerCase().indexOf(searchWord.toLowerCase()) !== -1) ||
             (todolist.tag[0].name && todolist.tag[0].name.toString().toLowerCase().indexOf(searchWord.toLowerCase()) !== -1) ||

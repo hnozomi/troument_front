@@ -216,7 +216,6 @@ class Form extends React.Component {
   render() {
     let displayForm
     const { input, message, status } = this.state;
-    // {this.props.detail_todolist && console.log(this.props.detail_todolist.resolve)}
 
     if (status || this.props.isResolveFormOpen) {
       displayForm = (
