@@ -43,7 +43,8 @@ class Login extends React.Component {
     }
 
     loginUser = async (event) => {
-        event.preventDefault();
+        console.log('ログイン実行されました')
+        // event.preventDefault();
         const params = {
             user_name: this.state.input.account,
             password: this.state.input.password,
@@ -51,7 +52,8 @@ class Login extends React.Component {
         Axios.get('/api/user_login', {
             params: params,
         })
-            .then(response => {
+        .then(response => {
+            console.log(response.data, 'responseが返ってきました')
                 if (typeof (response.data) === 'string') {
                     if(response.data === 'パスワードが一致していません'){
                         this.setState({
