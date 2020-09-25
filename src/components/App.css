@@ -1045,7 +1045,8 @@
   margin-top: 13em;
 } */
 
-    @media screen and (min-width: 560px) {
+    /* @media screen and (min-width: 560px) { */
+    @media screen and (max-width: 896px) {
       .ce-toolbar__plus{
         top: 0;
         left: -100px;
@@ -1060,7 +1061,8 @@
       }
     }
 
-@media screen and (min-width: 760px) {
+/* @media screen and (min-width: 760px) { */
+@media screen and (max-width: 1024px) {
 
   .mypage-search {
     margin-top: 16em;
@@ -1101,7 +1103,7 @@
     top: 0;
     right: -210px;
     background-color: black;
-    transform: translate3d(0%, calc(5px - 50%), 0px)
+    transform: translate3d(0%, calc(10px - 50%), 0px)
   }
 
   .ce-toolbar__settings-btn{
