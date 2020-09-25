@@ -1047,6 +1047,12 @@
 
     /* @media screen and (min-width: 560px) { */
     @media screen and (max-width: 896px) {
+      .ce-block__content {
+        max-width: 1000px;
+        margin: 0 auto;
+        border-bottom-color: #d5d7db
+      }
+
       .ce-toolbar__plus{
         top: 0;
         left: -100px;
