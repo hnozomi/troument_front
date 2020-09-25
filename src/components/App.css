@@ -1052,10 +1052,10 @@
         margin: 0 auto;
         border-bottom-color: #d5d7db
       } */
-      /* .ce-block__content {
-        min-width: 1500px;
+      .ce-block__content {
+        min-width: 700px;
         border-bottom-color: #d5d7db
-      } */
+      }
 
       .ce-toolbar__plus{
         top: 0;
@@ -1099,7 +1099,7 @@
   }
   
   .ce-block__content {
-    /* min-width: 1500px; */
+    min-width: 1000px;
     border-bottom-color: #d5d7db
   }
   
