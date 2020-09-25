@@ -22,6 +22,7 @@ const accountValidation = (account) => {
 };
 
 const passwordValidation = (password) => {
+  if(!password.match(/^[A-Za-z0-9]*$/))return '半角英数字以外の文字が入力されています'
   if (!password) return 'パスワードを入力してください';
   if (password.length < 4) return 'パスワードは4文字以上入力してください';
   return '';

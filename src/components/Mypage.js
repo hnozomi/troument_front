@@ -1,10 +1,8 @@
 import React from 'react';
 import Display from './Display';
-import Search from './Search';
 import User from './User';
 import AxiosBase from 'axios';
 // import Axios from 'axios';
-import { CircularProgress } from '@material-ui/core';
 
 import ReactCrop from 'react-image-crop';
 import 'react-image-crop/dist/ReactCrop.css';

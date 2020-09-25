@@ -10177,6 +10177,11 @@ react-js-pagination@^3.0.3:
     react "15.x.x - 16.x.x"
     tar "2.2.2"
 
+react-password-mask@^3.3.1:
+  version "3.3.1"
+  resolved "https://registry.yarnpkg.com/react-password-mask/-/react-password-mask-3.3.1.tgz#c92ce71f30de2157de32da4d88616a6ace00ec40"
+  integrity sha512-/MpZs25k36W1h7e/CKvyHsoRYxqmSZGDakhgs9GohfxPdGf8wgLhSkPPvNX5XJZDtriWduH7rnMYE2RJUGpdkA==
+
 react-popover@^0.5.10:
   version "0.5.10"
   resolved "https://registry.yarnpkg.com/react-popover/-/react-popover-0.5.10.tgz#40d5e854300a96722ffc1620e49d840cb1ad5db6"

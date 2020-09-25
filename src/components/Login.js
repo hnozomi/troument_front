@@ -171,12 +171,13 @@ class Login extends React.Component {
                             }
                             enterExitTransitionDurationMs={800}
                         >
-                            <input className="form-input"
+                            <input className="form-input password-input"
                                 type="text"
                                 name="password"
                                 value={this.state.input.password}
                                 onChange={event => this.inputCheck(event)}
                                 onClick={this.handleClose}
+                                placeholder="半角英数字のみ"
                             ></input>
                         </Popover>
                         <span className="account-form-bg"></span>

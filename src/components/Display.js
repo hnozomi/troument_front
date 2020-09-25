@@ -1,11 +1,8 @@
 import React from 'react';
 import DeleteIcon from '@material-ui/icons/Delete';
-import Tooltip from '@material-ui/core/Tooltip';
 import EditIcon from '@material-ui/icons/Edit';
 import { withRouter } from "react-router-dom";
 import Avatar from 'react-avatar';
-
-import Pagination from "react-js-pagination";
 
 import ThumbUpIcon from '@material-ui/icons/ThumbUp';
 import ThumbUpAltOutlinedIcon from '@material-ui/icons/ThumbUpAltOutlined';

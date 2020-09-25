@@ -152,6 +152,7 @@ class Register extends React.Component {
                 name="password"
                 value={this.state.input.password}
                 onChange={event => this.inputCheck(event)}
+                placeholder="半角英数字のみ"
               >
               </input>
               <span className="account-form-bg"></span>
