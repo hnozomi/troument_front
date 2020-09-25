@@ -588,7 +588,7 @@ class Home extends React.Component {
                                 aria-describedby="transition-modal-description"
                                 open={this.state.setOpen}
                                 onClose={this.handleClose}
-                                className={"modal"}
+                                className={"modal1"}
                                 closeAfterTransition
                                 BackdropComponent={Backdrop}
                                 BackdropProps={{
