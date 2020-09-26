@@ -91,10 +91,14 @@ class Detail extends React.Component {
         let worryElements = document.getElementById("worry"); // id of editor element
         let resolveElements = document.getElementById("resolve"); // id of editor element
 
-        worryElements.style.pointerEvents = "none";
-
+        // worryElements.style.pointerEvents = "none";
+        let editable_elements = worryElements.querySelectorAll("[contenteditable=true]");
+        editable_elements.forEach(el => el.removeAttribute("contenteditable"))
+        
         try {
-            resolveElements.style.pointerEvents = "none";
+            let editable_elements = resolveElements.querySelectorAll("[contenteditable=true]");
+            editable_elements.forEach(el => el.removeAttribute("contenteditable"))
+            // resolveElements.style.pointerEvents = "none";
         } catch (e) {
             
         }
