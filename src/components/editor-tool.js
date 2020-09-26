@@ -52,7 +52,7 @@ export const EDITOR_JS_TOOLS = {
         class: LinkTool,
         inlineToolbar: true,
         config: {
-            endpoint: 'https://localhost/api/fetchUrl', // Your backend endpoint for url data fetching
+            endpoint: 'https://troument-api.net/api/fetchUrl', // Your backend endpoint for url data fetching
             // endpoint: 'https://troument-api.net/api/fetchUrl', // Your backend endpoint for url data fetching
             // endpoint: 'http://localhost:8080/fetchUrl', // Your backend endpoint for url data fetching
             // endpoint: 'https://troument-api.net', // Your backend endpoint for url data fetching
