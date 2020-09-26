@@ -154,6 +154,8 @@ class Mypage extends React.Component {
       .catch(err => {
         console.error(new Error(err))
       })
+
+      Axios.get('/api/fetchUrl', { params: param })
   }
 
 
