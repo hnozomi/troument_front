@@ -1041,6 +1041,10 @@
   margin-top: 14em;
 }
 
+.link-tool{
+  pointer-events: auto; 
+}
+
 /* .mypage-wrapper{
   margin-top: 13em;
 } */

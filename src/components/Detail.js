@@ -90,15 +90,13 @@ class Detail extends React.Component {
     getReadOnly = () => {
         let worryElements = document.getElementById("worry"); // id of editor element
         let resolveElements = document.getElementById("resolve"); // id of editor element
-
-        // worryElements.style.pointerEvents = "none";
-        let editable_elements = document.querySelectorAll("[contenteditable=true]");
-        editable_elements.forEach(el => el.removeAttribute("contenteditable"))
+        let linkElements = document.getElementsByClassName("link-tool"); // id of editor element
+        console.log(linkElements)
+        // linkElements.style.pointerEvents = "auto";
+        worryElements.style.pointerEvents = "none";
         
         try {
-            let editable_elements = document.querySelectorAll("[contenteditable=true]");
-            editable_elements.forEach(el => el.removeAttribute("contenteditable"))
-            // resolveElements.style.pointerEvents = "none";
+            resolveElements.style.pointerEvents = "none";
         } catch (e) {
             
         }
