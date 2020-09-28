@@ -109,7 +109,6 @@ class Display extends React.Component {
           <div className="contents-wrapper">
             <div className="content-icon-wrap">
               <Avatar size={"50px"} round={"10px"} className="content-icon" src={"https://troument.s3-ap-northeast-1.amazonaws.com/" + this.props.detail_todolist.user.thumbnail} alt="" />
-              {/* <Avatar size={"50px"} round={"10px"} className="content-icon" src={"https://troument.s3-ap-northeast-1.amazonaws.com/" + this.props.thumbnail} alt="" /> */}
             </div>
             <div className="content-wrapper">
               <div className="content-image-time">
@@ -175,9 +174,7 @@ class Display extends React.Component {
                 <div onClick={() => { this.callDisplayDetail(todolist.worry_id) }} className="contents-wrapper">
 
                   <div className="content-icon-wrap">
-                  {/* <Tooltip title="Add" placement="top-end"> */}
                     <Avatar size={"50px"} round={"10px"} src={"https://troument.s3-ap-northeast-1.amazonaws.com/" + todolist.user.thumbnail} alt="" />
-                    {/* </Tooltip> */}
                   </div>
 
                   <div className="content-wrapper">

@@ -226,10 +226,9 @@ class Form extends React.Component {
               <span style={{ color: 'red', fontSize: 8, position: 'absolute', right: 0, top: 3 }}>{message.savedData}</span>
             )}
           </section>
-          <div className="resolvetest">
+          <div className="resolve-display">
             {this.props.detail_todolist
               ? <EditorJs onChange={this.saveEditor} instanceRef={instance => this.editorInstance = instance} data={this.props.detail_todolist.resolve} tools={EDITOR_JS_TOOLS} enableReInitialize={false} />
-              // ? <EditorJs onChange={this.saveEditor} instanceRef={instance => this.editorInstance = instance} data={this.props.data_resolve} tools={EDITOR_JS_TOOLS} enableReInitialize={false} />
               : <EditorJs onChange={this.saveEditor} instanceRef={instance => this.editorInstance = instance} tools={EDITOR_JS_TOOLS} enableReInitialize={false} />
             }
 
@@ -274,8 +273,6 @@ class Form extends React.Component {
             }
           </section>
 
-          {/* フォームのタグ部分 */}
-
           <section className="form-wrapper-sec" style={{ position: 'relative' }}>
             <label>タグ</label><span className="form-span">必須</span>
             {message.tag && (
@@ -286,25 +283,21 @@ class Form extends React.Component {
               tags={this.state.tags}
               suggestions={this.state.suggestions}
               onDelete={this.handleDelete.bind(this)}
-              // handleAddition={this.handleAddition.bind(this)}
               onAddition={this.handleAddition.bind(this)}
               onBlur={this.handleBlur}
               placeholderText={"タグを追加してください"}
             />
           </section>
 
-          {/* フォームの悩み入力部分 */}
 
           <section className="form-wrapper-sec" style={{ position: 'relative' }}>
             <label>悩み</label><span className="form-span">必須</span>
             {message.savedData && (
               <span style={{ color: 'red', fontSize: 8, position: 'absolute', right: 0, top: 3 }}>{message.savedData}</span>
             )}
-            {/* {input.title */}
             {this.props.detail_todolist
               ? <EditorJs onChange={this.saveEditor} instanceRef={instance => this.editorInstance = instance} data={this.props.detail_todolist.worry} tools={EDITOR_JS_TOOLS} enableReInitialize={false} />
               : <EditorJs onChange={this.saveEditor} instanceRef={instance => this.editorInstance = instance} tools={EDITOR_JS_TOOLS} enableReInitialize={false} />
-              // : <EditorJs onChange={this.saveEditor} instanceRef={instance => this.editorInstance = instance} data={this.props.detail_todolist.resolve} tools={EDITOR_JS_TOOLS} enableReInitialize={false} />
             }
           </section>
 

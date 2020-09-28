@@ -1,9 +1,8 @@
 import React from 'react';
 import Display from './Display';
 import User from './User';
-import AxiosBase from 'axios';
-// import Axios from 'axios';
-
+// import AxiosBase from 'axios';
+import Axios from 'axios';
 import ReactCrop from 'react-image-crop';
 import 'react-image-crop/dist/ReactCrop.css';
 import Modal from '@material-ui/core/Modal';
@@ -12,9 +11,9 @@ import Fade from '@material-ui/core/Fade';
 
 import Avatar from 'react-avatar';
 
-const Axios = AxiosBase.create({
-  baseURL: "https://troument-api.net"
-});
+// const Axios = AxiosBase.create({
+//   baseURL: "https://troument-api.net"
+// });
 
 
 class Mypage extends React.Component {
@@ -31,7 +30,6 @@ class Mypage extends React.Component {
       open: false,
       files: [],
       userInfo: this.props.userinfo,
-      // thumbnail: this.props.userinfo.thumbnail,
       isMypage: true,
       alltodolists: this.props.todolists,
       src: null,
@@ -147,7 +145,6 @@ class Mypage extends React.Component {
       .then(response => {
         this.setState((state => {
           return { todolists: response.data.reverse() }
-          // return { todolists: response.data.reverse(), loading: true }
         })
         )
       })
@@ -155,7 +152,6 @@ class Mypage extends React.Component {
         console.error(new Error(err))
       })
 
-      Axios.get('/api/fetchUrl', { params: param })
   }
 
 
@@ -235,10 +231,10 @@ class Mypage extends React.Component {
     formData.append('username', this.state.username)
 
     Axios.post('/api/files',
-      formData,
+      formData
     ).then(response => {
       this.setState((state => {
-        return { thumbnail: this.state.croppedImageUrl }
+        return { thumbnail: response.data.Files[0].key }
       }), () => this.handleReload()
       )
     }
@@ -401,7 +397,7 @@ class Mypage extends React.Component {
             <div className="profile">
               <label className="sample">
                 <Avatar size={"50px"} round={"10px"} alt="PROFILE" src={"https://troument.s3-ap-northeast-1.amazonaws.com/" + this.state.thumbnail} />
-                <input type="file" accept="image/*" onChange={this.onSelectFile} />
+                <input name="Files" type="file" accept="image/*" onChange={this.onSelectFile} />
               </label>
               <p className="profile_name">{this.state.username}</p>
             </div>
@@ -438,8 +434,8 @@ class Mypage extends React.Component {
                   />
                 )}
                 <div className="button-wrapper crop-button">
-                  <button className="button" onClick={this.canSendPic}>キャンセル</button>
-                  <button className="button" onClick={this.sendPicToS3}>決定</button>
+                  <button className="button crop-button-text" onClick={this.canSendPic}>キャンセル</button>
+                  <button className="button crop-button-text" onClick={this.sendPicToS3}>決定</button>
                 </div>
               </div>
             </Fade>
@@ -462,13 +458,11 @@ class Mypage extends React.Component {
 
           {this.state.resultLists.length !== 0
             ? <Display
-              // todolists={this.state.resultLists}
               todolists={this.state.searchLists}
               actionMethod={this.props.actionMethod}
               isMypage={this.state.isMypage}
             />
             : <p className="mypage-contents-wrappers mypage-no-data">データが存在しません</p>
-            // : <CircularProgress />
           }
         </div>
       </React.Fragment>

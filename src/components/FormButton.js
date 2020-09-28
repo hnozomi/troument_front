@@ -44,7 +44,7 @@ class FormButton extends React.Component {
   // 投稿ボタンが押されたとき
   // ****************************************************************///
 
-  submit = async(event) => {
+  submit = async (event) => {
     event.preventDefault();
 
     this.props.startSending()
@@ -74,33 +74,10 @@ class FormButton extends React.Component {
       createButton = (
         <div className="button-wrapper">
           <button onClick={clickFormClose} className="first-button button">キャンセル</button>
-          <Popover
-            isOpen={this.state.isOpen}
-            body={
-              this.props.isResolveFormOpen
-                ? (this.props.handleResolveUpdate
-                  ? <div className="popover"><p className="popover-text">修正が完了しました！</p><p className="popover-text">その調子！</p></div>
-                  : <div className="popover"><p className="popover-text">お疲れ様です！</p><p className="popover-text">その調子！</p></div>)
-                : (this.props.handleWorryUpdate)
-                  ? (<div className="popover"><p className="popover-text">修正が完了しました</p><p className="popover-text">頑張れー！</p></div>)
-                  : (<div className="popover"><p className="popover-text">頑張ってください！</p><p className="popover-text">応援しています！</p></div>)
-
-            }
-            place={'above'}
-            enterExitTransitionDurationMs={800}
-          >
-            {
-              this.props.isStatus
-                ? <button disabled={!this.props.canSubmit()} onClick={this.submit} type="submit" className="button">投稿</button>
-                // : <button onClick={this.submit} type="submit" className="button">投稿</button>
-                : <button disabled={!this.props.canSubmit()} onClick={this.submit} type="submit" className="button">投稿</button>
-            }
-          </Popover>
+          <button disabled={!this.props.canSubmit()} onClick={this.submit} type="submit" className="button">投稿</button>
         </div>
       );
     }
-
-    // }
 
     return (
       <React.Fragment>

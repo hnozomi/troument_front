@@ -226,12 +226,9 @@ class Home extends React.Component {
             return { todolists: this.state.todolists }
         })
         );
-        // const url = constUrl + '/api/listupdate'
         Axios.post('/api/listupdate', {
             detail_todolist: this.state.detail_todolist,
         })
-            .then(response => {
-            })
             .catch(err => {
                 console.error(new Error(err))
             })
@@ -264,8 +261,6 @@ class Home extends React.Component {
         Axios.post('/api/listupdate', {
             detail_todolist: this.state.detail_todolist,
         })
-            .then(response => {
-            })
             .catch(err => {
                 console.error(new Error(err))
             })
@@ -451,8 +446,6 @@ class Home extends React.Component {
         }
 
         Axios.get('/api/gooddelete', { params: param })
-            .then(response => {
-            })
             .catch(err => {
                 console.error(new Error(err))
             })
@@ -599,8 +592,6 @@ class Home extends React.Component {
                                     <div className="paper">
                                         <img className="pop-icon" src="/image/paperplane.svg" alt="紙飛行機" />
                                         <div className="pop-message">投稿が完了しました！</div>
-                                        {/* <h2 id="transition-modal-title" className="modal-title modal-cons">送信完了!</h2>
-                                        <p id="transition-modal-description" className="modal-description modal-cons">頑張って解決させましょう!</p> */}
                                     </div>
                                 </Fade>
                             </Modal>

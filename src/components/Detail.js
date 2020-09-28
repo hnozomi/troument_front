@@ -88,11 +88,9 @@ class Detail extends React.Component {
     // ****************************************************************///
 
     getReadOnly = () => {
-        let worryElements = document.getElementById("worry"); // id of editor element
-        let resolveElements = document.getElementById("resolve"); // id of editor element
-        let linkElements = document.getElementsByClassName("link-tool"); // id of editor element
-        console.log(linkElements)
-        // linkElements.style.pointerEvents = "auto";
+        let worryElements = document.getElementById("worry"); 
+        let resolveElements = document.getElementById("resolve");
+        
         worryElements.style.pointerEvents = "none";
         
         try {
@@ -171,7 +169,6 @@ class Detail extends React.Component {
         }
 
         return (
-            // <React.Fragment>
             <div className="display-title-wrapper">
                 <Display
                     {...this.props}
@@ -211,7 +208,6 @@ class Detail extends React.Component {
                 </Dialog>
 
             </div >
-            // </React.Fragment>
         );
     }
 }

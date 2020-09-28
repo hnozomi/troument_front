@@ -405,6 +405,11 @@
   padding: 0.5em;
 }
 
+.crop-button-text {
+  width: max-content;
+  padding: 0.1em 1.2em 
+}
+
 /* ReactCropライブラリ使用 */
 
 .ReactCrop__image {
