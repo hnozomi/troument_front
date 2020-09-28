@@ -839,6 +839,11 @@
   position: fixed;
   box-sizing: border-box;
   width: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
 }
 
 .modal-header {
