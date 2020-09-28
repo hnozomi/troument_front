@@ -1,8 +1,8 @@
 import React from 'react';
 import Display from './Display';
 import User from './User';
-// import AxiosBase from 'axios';
-import Axios from 'axios';
+import AxiosBase from 'axios';
+// import Axios from 'axios';
 import ReactCrop from 'react-image-crop';
 import 'react-image-crop/dist/ReactCrop.css';
 import Modal from '@material-ui/core/Modal';
@@ -11,9 +11,9 @@ import Fade from '@material-ui/core/Fade';
 
 import Avatar from 'react-avatar';
 
-// const Axios = AxiosBase.create({
-//   baseURL: "https://troument-api.net"
-// });
+const Axios = AxiosBase.create({
+  baseURL: "https://troument-api.net"
+});
 
 
 class Mypage extends React.Component {
