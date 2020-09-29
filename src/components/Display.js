@@ -57,9 +57,9 @@ class Display extends React.Component {
   async goodCheck() {
 
     if (this.props.detail_todolist) {
-
       const goodcheck =
-        this.props.detail_todolist.user.goodlist.findIndex((good) => {
+        // this.props.detail_todolist.user.goodlist.findIndex((good) => {
+          this.state.userinfo.goodlist.findIndex((good) => {
           return good === this.props.detail_todolist._id
         })
 
@@ -125,7 +125,7 @@ class Display extends React.Component {
                 })}
               </div>
               {this.props.detail_todolist.status &&
-                <p className="content-count">{this.props.detail_todolist.count}人が感謝しています</p>
+                <p className="content-count">{this.props.detail_todolist.count}人の役に立っています</p>
               }
             </div>
           </div>
@@ -133,6 +133,7 @@ class Display extends React.Component {
             !this.props.isUpdateFormOpen && 
               (
                 <div className="content-button-wrapper">
+
 
                   {this.props.detail_todolist.status && (
                     this.state.isGood
@@ -142,8 +143,8 @@ class Display extends React.Component {
                       : <button className="content-button" onClick={this.handleGoodChange}>参考になった
                               <ThumbUpAltOutlinedIcon className="content-button-icon" style={{ fontSize: 18 }} />
                       </button>
-
                   )}
+
 
                   {this.props.login_user === this.props.detail_todolist.username &&
                     <div className="content-edit-button">
@@ -193,7 +194,7 @@ class Display extends React.Component {
                     </div>
 
                     {todolist.status
-                      ? <p className="content-count">{todolist.count}人が感謝しています</p>
+                      ? <p className="content-count">{todolist.count}人の役に立っています</p>
                       : <p className="content-count">悩み中...　応援してください</p>
                     }
                   </div>

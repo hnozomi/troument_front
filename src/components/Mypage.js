@@ -331,6 +331,7 @@ class Mypage extends React.Component {
   // ****************************************************************///
 
   handleReload() {
+    this.props.thumbnailUpdate(this.state.thumbnail)
     this.props.getTodolists()
     this.getTodoListCount()
   }
@@ -422,6 +423,7 @@ class Mypage extends React.Component {
             }}
           >
             <Fade in={this.state.isPicOpen}>
+                
               <div className="modal">
                 {src && (
                   <ReactCrop
@@ -437,6 +439,7 @@ class Mypage extends React.Component {
                   <button className="button crop-button-text" onClick={this.canSendPic}>キャンセル</button>
                   <button className="button crop-button-text" onClick={this.sendPicToS3}>決定</button>
                 </div>
+
               </div>
             </Fade>
           </Modal>

@@ -55,6 +55,7 @@ class Home extends React.Component {
         this.getTodolists = this.getTodolists.bind(this)
         this.updateFormOpen = this.updateFormOpen.bind(this)
         this.resolveFormOpen = this.resolveFormOpen.bind(this)
+        this.thumbnailUpdate = this.thumbnailUpdate.bind(this)
     }
 
 
@@ -205,6 +206,23 @@ class Home extends React.Component {
         )
 
     }
+
+    // ****************************************************************///
+    // サムネイル更新
+    // ****************************************************************///
+
+    thumbnailUpdate(updateThumbnail) {
+
+        const userinfo = this.state.userinfo
+
+        userinfo.thumbnail = updateThumbnail
+
+        this.setState((state => {
+            return { userinfo: this.state.userinfo }
+        })
+        );
+    }
+
 
     // ****************************************************************///
     // 悩みの編集 Detailコンポーネントの1worryUpdateから実行
@@ -510,6 +528,7 @@ class Home extends React.Component {
                                 deleteDialogOpen={this.deleteDialogOpen}
                                 actionMethod={actionMethod}
                                 userinfo={this.state.userinfo}
+                                // _id={this.state.userinfo._id}
                                 _id={this.state.detail_todolist._id}
                             />
                                 <Form
@@ -607,7 +626,7 @@ class Home extends React.Component {
 
 
                         <Route exact path='/Mypage'
-                            render={props => <Mypage getTodolists={this.getTodolists} getUserinfo={this.getUserinfo} userinfo={this.state.userinfo} todolists={this.state.todolists} loginuser={this.state.login_user} actionMethod={actionMethod} />} />
+                            render={props => <Mypage thumbnailUpdate={this.thumbnailUpdate} getTodolists={this.getTodolists} getUserinfo={this.getUserinfo} userinfo={this.state.userinfo} todolists={this.state.todolists} loginuser={this.state.login_user} actionMethod={actionMethod} />} />
 
                     </Switch>
                 </Auth>
